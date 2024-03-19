@@ -10,7 +10,12 @@ function getTrainInfos()
 		local signalPaths = walkPath(move_path)
 		
 		for i, signalPath in ipairs(signalPaths) do
-			local minSpeed = getMinValue()
+			local minSpeed = signalPath.minSpeed
+			local signalState = signalPath.signalState
+			print("---[SignalPath Start]---")
+			print("PathSpeed: " .. minSpeed .. "")
+			print("PathState: " .. signalState .. "")
+			print("---[SignalPath End]---")
 		end
 	end
 end
@@ -50,35 +55,37 @@ end
 
 
 function walkPath(move_path)
-	print("-----[StartBlock]-----")
 	local signalPaths = {} 
 	local signalIndex = 0
 	
 	local tempSignalPaths = {}
 	local signalPath = {}
+	local signalPathSpeed = {}
 	local i = move_path.dyn.pathPos.edgeIndex
 	while i <= move_path.dyn.pathPos.edgeIndex + move_path.path.endOffset do
 		local path = move_path.path.edges[i]
 		
 		if signalIndex > 0 then
 			table.insert(signalPath, path.edgeId.entity)
+			table.insert(signalPathSpeed, getEdgeSpeed(path.edgeId.entity))
 		end
 		
 		local signalId = api.engine.system.signalSystem.getSignal(path.edgeId, path.dir)
 		local signalList = getComponentProtected(signalId.entity, 26)
 		
 		if not (signalList == nil) then
-			print(api.engine.getComponent(signalId.entity, 63).name)
 			local signal = signalList.signals[1]
-			print(signal.state)
 			
+			tempSignalPaths.minSpeed = getMinValue(signalPathSpeed)
 			tempSignalPaths.path = signalPath
 			tempSignalPaths.signal = signalId.entity
+			tempSignalPaths.signalState = signal.state
 			
 			if signalIndex > 0 then
 				table.insert(signalPaths, tempSignalPaths)
 				tempSignalPaths = {}
 				signalPath = {}
+				signalPathSpeed = {}
 			end
 			
 			signalIndex = signalIndex + 1
@@ -86,7 +93,6 @@ function walkPath(move_path)
 
 		i = i + 1
 	end
-	print("-----[EndBlock]-----")
 	
 	return signalPaths
 end
@@ -96,7 +102,7 @@ function signals.getSignalObject()
 end
 
 function signals.createNewSignal(signal, construct)
-	signalObject[construct].signal = signal
+	signalObject[signal].construct = construct
 end
 
 function signals.createParams()
