@@ -1,0 +1,101 @@
+function data()
+return {
+	params = {
+		alpha_scale = {
+			alphaScale = 1,
+			
+		},
+		alpha_test = {
+			alphaThreshold = 0.5,
+			preferAlphaToCoverage = true,
+			
+		},
+		fade_out_range = {
+			fadeOutEndDist = 20000,
+			fadeOutStartDist = 10000,
+			
+		},
+		map_albedo_opacity = {
+			compressionAllowed = true,
+			fileName = "models/stage/ballast.tga",
+			magFilter = "LINEAR",
+			minFilter = "LINEAR_MIPMAP_LINEAR",
+			mipmapAlphaScale = 0,
+			type = "TWOD",
+			wrapS = "REPEAT",
+			wrapT = "REPEAT",
+			
+		},
+		map_metal_gloss_ao = {
+			compressionAllowed = true,
+			fileName = "default_metal_gloss_ao.tga",
+			magFilter = "LINEAR",
+			minFilter = "LINEAR_MIPMAP_LINEAR",
+			mipmapAlphaScale = 0,
+			redGreen = false,
+			scaleDownAllowed = true,
+			type = "TWOD",
+			wrapS = "CLAMP_TO_EDGE",
+			wrapT = "CLAMP_TO_EDGE",
+			
+		},
+		map_normal = {
+			compressionAllowed = false,
+			fileName = "models/stage/ballast_nrml.tga",
+			magFilter = "LINEAR",
+			minFilter = "LINEAR_MIPMAP_LINEAR",
+			mipmapAlphaScale = 0,
+			type = "TWOD",
+			wrapS = "REPEAT",
+			wrapT = "REPEAT",
+			
+		},
+		map_op_1 = {
+			compressionAllowed = true,
+			fileName = "tracks/ballast_color.dds",
+			magFilter = "LINEAR",
+			minFilter = "LINEAR_MIPMAP_LINEAR",
+			mipmapAlphaScale = 0,
+			type = "TWOD",
+			wrapS = "REPEAT",
+			wrapT = "REPEAT",
+			
+		},
+		operation_1 = {
+			mode = "WORLD_XY",
+			op = "OVERLAY",
+			scale = {
+				1, 1, 
+			},
+			
+		},
+		map_op_2 = {
+			compressionAllowed = true,
+			fileName = "unknown_texture.tga",
+			magFilter = "LINEAR",
+			minFilter = "LINEAR_MIPMAP_LINEAR",
+			mipmapAlphaScale = 0,
+			type = "TWOD",
+			wrapS = "REPEAT",
+			wrapT = "REPEAT",
+		},
+		operation_2 = {
+			op = "NO_OP",
+			mode = "NORMAL",
+		},
+		polygon_offset = {
+			factor = -2,
+			units = -2,
+			forceDepthWrite = true,
+			
+		},
+		two_sided = {
+			twoSided = false,
+			
+		},
+		
+	},
+	type = "PHYS_TRANSPARENT_NRML_MAP_OP",
+	
+}
+end

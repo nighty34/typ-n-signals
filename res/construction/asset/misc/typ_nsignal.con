@@ -1,0 +1,36 @@
+local signals = require "nightfury/signals/main"
+
+function data()
+
+return { 
+	params = signals.createParams(),
+	type = "ASSET_DEFAULT",
+	buildMode = "MULTI",
+	description = {
+		name = _("TypeN Signal"),			
+		description = _("Tram Mast"),
+	},
+	availability = {
+		yearFrom = 1950		
+	},
+	skipOnInit = true,
+	categories = { "nighty_signals" },
+	skipCollision = true,
+	autoRemovable = false,
+	
+	updateFn = function(params)
+		local result = {}
+		result.models = { 
+			{
+				id = "asset/signals/signal_test.mdl",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }
+			}
+		}
+		
+		result.cost = -1
+		result.maintenanceCost = result.cost / 6
+
+		return result
+	end
+}
+end

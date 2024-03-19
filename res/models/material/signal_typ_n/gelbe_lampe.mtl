@@ -1,0 +1,29 @@
+function data()
+return {
+	__version = "",
+	order = 0,
+	params = {
+		emissive_scale = {
+			emissiveScale = { 1.5, 2.5, 2.5, },
+		},
+		fade_out_range = {
+			fadeOutEndDist = 20000,
+			fadeOutStartDist = 10000,
+		},
+		map_emissive = {
+			fileName = "models/railroad/signal_sbb_typ_n/signal_sbb_typ_n_lampen.tga",
+			type = "TWOD",
+		},
+		polygon_offset = {
+			factor = 0,
+			forceDepthWrite = false,
+			units = 0,
+		},
+		two_sided = {
+			flipNormal = true,
+			twoSided = false,
+		},
+	},
+	type = "EMISSIVE",
+}
+end
