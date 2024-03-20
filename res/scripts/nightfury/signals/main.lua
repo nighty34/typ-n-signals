@@ -112,8 +112,27 @@ function signals.createParams()
 		key = "nighty_signals",
 		name = _("nighty_signaling"),
 		values = {_("nighty_signaling_1"),_("nighty_signaling_2")},
-		defaultIndex = 0,
+		defaultIndex = 1,
 	}
+	params[#params + 1] = {
+		key = "nighty_signals_green",
+		name = _("nighty_signals_green"),
+		values = {_("nighty_on"),_("nighty_off")},
+		defaultIndex = 1,
+	}
+	params[#params + 1] = {
+		key = "nighty_signals_red",
+		name = _("nighty_signals_red"),
+		values = {_("nighty_on"),_("nighty_off")},
+		defaultIndex = 1,
+	}
+	params[#params + 1] = {
+		key = "nighty_signals_yellow",
+		name = _("nighty_signals_yellow"),
+		values = {_("nighty_on"),_("nighty_off")},
+		defaultIndex = 1,
+	}
+	
 	
 	return params
 end
