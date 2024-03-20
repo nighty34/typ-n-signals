@@ -1,6 +1,8 @@
 local signals = {}
 local signalObject = {}
 
+signals.signals = {}
+
 function getTrainInfos()
 	local trains = {}
     api.engine.system.trainMoveSystem.forEach(function (a) table.insert(trains, a) end)

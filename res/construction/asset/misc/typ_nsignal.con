@@ -4,7 +4,7 @@ function data()
 
 return { 
 	params = signals.createParams(),
-	type = "ASSET_DEFAULT",
+	type = "RAIL_DEPOT",
 	buildMode = "MULTI",
 	description = {
 		name = _("TypeN Signal"),			
@@ -20,12 +20,17 @@ return {
 	
 	updateFn = function(params)
 		local result = {}
-		result.models = { 
-			{
-				id = "asset/signals/signal_test.mdl",
-				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }
-			}
-		}
+		result.models = {}
+		
+		
+		result.models[#result.models+1] = { id = "nighty/signals/typ-n_base.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+		if params.nighty_signals_green ~= nil and params.nighty_signals_green == 0 then
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_green.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+		end
+		
+		if params.nighty_signals_red ~= nil and params.nighty_signals_red == 0 then
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_red.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+		end
 		
 		result.cost = -1
 		result.maintenanceCost = result.cost / 6

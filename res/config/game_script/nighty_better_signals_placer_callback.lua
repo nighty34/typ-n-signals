@@ -7,13 +7,13 @@ local function getSignal(params)
 	end
 	
     local added = params.proposal.toAdd[1]
-
-
     local signal = string.match(added.fileName, "^.+/(.+)%.con$")
---    if not signals.signals[signal] then
---        return
---    end
-	return {}
+
+	if signals.signals[signal] == nil then
+		return
+	end
+
+	return signals.signals[signal]
 end
 
 
@@ -41,14 +41,17 @@ function data()
 				end
 				
 				
-			elseif name == "builder.apply" or name == "builder.proposalCreate" then	
-				local params = getSignal(param)
+			elseif name == "builder.apply" then	
+				local signal = getSignal(param)
 				
 				
-				if not params then
+				
+				if not signal then
 					return
 				end	
 				
+				print("Success")
+				print(signal)
 				
 				-- when object is a Signal
 				-- get closest edge. 
