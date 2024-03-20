@@ -18,6 +18,10 @@ function getTrainInfos()
 			print("PathSpeed: " .. minSpeed .. "")
 			print("PathState: " .. signalState .. "")
 			print("---[SignalPath End]---")
+			
+			local signal = signalObject[signalPath.signal]
+			
+			
 		end
 	end
 end
@@ -52,7 +56,7 @@ function getEdgeSpeed(edge)
 		
 		return curveSpeed * 3.6
 	end
-	return 10000000 -- return hight number
+	return math.huge -- return hight number
 end
 
 

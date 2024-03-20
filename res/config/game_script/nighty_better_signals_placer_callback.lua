@@ -13,7 +13,13 @@ local function getSignal(params)
 		return
 	end
 
-	return signals.signals[signal]
+    local position = {added.transf[13], added.transf[14], added.transf[15]}
+
+
+	local result = {
+		position = position,
+	}
+	return result
 end
 
 
@@ -42,22 +48,33 @@ function data()
 				
 				
 			elseif name == "builder.apply" then	
-				local signal = getSignal(param)
+				local signal_params = getSignal(param)
 				
-				
-				
-				if not signal then
+				if not signal_params then
 					return
 				end	
 				
-				print("Success")
-				print(signal)
+				print(signal_params.position[1])
+				print(signal_params.position[2])
+				print(signal_params.position[3])
 				
-				-- when object is a Signal
-				-- get closest edge. 
-				-- place signal on edge
+				print(id)
+				print(name)
 				
-				-- signals.createSignal(r_signal, c_signal)
+				local c_signal = param.result[1]
+
+				local r_signal = game.interface.getEntities({radius=8,pos={signal_params.position[1],signal_params.position[2]}}, { type = "SIGNAL", includeData = true })
+				
+				local firstKey, firstValue
+				
+				for key, value in pairs(myDictionary) do
+					if not firstKey then
+						firstKey = key
+						break
+					end
+				end
+				
+				signals.createSignal(r_signal[firstKey], c_signal)
 			end
 		end
 	}

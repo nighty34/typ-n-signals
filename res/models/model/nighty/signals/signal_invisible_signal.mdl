@@ -1,0 +1,47 @@
+function data()
+return {
+	boundingInfo = {
+		bbMax = { 0.39379525184631, 0.61080157756805, 6.3053741455078, },
+		bbMin = { -0.39228457212448, -0.51076626777649, 0.31353887915611, },
+	},
+	collider = {
+		params = { },
+		transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+		type = "MESH",
+	},
+	lods = {
+		{
+			node = {
+				children = { },
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+			},
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 0.01,
+		},
+	},
+	metadata = {
+		availability = {
+			yearFrom = 0,
+			yearTo = 0,
+		},
+		category = {
+			categories = { "typen", },
+		},
+		cost = {
+			price = 0,
+			priceScale = 1,
+		},
+		description = {
+			name = _("nighty_invisible_signal"),
+		},
+		signal = {
+			soundevent = "",
+			type = "PATH_SIGNAL",
+			upright = true,
+		},
+	},
+	version = 1,
+}
+end
