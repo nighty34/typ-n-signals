@@ -3,7 +3,7 @@ local signalObject = {}
 
 signals.signals = {}
 
-function getTrainInfos()
+function signals.getTrainInfos()
 	local trains = {}
     api.engine.system.trainMoveSystem.forEach(function (a) table.insert(trains, a) end)
 	
@@ -19,10 +19,30 @@ function getTrainInfos()
 			print("PathState: " .. signalState .. "")
 			print("---[SignalPath End]---")
 			
-			local signal = signalObject[signalPath.signal]
+			print("Matching to: " .. tonumber(signalPath.signal))
 			
+			local c_signal = signalObject[tonumber(signalPath.signal)]
+		
 			
+			if not (c_signal == nil) then
+				local params = getComponentProtected(game.interface.getEntity(c_signal), 13)
+				if params ~= nil then
+					params.param.nighty_signals_green = signalState
+					params.param.nighty_signals_red = 1 - signalState
+				else
+					print("couldn't access params")
+				end
+			else 
+				print("couldn't find signal in table")
+			end
 		end
+	end
+end
+
+function dmpSignalTable()
+	for i,k in pairs(signalObject) do
+		print(i)
+		print(k)
 	end
 end
 
@@ -107,8 +127,11 @@ function signals.getSignalObject()
 	return signalObject
 end
 
-function signals.createNewSignal(signal, construct)
-	signalObject[signal].construct = construct
+function signals.createSignal(signal, construct)
+	print("Adding Signal: " .. signal)
+	print("Adding Con: " .. construct)
+	signalObject[tonumber(signal)] = tonumber(construct)
+	print(signalObject[signal])
 end
 
 function signals.createParams()

@@ -54,27 +54,22 @@ function data()
 					return
 				end	
 				
-				print(signal_params.position[1])
-				print(signal_params.position[2])
-				print(signal_params.position[3])
-				
-				print(id)
-				print(name)
-				
 				local c_signal = param.result[1]
 
 				local r_signal = game.interface.getEntities({radius=8,pos={signal_params.position[1],signal_params.position[2]}}, { type = "SIGNAL", includeData = true })
 				
-				local firstKey, firstValue
+				local firstKey
 				
-				for key, value in pairs(myDictionary) do
+				for key, value in pairs(r_signal) do
 					if not firstKey then
 						firstKey = key
 						break
 					end
 				end
 				
-				signals.createSignal(r_signal[firstKey], c_signal)
+				print("Found Signal: " .. firstKey)
+				
+				signals.createSignal(firstKey, c_signal)
 			end
 		end
 	}

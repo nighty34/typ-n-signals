@@ -4,7 +4,7 @@ function data()
 
 return { 
 	params = signals.createParams(),
-	type = "RAIL_DEPOT",
+	type = "ASSET_DEFAULT",
 	buildMode = "MULTI",
 	description = {
 		name = _("TypeN Signal"),			
@@ -16,7 +16,7 @@ return {
 	skipOnInit = true,
 	categories = { "nighty_signals" },
 	skipCollision = true,
-	autoRemovable = false,
+	autoRemovable = true,
 	
 	updateFn = function(params)
 		local result = {}
