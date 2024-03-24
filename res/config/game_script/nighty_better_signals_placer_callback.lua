@@ -15,9 +15,9 @@ local function getSignal(params)
 
     local position = {added.transf[13], added.transf[14], added.transf[15]}
 
-
 	local result = {
 		position = position,
+		construction = params.result[1],
 	}
 	return result
 end
@@ -25,15 +25,41 @@ end
 
 function data()
 	return{
+		update = function()
+			local success, errorMessage = pcall(signals.getTrainInfos)
+		
+			if success then
+			else 
+				print(errorMessage)
+			end
+		end,
 		handleEvent = function(src, id, name, param)
-			
-			if src ~="__signalEvent__" or src ~= "nighty_better_signals_placer_callback.lua" then
+			if id ~="__signalEvent__" or src ~= "nighty_better_signals_placer_callback.lua" then
 				return
 			end
 			
+			print("Got Event")
+			
             if name == "builder.apply" then
-                                
-                print("Building Signal")
+			
+				print("Intersected Signal Event")
+			
+				local c_signal = param.construction
+
+				local r_signal = game.interface.getEntities({radius=8,pos={param.position[1],param.position[2]}}, { type = "SIGNAL", includeData = true })
+				
+				local firstKey
+				
+				for key, value in pairs(r_signal) do
+					if not firstKey then
+						firstKey = key
+						break
+					end
+				end
+				
+				print("Found Signal: " .. firstKey)
+				
+				signals.createSignal(firstKey, c_signal)
 			end
 			
 			
@@ -52,24 +78,9 @@ function data()
 				
 				if not signal_params then
 					return
-				end	
-				
-				local c_signal = param.result[1]
-
-				local r_signal = game.interface.getEntities({radius=8,pos={signal_params.position[1],signal_params.position[2]}}, { type = "SIGNAL", includeData = true })
-				
-				local firstKey
-				
-				for key, value in pairs(r_signal) do
-					if not firstKey then
-						firstKey = key
-						break
-					end
 				end
-				
-				print("Found Signal: " .. firstKey)
-				
-				signals.createSignal(firstKey, c_signal)
+				print("Will send Event")
+				game.interface.sendScriptEvent("__signalEvent__", name, signal_params)
 			end
 		end
 	}

@@ -5,7 +5,7 @@ function data()
 return { 
 	params = signals.createParams(),
 	type = "ASSET_DEFAULT",
-	buildMode = "MULTI",
+	--buildMode = "MULTI",
 	description = {
 		name = _("TypeN Signal"),			
 		description = _("Tram Mast"),
@@ -16,25 +16,52 @@ return {
 	skipOnInit = true,
 	categories = { "nighty_signals" },
 	skipCollision = true,
-	autoRemovable = true,
+	autoRemovable = false,
+	order = 34340,
 	
 	updateFn = function(params)
 		local result = {}
 		result.models = {}
 		
-		
 		result.models[#result.models+1] = { id = "nighty/signals/typ-n_base.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 		if params.nighty_signals_green ~= nil and params.nighty_signals_green == 0 then
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_green.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_red.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 		end
 		
 		if params.nighty_signals_red ~= nil and params.nighty_signals_red == 0 then
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_red.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_green.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 		end
 		
 		result.cost = -1
 		result.maintenanceCost = result.cost / 6
 
+		result.terrainAlignmentLists = {
+		  {
+			type = "EQUAL",               -- accepted values: "EQUAL", "LESS" and "GREATER"
+			faces = { { { 9.352, -5.165, 0 }, { -9.352, -4.457, 0 }, { -8.851, 4.457, 0 } , { 8.851, 5.115, 0 } } }, -- a list of polygons
+			slopeLow = 0.3,
+			slopeHigh = 0.6,
+		  },
+		}
+		
+		
+		result.groundFaces = {
+			{  
+				face = { { -10, -10, 0 }, { 10, -10, 0 }, { 10, 10, 0 } },
+				modes = {
+					{
+						type = "FILL",               
+						key = "industry_floor.lua"
+					}
+				},
+				loop = true,
+				alignmentOffsetMode = "OBJECT",
+				alignmentDirMode = "OBJECT",
+				alignmentOffset = { -2.0, -1.0 },
+
+			},
+		}
+		
 		return result
 	end
 }
