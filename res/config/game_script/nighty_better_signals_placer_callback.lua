@@ -1,7 +1,13 @@
 local signals = require "nightfury/signals/main"
+local utils = require "nightfury/signals/utils"
 
+
+-- Function will analyze params and determine if it's a in the config
+-- registered Signal.
+-- If a signal is detected it returns signal params
+-- @param params param value from the guiHandleEvent
+-- @return returns table with information about the signal
 local function getSignal(params)
-
     if not params.proposal.toAdd or #params.proposal.toAdd == 0 then
 		return nil
 	end
@@ -26,7 +32,7 @@ end
 function data()
 	return{
 		update = function()
-			local success, errorMessage = pcall(signals.getTrainInfos)
+			local success, errorMessage = pcall(signals.updateSignals)
 		
 			if success then
 			else 
@@ -37,12 +43,9 @@ function data()
 			if id ~="__signalEvent__" or src ~= "nighty_better_signals_placer_callback.lua" then
 				return
 			end
-			
-			print("Got Event")
+	
 			
             if name == "builder.apply" then
-			
-				print("Intersected Signal Event")
 			
 				local c_signal = param.construction
 

@@ -1,17 +1,29 @@
+local utils = require "nightfury/signals/utils"
+local taskutrils = require "mission/taskutil"
 local signals = {}
 
 signals.signals = {}
+-- Table holds all placed Signals
 signals.signalObjects = {}
 
-function signals.getTrainInfos()
+-- 3 states: None, Changed, WasChanged
+
+
+-- Function checks move_path of all the trains
+-- If a signal is found it's current state is checked
+-- after that the signal will be changed accordingly
+function signals.updateSignals()
 	local trains = {}
     api.engine.system.trainMoveSystem.forEach(function (a) table.insert(trains, a) end)
 	
+	for key, value in pairs(signals.signalObjects) do
+		value.changed = value.changed * 2
+	end
+	
 	for i,train in ipairs(trains) do
-		local move_path = getComponentProtected(train, 66)
+		local move_path = utils.getComponentProtected(train, 66)
 
-		if move_path ~= nil then
-		
+		if move_path then
 			local signalPaths = walkPath(move_path)
 			
 			for i, signalPath in ipairs(signalPaths) do
@@ -19,16 +31,16 @@ function signals.getTrainInfos()
 				local signalState = signalPath.signalState
 				
 				local signalString = "signal" .. signalPath.signal
-				print("Trying to read: " .. signalString)
+				local c_signal = signals.signalObjects[signalString].construction
 				
-				local c_signal = signals.signalObjects[signalString]
+				signals.signalObjects[signalString].changed = 1
 				
 				if c_signal then
-					local oldConstruction = game.interface.getEntity(c_signal)--getComponentProtected(c_signal, 13)
+					local oldConstruction = game.interface.getEntity(c_signal)
 					if oldConstruction then
 						oldConstruction.params.nighty_signals_green = 1 - signalState
 						oldConstruction.params.nighty_signals_red = signalState
-						oldConstruction.params.seed = nil
+						oldConstruction.params.seed = nil -- important!!
 						game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, oldConstruction.params)
 					else
 						print("couldn't access params")
@@ -40,62 +52,38 @@ function signals.getTrainInfos()
 
 		end
 	end
-end
-
-function signals.createSignal(signal, construct)
-	print("Register Signal: " .. signal .. " (" .. "signal" .. signal ..") With construction: " .. construct)
-	signals.signalObjects["signal" .. signal] = construct
-end
-
-function getComponentProtected(entity, code)
-	if pcall(function() api.engine.getComponent(entity, code) end) then
-		return api.engine.getComponent(entity, code)
-	else 
-		return nil
-	end
-end
-
-function getMinValue(values)
-	local minValue = math.huge
-	for i, value in ipairs(values) do
-		minValue = math.min(minValue, value)
-	end
 	
-	return minValue
-end
-
-
-function getEdgeSpeed(edge)
-	local transportNetwork = getComponentProtected(edge, 52)
-		if not (transportNetwork == nil) then
-		
-		local minSpeed = transportNetwork.edges[1].speedLimit-- speedLimit
-		local curveSpeed = transportNetwork.edges[1].curveSpeedLimit -- curveSpeed
-		if minSpeed < curveSpeed then 
-			return minSpeed * 3.6
-		end
-		
-		return curveSpeed * 3.6
-	end
-	return math.huge -- return hight number
-end
-
-function upgradeProposal(entity_id, signalState) -- stolen from: https://www.transportfever.net/thread/16532-update-von-konstruktionen-simpleproposal/?postID=337120&highlight=upgradeConstruction#post337120
-	local oldConstruction = game.interface.getEntity(entity_id) -- constructionOwned is a construction owned edge entity ID 
-	local proposal = api.type.SimpleProposal.new()
-	proposal.constructionsToRemove = {entity_id}
-	local pd = api.engine.util.proposal.makeProposalData(proposal, context)
-	if pd.errorState.critical == true then
-		table.insert(errorList, {edgeId, pd.errorState.messages[1] .. ": " .. constr.fileName})
-	else
-		local check = game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, pure(oldConstruction.params))
-		if check ~= entity_id then
-			table.insert(errorList, {edgeId, "construction upgrade error: " .. constr.fileName})
+	-- Throw signal to red
+	for key, value in pairs(signals.signalObjects) do
+		if value.changed == 2 then
+			local oldConstruction = game.interface.getEntity(value.construction)
+			if oldConstruction then
+				oldConstruction.params.nighty_signals_green = 1
+				oldConstruction.params.nighty_signals_red = 0
+				oldConstruction.params.seed = nil -- important!!
+				game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, oldConstruction.params)
+			end
+			value.changed = 0
 		end
 	end
 end
 
 
+-- Registers new signal
+-- @param signal signal entityid
+-- @param construct construction entityid
+function signals.createSignal(signal, construct)
+	local signalKey = "signal" .. signal
+	print("Register Signal: " .. signal .. " (" .. signalKey ..") With construction: " .. construct)
+	signals.signalObjects[signalKey] = {}
+	signals.signalObjects[signalKey].construction = construct
+	signals.signalObjects[signalKey].changed = 0
+end
+
+
+-- Walks down the given path and analyses path.
+-- @param move_path Move_path value from a trains path
+-- @return returns analysed path with signal states and maxSpeed of the parts
 function walkPath(move_path)
 	local signalPaths = {} 
 	local signalIndex = 0
@@ -107,19 +95,19 @@ function walkPath(move_path)
 	while (i <= move_path.dyn.pathPos.edgeIndex + move_path.path.endOffset) and (move_path.path ~= nil) do
 		local path = move_path.path.edges[i]
 		
-		if path ~= nil then
+		if path then
 			if signalIndex > 0 then
 				table.insert(signalPath, path.edgeId.entity)
-				table.insert(signalPathSpeed, getEdgeSpeed(path.edgeId.entity))
+				table.insert(signalPathSpeed, utils.getEdgeSpeed(path.edgeId.entity))
 			end
 			
 			local signalId = api.engine.system.signalSystem.getSignal(path.edgeId, path.dir)
-			local signalList = getComponentProtected(signalId.entity, 26)
+			local signalList = utils.getComponentProtected(signalId.entity, 26)
 			
 			if not (signalList == nil) then
 				local signal = signalList.signals[1]
 				
-				tempSignalPaths.minSpeed = getMinValue(signalPathSpeed)
+				tempSignalPaths.minSpeed = utils.getMinValue(signalPathSpeed)
 				tempSignalPaths.path = signalPath
 				tempSignalPaths.signal = signalId.entity
 				tempSignalPaths.signalState = signal.state
@@ -141,6 +129,14 @@ function walkPath(move_path)
 	return signalPaths
 end
 
+
+function signals.closeSignals() 
+	for signal, construction in pairs(signals.signalObjects) do
+		
+	end
+end
+-- Generic Params for signals
+-- @return returns params for signal constructions
 function signals.createParams()
 	local params = {}
 	
