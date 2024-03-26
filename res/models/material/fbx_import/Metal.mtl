@@ -23,7 +23,7 @@ return {
 			wrapT = "REPEAT",
 		},
 		map_normal = {
-			fileName = "unknown_normal_1k.dds",
+			fileName = "models/railroad/typ_n/signal_metall_typ_n_ao.dds",
 			redGreen = true,
 			type = "TWOD",
 		},

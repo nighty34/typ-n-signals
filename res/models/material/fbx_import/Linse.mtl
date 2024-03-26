@@ -7,14 +7,14 @@ return {
 			albedoScale = { 1, 1, 1, },
 		},
 		alpha_scale = {
-			alphaScale = 4,
+			alphaScale = 1,
 		},
 		alpha_test = {
 			a2CThreshold = 0,
-			alphaThreshold = 0.5,
-			cutout = true,
-			disableDepthAndNormalWrite = true,
-			sorted = true,
+			alphaThreshold = 0,
+			cutout = false,
+			disableDepthAndNormalWrite = false,
+			sorted = false,
 		},
 		fade_out_range = {
 			fadeOutEndDist = 20000,

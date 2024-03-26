@@ -1,5 +1,4 @@
 local utils = require "nightfury/signals/utils"
-local taskutrils = require "mission/taskutil"
 local signals = {}
 
 signals.signals = {}
@@ -40,6 +39,7 @@ function signals.updateSignals()
 					if oldConstruction then
 						oldConstruction.params.nighty_signals_green = 1 - signalState
 						oldConstruction.params.nighty_signals_red = signalState
+						oldConstruction.params.nighty_signals_speed = math.floor(minSpeed)
 						oldConstruction.params.seed = nil -- important!!
 						game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, oldConstruction.params)
 					else
@@ -86,45 +86,62 @@ end
 -- @return returns analysed path with signal states and maxSpeed of the parts
 function walkPath(move_path)
 	local signalPaths = {} 
-	local signalIndex = 0
 	
 	local tempSignalPaths = {}
 	local signalPath = {}
 	local signalPathSpeed = {}
-	local i = move_path.dyn.pathPos.edgeIndex
+	local activeSignal = {}
+	
+	
+	local polygon = {}
+	local i = move_path.dyn.pathPos.edgeIndex - 2
+	if i < 1 then
+		i = 1
+	end
 	while (i <= move_path.dyn.pathPos.edgeIndex + move_path.path.endOffset) and (move_path.path ~= nil) do
 		local path = move_path.path.edges[i]
 		
 		if path then
-			if signalIndex > 0 then
-				table.insert(signalPath, path.edgeId.entity)
-				table.insert(signalPathSpeed, utils.getEdgeSpeed(path.edgeId.entity))
-			end
-			
 			local signalId = api.engine.system.signalSystem.getSignal(path.edgeId, path.dir)
 			local signalList = utils.getComponentProtected(signalId.entity, 26)
 			
-			if not (signalList == nil) then
+			if signalList then -- found Signal
+			
 				local signal = signalList.signals[1]
 				
-				tempSignalPaths.minSpeed = utils.getMinValue(signalPathSpeed)
-				tempSignalPaths.path = signalPath
-				tempSignalPaths.signal = signalId.entity
-				tempSignalPaths.signalState = signal.state
-				
-				if signalIndex > 0 then
+				if activeSignal.signal and activeSignal.signalId then
+					tempSignalPaths.minSpeed = utils.getMinValue(signalPathSpeed)
+					tempSignalPaths.path = signalPath
+					tempSignalPaths.signal = activeSignal.signalId.entity
+					tempSignalPaths.signalState = activeSignal.signal.state
+					
 					table.insert(signalPaths, tempSignalPaths)
-					tempSignalPaths = {}
-					signalPath = {}
-					signalPathSpeed = {}
 				end
 				
-				signalIndex = signalIndex + 1
+				activeSignal.signal = signal
+				activeSignal.signalId = signalId
+				
+				tempSignalPaths = {}
+				signalPath = {}
+				signalPathSpeed = {}
 			end
+
+			table.insert(signalPath, path.edgeId.entity)
+			table.insert(signalPathSpeed, utils.getEdgeSpeed(path.edgeId.entity))
 		end
 
 		i = i + 1
 	end
+	
+	if activeSignal.signal and activeSignal.signalId then
+		tempSignalPaths.minSpeed = utils.getMinValue(signalPathSpeed)
+		tempSignalPaths.path = signalPath
+		tempSignalPaths.signal = activeSignal.signalId.entity
+		tempSignalPaths.signalState = activeSignal.signal.state
+		
+		table.insert(signalPaths, tempSignalPaths)
+	end
+
 	
 	return signalPaths
 end
@@ -163,6 +180,19 @@ function signals.createParams()
 		name = _("nighty_signals_yellow"),
 		values = {_("nighty_on"),_("nighty_off")},
 		defaultIndex = 1,
+	}
+	
+	local speedValues = {}
+	for i = 1, 300, 1 do
+		table.insert(speedValues, (i .. ""))
+	end
+
+	
+	params[#params + 1] = {
+		key = "nighty_signals_speed",
+		name = _("nighty_signals_speed"),
+		uiType = "SLIDER",
+		values = speedValues,
 	}
 	
 	
