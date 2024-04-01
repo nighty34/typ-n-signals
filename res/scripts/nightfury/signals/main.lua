@@ -49,6 +49,20 @@ function signals.updateSignals()
 			for i, signalPath in ipairs(signalPaths) do
 				local minSpeed = signalPath.minSpeed
 				local signalState = signalPath.signalState
+				local dest = 0
+				local direction = 0
+				
+				if signalPath.speed then
+					minSpeed = signalPath.speed
+				end
+				
+				if signalPath.dest then
+					dest = signalPath.dest
+				end
+				
+				if signalPath.direction then
+					direction = signalPath.direction
+				end
 				
 				local signalString = "signal" .. signalPath.signal
 				local tableEntry = signals.signalObjects[signalString]
@@ -63,13 +77,13 @@ function signals.updateSignals()
 							oldConstruction.params.nighty_signals_green = 1 - signalState
 							oldConstruction.params.nighty_signals_red = signalState
 							oldConstruction.params.nighty_signals_speed = math.floor(minSpeed)
+							oldConstruction.params.nighty_signals_dest = dest
+							oldConstruction.params.nighty_signals_direction = direction
 							oldConstruction.params.seed = nil -- important!!
 							game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, oldConstruction.params)
 						else
 							print("couldn't access params")
 						end
-					else 
-						print("couldn't find signal in table")
 					end
 				end
 			end
@@ -105,11 +119,25 @@ function signals.createSignal(signal, construct)
 end
 
 
+function parseName(input)
+    local values = {}
+    
+    -- Iterate over each key-value pair in the input string
+    for pair in input:gmatch("%s*([^,]+)%s*,?") do
+        local key, value = pair:match("(%w+)%s*=%s*(%d+)")
+        if key and (key == "speed" or key == "dest" or key == "direction") then
+            values[key] = tonumber(value)
+        end
+    end
+    
+    return values
+end
+
 -- Walks down the given path and analyses path.
 -- @param move_path Move_path value from a trains path
 -- @return returns analysed path with signal states and maxSpeed of the parts
 function walkPath(move_path)
-	local pathViewDistance = 15 -- To be changed
+	local pathViewDistance = 20 -- To be changed
 
 	local signalPaths = {} 
 	
@@ -135,19 +163,33 @@ function walkPath(move_path)
 				
 					local signal = signalList.signals[1]
 					
-					if activeSignal.signal and activeSignal.signalId then
-						tempSignalPaths.minSpeed = utils.getMinValue(signalPathSpeed)
-						tempSignalPaths.signal = activeSignal.signalId.entity
-						tempSignalPaths.signalState = activeSignal.signal.state
+					if signal.type == 0 then
+					
+						if activeSignal.signal and activeSignal.signalId then
+							tempSignalPaths.minSpeed = utils.getMinValue(signalPathSpeed)
+							tempSignalPaths.signal = activeSignal.signalId.entity
+							tempSignalPaths.signalState = activeSignal.signal.state
+							
+							table.insert(signalPaths, tempSignalPaths)
+						end
 						
-						table.insert(signalPaths, tempSignalPaths)
+						activeSignal.signal = signal
+						activeSignal.signalId = signalId
+							
+						tempSignalPaths = {}
+						signalPathSpeed = {}						
+					elseif signal.type == 2 then
+						local name = utils.getComponentProtected(signalId.entity, 63)
+						local values = parseName(name.name)
+						
+						tempSignalPaths.speed = values['speed']
+						tempSignalPaths.dest = values['dest']
+						tempSignalPaths.direction = values['direction']
 					end
 					
-					activeSignal.signal = signal
-					activeSignal.signalId = signalId
+
 					
-					tempSignalPaths = {}
-					signalPathSpeed = {}
+
 				end
 
 				table.insert(signalPathSpeed, utils.getEdgeSpeed(path.edgeId.entity))
@@ -211,6 +253,20 @@ function signals.createParams()
 		name = _("nighty_signals_speed"),
 		uiType = "SLIDER",
 		values = speedValues,
+	}
+	
+	params[#params + 1] = {
+		key = "nighty_signals_dest",
+		name = _("nighty_signals_dest"),
+		uiType = "SLIDER",
+		values = speedValues,
+	}
+
+	params[#params + 1] = {
+		key = "nighty_signals_",
+		name = _("nighty_signals_dest"),
+		uiType = "SLIDER",
+		values = {_("nighty_rightWay"), _("nighty_wrongWay")},
 	}
 	
 	

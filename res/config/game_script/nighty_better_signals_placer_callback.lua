@@ -4,7 +4,8 @@ local zone = require "nightfury/signals/zone"
 
 local state = {
 	signalIndex = 0,
-	markedSignal = nil
+	markedSignal = nil,
+	possibleSignals = nil,
 }
 
 
@@ -35,7 +36,21 @@ local function getSignal(params)
 end
 
 
-local signalIndex = 0
+function markSignal(allSignals)
+	local signal = allSignals[((math.abs(state.signalIndex/2)) % #allSignals) + 1]
+	
+	if signal then
+		local signalTransf = utils.getComponentProtected(signal, 58).fatInstances[1].transf
+		zone.setZoneCircle("selectedSignal", {signalTransf[13], signalTransf[14]}, 2)
+		state.markedSignal = signal
+	else
+		if #allSignals == 0 then
+			zone.remZone("selectedSignal")
+			state.markedSignal = nil
+			allSignals = nil
+		end
+	end
+end
 
 
 function data()
@@ -57,7 +72,6 @@ function data()
 			
 				local c_signal = param.construction
 				
-				
 				if state.markedSignal then 
 					local r_signal = state.markedSignal
 					
@@ -66,25 +80,22 @@ function data()
 					print("No Signal Found")
 				end
 			elseif name == "builder.proposalCreate" then
-				local r_signals = game.interface.getEntities({radius=10,pos={param.position[1],param.position[2]}}, { type = "SIGNAL" })
-				local signal = r_signals[(((state.signalIndex*2)+1) % #r_signals) + 1]
+				state.possibleSignals = game.interface.getEntities({radius=10,pos={param.position[1],param.position[2]}}, { type = "SIGNAL" })
+				markSignal(state.possibleSignals)
+
 				
-				if signal then
-					local signalTransf = utils.getComponentProtected(signal, 58).fatInstances[1].transf
-					zone.setZoneCircle("selectedSignal", {signalTransf[13], signalTransf[14]}, 2)
-					state.markedSignal = signal
-				else
-					if #r_signals == 0 then
-						zone.remZone("selectedSignal")
-						state.markedSignal = nil 
-					end
+			elseif name == "signals.nextSignal" then
+				if state.possibleSignals then
+					state.signalIndex = state.signalIndex + 1
+					markSignal(state.possibleSignals)
 				end
 				
 				
 			elseif name == "signals.viewUpdate" then
-				signals.pos = param
-			elseif name == "signals.nextSignal" then
-				state.signalIndex = state.signalIndex + 1
+				signals.pos = param	
+				
+			elseif name == "signals.reset" then
+				zone.remZone("selectedSignal")
 			end
 		end,
 		guiHandleEvent = function(id, name, param)
@@ -93,7 +104,9 @@ function data()
 				
 				if not signal then
 					return
-				end	
+				end
+				
+				game.interface.sendScriptEvent("__signalEvent__", "signals.reset", {})
 				
 			elseif (name == "builder.apply") or (name == "builder.proposalCreate") then
 				local signal_params = getSignal(param)
@@ -107,7 +120,7 @@ function data()
 				
 				game.interface.sendScriptEvent("__signalEvent__", name, signal_params)
 				
-			elseif name == "builder.rotate"then
+			elseif name == "builder.rotate" then
 					game.interface.sendScriptEvent("__signalEvent__", "signals.nextSignal", {})
 					
 			elseif id == "mainView" and (name == "camera.userPan" or name == 'camera.keyScroll') then
@@ -115,7 +128,6 @@ function data()
 				
 				if view then
 					local pos = {view[1], view[2]}
-					zone.setZoneCircle("tar_signals", pos, 500)
 					game.interface.sendScriptEvent("__signalEvent__", "signals.viewUpdate", pos)
 				end
 			end
