@@ -211,6 +211,16 @@ function walkPath(move_path)
 	return signalPaths
 end
 
+function signals.save()
+	return signals.signalObjects
+end
+
+
+function signals.load(state)
+	if state then
+		signals.signalObjects = state
+	end
+end
 
 -- Generic Params for signals
 -- @return returns params for signal constructions
@@ -255,19 +265,19 @@ function signals.createParams()
 		values = speedValues,
 	}
 	
-	params[#params + 1] = {
-		key = "nighty_signals_dest",
-		name = _("nighty_signals_dest"),
-		uiType = "SLIDER",
-		values = speedValues,
-	}
+--	params[#params + 1] = {
+--		key = "nighty_signals_dest",
+--		name = _("nighty_signals_dest"),
+--		uiType = "SLIDER",
+--		values = speedValues,
+--	}
 
-	params[#params + 1] = {
-		key = "nighty_signals_",
-		name = _("nighty_signals_dest"),
-		uiType = "SLIDER",
-		values = {_("nighty_rightWay"), _("nighty_wrongWay")},
-	}
+--	params[#params + 1] = {
+--		key = "nighty_signals_direction",
+--		name = _("nighty_signals_direction"),
+--		uiType = "SLIDER",
+--		values = {_("nighty_rightWay"), _("nighty_wrongWay")},
+--	}
 	
 	
 	return params

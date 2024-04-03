@@ -2,7 +2,7 @@ local signals = require "nightfury/signals/main"
 local utils = require "nightfury/signals/utils"
 local zone = require "nightfury/signals/zone"
 
-local state = {
+local signalState = {
 	signalIndex = 0,
 	markedSignal = nil,
 	possibleSignals = nil,
@@ -37,16 +37,16 @@ end
 
 
 function markSignal(allSignals)
-	local signal = allSignals[((math.abs(state.signalIndex/2)) % #allSignals) + 1]
+	local signal = allSignals[((math.abs(signalState.signalIndex/2)) % #allSignals) + 1]
 	
 	if signal then
 		local signalTransf = utils.getComponentProtected(signal, 58).fatInstances[1].transf
 		zone.setZoneCircle("selectedSignal", {signalTransf[13], signalTransf[14]}, 2)
-		state.markedSignal = signal
+		signalState.markedSignal = signal
 	else
 		if #allSignals == 0 then
 			zone.remZone("selectedSignal")
-			state.markedSignal = nil
+			signalState.markedSignal = nil
 			allSignals = nil
 		end
 	end
@@ -55,6 +55,17 @@ end
 
 function data()
 	return{
+		save = function()
+			state = {}
+			state.signals = signals.save()
+			return state
+		end,
+		load = function(loadedState)
+			state = loadedState or {signals = {}}
+			if state then
+				signals.load(state.signals)
+			end
+		end,
 		update = function()
 			local success, errorMessage = pcall(signals.updateSignals)
 		
@@ -72,22 +83,22 @@ function data()
 			
 				local c_signal = param.construction
 				
-				if state.markedSignal then 
-					local r_signal = state.markedSignal
+				if signalState.markedSignal then 
+					local r_signal = signalState.markedSignal
 					
 					signals.createSignal(r_signal, c_signal)
 				else
 					print("No Signal Found")
 				end
 			elseif name == "builder.proposalCreate" then
-				state.possibleSignals = game.interface.getEntities({radius=10,pos={param.position[1],param.position[2]}}, { type = "SIGNAL" })
-				markSignal(state.possibleSignals)
+				signalState.possibleSignals = game.interface.getEntities({radius=10,pos={param.position[1],param.position[2]}}, { type = "SIGNAL" })
+				markSignal(signalState.possibleSignals)
 
 				
 			elseif name == "signals.nextSignal" then
-				if state.possibleSignals then
-					state.signalIndex = state.signalIndex + 1
-					markSignal(state.possibleSignals)
+				if signalState.possibleSignals then
+					signalState.signalIndex = signalState.signalIndex + 1
+					markSignal(signalState.possibleSignals)
 				end
 				
 				
