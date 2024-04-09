@@ -16,7 +16,7 @@ return {
 			node = {
 				children = {
 					{
-						materials = { "fbx_import/geschwindkeitstafel.mtl", },
+						materials = { "nighty/signals/geschwindigkeitsanzeiger_50.mtl", },
 						mesh = "fbx_import/signal_gesch_tafel_lod0.msh",
 						name = "geschw",
 						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },

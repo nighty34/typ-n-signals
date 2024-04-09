@@ -1,0 +1,36 @@
+function data()
+return {
+	boundingInfo = {
+		bbMax = { 0.39379522204399, 0.61080259084702, 6.3053741455078, },
+		bbMin = { -0.39228457212448, -0.51076525449753, 0.31353884935379, },
+	},
+	collider = {
+		params = {
+			halfExtents = { 0.39303988218307, 0.56078392267227, 2.99591755867, },
+		},
+		transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+		type = "BOX",
+	},
+	lods = {
+		{
+			node = {
+				children = {
+					{
+						materials = { "nighty/signals/geschwindigkeitsanzeiger_40.mtl", },
+						mesh = "fbx_import/signal_gesch_tafel_lod0.msh",
+						name = "geschw",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
+					},
+				},
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+			},
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 486.76959228516,
+		},
+	},
+	metadata = { },
+	version = 1,
+}
+end

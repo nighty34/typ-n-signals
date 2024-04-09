@@ -24,10 +24,38 @@ return {
 		result.models = {}
 		
 		result.models[#result.models+1] = { id = "nighty/signals/typ-n_base.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
-		if params.nighty_signals_green ~= nil and params.nighty_signals_green == 0 then
+		
+		
+		if params.nighty_signals_green ~= nil and params.nighty_signals_green == 0 then -- Green
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_green.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
-			if (params.nighty_signals_speed ~= nil) and params.nighty_signals_speed < 50 then
+			
+			
+			if (params.nighty_signals_speed ~= nil) and params.nighty_signals_speed < 30 then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_30.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+		
+			elseif (params.nighty_signals_speed ~= nil) and params.nighty_signals_speed < 40 then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_40.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+			
+			elseif (params.nighty_signals_speed ~= nil) and params.nighty_signals_speed < 50 then
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_50.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+			
+			elseif (params.nighty_signals_speed ~= nil) and params.nighty_signals_speed < 60 then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_60.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+			
+			elseif (params.nighty_signals_speed ~= nil) and params.nighty_signals_speed < 70 then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_70.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+			
+			elseif (params.nighty_signals_speed ~= nil) and params.nighty_signals_speed < 80 then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_80.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+			
+			elseif (params.nighty_signals_speed ~= nil) and params.nighty_signals_speed < 90 then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_90.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+			
+			elseif (params.nighty_signals_speed ~= nil) and params.nighty_signals_speed < 100 then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_100.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+			
+			elseif (params.nighty_signals_speed ~= nil) and params.nighty_signals_speed < 110 then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_110.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 			end
 		end
 		

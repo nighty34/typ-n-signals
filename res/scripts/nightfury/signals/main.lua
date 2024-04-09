@@ -80,6 +80,7 @@ function signals.updateSignals()
 							oldConstruction.params.nighty_signals_dest = dest
 							oldConstruction.params.nighty_signals_direction = direction
 							oldConstruction.params.seed = nil -- important!!
+							
 							game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, oldConstruction.params)
 						else
 							print("couldn't access params")
@@ -126,7 +127,7 @@ function parseName(input)
     for pair in input:gmatch("%s*([^,]+)%s*,?") do
         local key, value = pair:match("(%w+)%s*=%s*(%d+)")
         if key and (key == "speed" or key == "dest" or key == "direction") then
-            values[key] = tonumber(value)
+            values[key] = tonumber(value) - 1
         end
     end
     
