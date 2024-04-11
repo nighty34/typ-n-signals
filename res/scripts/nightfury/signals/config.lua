@@ -3,11 +3,12 @@ local signals = require "nightfury/signals/main"
 local config = {}
 
 config.signals = {
-	typ_nsignal = {
-		green = true,
-		red = true,
-		yellow = true,
+	nighty_type_n_hauptsignal = {
+		type = "main",
 	},
+	nighty_type_n_vorsignal = {
+		type = "repeat",
+	}
 }
 
 

@@ -27,15 +27,6 @@ function signals.updateSignals()
 		end
 	end
 	
-	-- print("Computing Train Count: " .. #trains)
-	
-    --api.engine.system.trainMoveSystem.forEach(function (a)
-	--	local train = utils.getComponentProtected(a, 70)
-	--	if (train ~= nil) and (not train.userStopped) and (not train.noPath) and (not train.doorsOpen) then
-	--		table.insert(trains, a)
-	--	end
-	--end)
-	
 	for key, value in pairs(signals.signalObjects) do
 		value.changed = value.changed * 2
 	end
@@ -79,11 +70,12 @@ function signals.updateSignals()
 							oldConstruction.params.nighty_signals_speed = math.floor(minSpeed)
 							oldConstruction.params.nighty_signals_dest = dest
 							oldConstruction.params.nighty_signals_direction = direction
+							oldConstruction.params.nighty_signals_followingStates = signalPath.followingSignalStates
 							oldConstruction.params.seed = nil -- important!!
-							
+
 							game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, oldConstruction.params)
 						else
-							print("couldn't access params")
+							print("Couldn't access params")
 						end
 					end
 				end
@@ -111,12 +103,13 @@ end
 -- Registers new signal
 -- @param signal signal entityid
 -- @param construct construction entityid
-function signals.createSignal(signal, construct)
+function signals.createSignal(signal, construct, signalType)
 	local signalKey = "signal" .. signal
 	print("Register Signal: " .. signal .. " (" .. signalKey ..") With construction: " .. construct)
 	signals.signalObjects[signalKey] = {}
 	signals.signalObjects[signalKey].construction = construct
 	signals.signalObjects[signalKey].changed = 0
+	signals.signalObjects[signalKey].type = signalType
 end
 
 
@@ -146,7 +139,6 @@ function walkPath(move_path)
 	local signalPathSpeed = {}
 	local activeSignal = {}
 	
-	
 	local polygon = {}
 	
 	if move_path.path then
@@ -170,15 +162,20 @@ function walkPath(move_path)
 							tempSignalPaths.minSpeed = utils.getMinValue(signalPathSpeed)
 							tempSignalPaths.signal = activeSignal.signalId.entity
 							tempSignalPaths.signalState = activeSignal.signal.state
+							tempSignalPaths.followingSignals = {}
 							
+							for key, value in pairs(signalPaths) do
+								table.insert(value.followingSignals, tempSignalPaths)
+							end
+
 							table.insert(signalPaths, tempSignalPaths)
 						end
 						
 						activeSignal.signal = signal
 						activeSignal.signalId = signalId
-							
+						
 						tempSignalPaths = {}
-						signalPathSpeed = {}						
+						signalPathSpeed = {}
 					elseif signal.type == 2 then
 						local name = utils.getComponentProtected(signalId.entity, 63)
 						local values = parseName(name.name)
@@ -187,9 +184,6 @@ function walkPath(move_path)
 						tempSignalPaths.dest = values['dest']
 						tempSignalPaths.direction = values['direction']
 					end
-					
-
-					
 
 				end
 
@@ -204,11 +198,14 @@ function walkPath(move_path)
 		tempSignalPaths.minSpeed = utils.getMinValue(signalPathSpeed)
 		tempSignalPaths.signal = activeSignal.signalId.entity
 		tempSignalPaths.signalState = activeSignal.signal.state
+
+		for key, value in pairs(signalPaths) do
+			table.insert(value.followingSignals, tempSignalPaths)
+		end
 		
 		table.insert(signalPaths, tempSignalPaths)
 	end
 
-	
 	return signalPaths
 end
 

@@ -28,9 +28,9 @@ local function getSignal(params)
 
     local position = {added.transf[13], added.transf[14], added.transf[15]}
 	
-
 	local result = {
 		position = position,
+		type = signals.signals[signal].type
 	}
 	return result
 end
@@ -38,7 +38,7 @@ end
 
 function markSignal(allSignals)
 	local signal = allSignals[((math.abs(signalState.signalIndex/2)) % #allSignals) + 1]
-	
+
 	if signal then
 		local signalTransf = utils.getComponentProtected(signal, 58).fatInstances[1].transf
 		zone.setZoneCircle("selectedSignal", {signalTransf[13], signalTransf[14]}, 2)
@@ -79,14 +79,11 @@ function data()
 				return
 			end
 			
-            if name == "builder.apply" then
-			
-				local c_signal = param.construction
-				
+            if name == "builder.apply" then	
 				if signalState.markedSignal then 
 					local r_signal = signalState.markedSignal
 					
-					signals.createSignal(r_signal, c_signal)
+					signals.createSignal(r_signal, param.construction, param.type)
 				else
 					print("No Signal Found")
 				end
