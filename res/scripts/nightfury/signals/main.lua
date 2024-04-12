@@ -61,8 +61,7 @@ function signals.updateSignals()
 					if c_signal then
 						local oldConstruction = game.interface.getEntity(c_signal)
 						if oldConstruction then
-							oldConstruction.params.nighty_signals_green = 1 - signalState
-							oldConstruction.params.nighty_signals_red = signalState
+							oldConstruction.params.nighty_signals_state = signalState
 							oldConstruction.params.nighty_signals_speed = math.floor(minSpeed)
 							oldConstruction.params.nighty_signals_dest = dest
 							oldConstruction.params.nighty_signals_direction = direction
@@ -85,8 +84,7 @@ function signals.updateSignals()
 		if value.changed == 2 then
 			local oldConstruction = game.interface.getEntity(value.construction)
 			if oldConstruction then
-				oldConstruction.params.nighty_signals_green = 1
-				oldConstruction.params.nighty_signals_red = 0
+				oldConstruction.params.nighty_signals_state = 0
 				oldConstruction.params.seed = nil -- important!!
 				game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, oldConstruction.params)
 			end
