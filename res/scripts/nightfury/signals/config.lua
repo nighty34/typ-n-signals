@@ -7,7 +7,7 @@ config.signals = {
 		type = "main",
 	},
 	nighty_type_n_vorsignal = {
-		type = "repeat",
+		type = "main",
 	}
 }
 
