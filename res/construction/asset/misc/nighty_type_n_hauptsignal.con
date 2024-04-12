@@ -3,7 +3,26 @@ local signals = require "nightfury/signals/main"
 function data()
 
 return { 
-	params = signals.createParams(),
+	params = {
+		{
+			key = "nighty_type_n_speedindicator",
+			name = _("nighty_type_n_speedindicator"),
+			values = {_("nighty_yes"),_("nighty_no")},
+			defaultIndex = 1,
+		},
+		{
+			key = "nighty_type_n_entrysignal",
+			name = _("nighty_type_n_entrysignal"),
+			values = {_("nighty_yes"),_("nighty_no")},
+			defaultIndex = 1,
+		},
+		{
+			key = "nighty_type_n_exitsignal",
+			name = _("nighty_type_n_exitsignal"),
+			values = {_("nighty_yes"),_("nighty_no")},
+			defaultIndex = 1,
+		},
+	},
 	type = "ASSET_DEFAULT",
 	--buildMode = "MULTI",
 	description = {
@@ -22,9 +41,14 @@ return {
 	updateFn = function(params)
 		local result = {}
 		result.models = {}
+
+		local hasSpeedIndicator = (params.nighty_type_n_speedindicator and params.nighty_type_n_speedindicator == 0)
 		
 		result.models[#result.models+1] = { id = "nighty/signals/typ-n_base.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 		
+		if hasSpeedIndicator then
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speedindicator.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+		end
 		
 		if params.nighty_signals_green ~= nil and params.nighty_signals_green == 0 then -- Green
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_green.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}

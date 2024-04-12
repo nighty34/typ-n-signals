@@ -16,12 +16,6 @@ return {
 			node = {
 				children = {
 					{
-						materials = { "fbx_import/Linse.mtl", },
-						mesh = "fbx_import/signal_gesch_glass_lod0.msh",
-						name = "glass",
-						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
-					},
-					{
 						materials = { "fbx_import/Metal.mtl", },
 						mesh = "fbx_import/pfeiler_lod0.msh",
 						name = "Cube",
@@ -70,21 +64,9 @@ return {
 						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
 					},
 					{
-						materials = { "fbx_import/geschwindigkeitsanzeiger.mtl", },
-						mesh = "fbx_import/signal_gesch_kasten.001_lod0.msh",
-						name = "geschw",
-						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
-					},
-					{
 						materials = { "fbx_import/Metal.mtl", },
 						mesh = "fbx_import/signal_haupt_schirm.004_lod0.msh",
 						name = "Signal_Haupt",
-						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
-					},
-					{
-						materials = { "fbx_import/ScharzSignal.mtl", },
-						mesh = "fbx_import/signal_haupt_schirm.005_lod0.msh",
-						name = "geschw_halterung",
 						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
 					},
 					{
