@@ -39,7 +39,7 @@ return {
 					speed = nextSignal.speed
 				end
 
-				if (signalState == 1) then -- Green
+				if (signalState == 1) and (params.nighty_signals_red == 1) then -- Green
 
 					if not isDisplayingNextSpeed then
 						result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_green.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
