@@ -50,6 +50,7 @@ return {
 		local signalType = "normal"
 		local maxSpeed = 110
 		local indicatedSpeed = maxSpeed + 1
+		local canIndicateSpeed = true
 
 		if (params.nighty_signals_speed) then
 			indicatedSpeed = params.nighty_signals_speed
@@ -87,6 +88,10 @@ return {
 		else
 			indicatesNextSpeed = false
 		end
+		
+		if nextStopSignalDistance == 1 then
+			canIndicateSpeed = false
+		end
 
 		
 		-- Model definition
@@ -106,7 +111,7 @@ return {
 		-- Speed indicator
 		if hasSpeedIndicator then 
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speedindicator.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
-			if isGreen then
+			if isGreen and canIndicateSpeed then
 				if indicatedSpeed < 30 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_30.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 			
