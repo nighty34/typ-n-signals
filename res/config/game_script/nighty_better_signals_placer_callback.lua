@@ -40,9 +40,11 @@ function markSignal(allSignals)
 	local signal = allSignals[((math.abs(signalState.signalIndex/2)) % #allSignals) + 1]
 
 	if signal then
-		local signalTransf = utils.getComponentProtected(signal, 58).fatInstances[1].transf
-		zone.setZoneCircle("selectedSignal", {signalTransf[13], signalTransf[14]}, 2)
-		signalState.markedSignal = signal
+		local signalTransf = utils.getComponentProtected(signal, 58)
+		if signalTransf then
+			zone.setZoneCircle("selectedSignal", {signalTransf.fatInstances[1].transf[13], signalTransf.fatInstances[1].transf[14]}, 2)
+			signalState.markedSignal = signal
+		end
 	else
 		if #allSignals == 0 then
 			zone.remZone("selectedSignal")

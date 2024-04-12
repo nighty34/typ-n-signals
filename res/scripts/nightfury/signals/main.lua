@@ -38,14 +38,10 @@ function signals.updateSignals()
 			local signalPaths = walkPath(move_path)
 			
 			for i, signalPath in ipairs(signalPaths) do
-				local minSpeed = signalPath.minSpeed
+				local minSpeed = signalPath.speed
 				local signalState = signalPath.signalState
 				local dest = 0
 				local direction = 0
-				
-				if signalPath.speed then
-					minSpeed = signalPath.speed
-				end
 				
 				if signalPath.dest then
 					dest = signalPath.dest
@@ -70,7 +66,7 @@ function signals.updateSignals()
 							oldConstruction.params.nighty_signals_speed = math.floor(minSpeed)
 							oldConstruction.params.nighty_signals_dest = dest
 							oldConstruction.params.nighty_signals_direction = direction
-							oldConstruction.params.nighty_signals_followingStates = signalPath.followingSignalStates
+							oldConstruction.params.nighty_signals_followingSignals = signalPath.followingSignals
 							oldConstruction.params.seed = nil -- important!!
 
 							game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, oldConstruction.params)
@@ -156,10 +152,12 @@ function walkPath(move_path)
 				
 					local signal = signalList.signals[1]
 					
-					if signal.type == 0 then
+					if signal.type == 0  or (signals.signalObjects["signal" .. signalId.entity] and signals.signalObjects["signal" .. signalId.entity].type) then
 					
 						if activeSignal.signal and activeSignal.signalId then
-							tempSignalPaths.minSpeed = utils.getMinValue(signalPathSpeed)
+							if not tempSignalPaths.speed then
+								tempSignalPaths.speed = utils.getMinValue(signalPathSpeed)
+							end
 							tempSignalPaths.signal = activeSignal.signalId.entity
 							tempSignalPaths.signalState = activeSignal.signal.state
 							tempSignalPaths.followingSignals = {}
@@ -195,7 +193,9 @@ function walkPath(move_path)
 	end
 	
 	if activeSignal.signal and activeSignal.signalId then
-		tempSignalPaths.minSpeed = utils.getMinValue(signalPathSpeed)
+		if not tempSignalPaths.speed then
+			tempSignalPaths.speed = utils.getMinValue(signalPathSpeed)
+		end
 		tempSignalPaths.signal = activeSignal.signalId.entity
 		tempSignalPaths.signalState = activeSignal.signal.state
 

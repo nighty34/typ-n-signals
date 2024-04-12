@@ -1,0 +1,108 @@
+function data()
+return {
+	boundingInfo = {
+		bbMax = { 0.80000001192093, -1.6108026504517, 6, },
+		bbMin = { -0.59228456020355, -2.5107653141022, 0, },
+	},
+	collider = {
+		params = {
+			halfExtents = { 0.69614231586456, 0.44998133182526, 3, },
+		},
+		transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0.10385772585869, -2.0607838630676, 3, 1, },
+		type = "BOX",
+	},
+	lods = {
+		{
+			node = {
+				children = {
+					{
+						materials = { "fbx_import/Linse.mtl", },
+						mesh = "fbx_import/signal_gesch_glass_lod0.msh",
+						name = "glass",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
+					},
+					{
+						materials = { "fbx_import/Metal.mtl", },
+						mesh = "fbx_import/pfeiler_lod0.msh",
+						name = "Cube",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
+					},
+					{
+						materials = { "fbx_import/Metal.mtl", },
+						mesh = "fbx_import/pfeiler.002_lod0.msh",
+						name = "Cube",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
+					},
+					{
+						materials = { "fbx_import/Metal.mtl", },
+						mesh = "fbx_import/pfeiler.001_lod0.msh",
+						name = "Cube",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
+					},
+					{
+						materials = { "fbx_import/Metal.mtl", },
+						mesh = "fbx_import/pfeiler.004_lod0.msh",
+						name = "Cube",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
+					},
+					{
+						materials = { "fbx_import/ScharzSignalVorsignal.mtl", },
+						mesh = "fbx_import/signal_haupt_schirm.002_lod0.msh",
+						name = "Signal_Haupt",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
+					},
+					{
+						materials = { "fbx_import/ScharzSignalVorsignal.mtl", },
+						mesh = "fbx_import/Circle.001_lod0.msh",
+						name = "Circle",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
+					},
+					{
+						materials = { "fbx_import/ScharzSignalVorsignal.mtl", },
+						mesh = "fbx_import/signal_haupt_schirm.003_lod0.msh",
+						name = "Signal_Haupt",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
+					},
+					{
+						materials = { "fbx_import/geschwindigkeitsanzeiger.mtl", },
+						mesh = "fbx_import/signal_gesch_kasten.001_lod0.msh",
+						name = "geschw",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
+					},
+					{
+						materials = { "fbx_import/Metal.mtl", },
+						mesh = "fbx_import/signal_haupt_schirm.004_lod0.msh",
+						name = "Signal_Haupt",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
+					},
+					{
+						materials = { "fbx_import/ScharzSignalVorsignal.mtl", },
+						mesh = "fbx_import/signal_haupt_schirm.005_lod0.msh",
+						name = "geschw_halterung",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
+					},
+					{
+						materials = { "fbx_import/ScharzSignalVorsignal.mtl", },
+						mesh = "fbx_import/Circle.002_lod0.msh",
+						name = "Circle",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, -0.13994199037552, 3.6917015222571e-08, -0.27128851413727, 1, },
+					},
+					{
+						materials = { "fbx_import/ScharzSignalVorsignal.mtl", },
+						mesh = "fbx_import/Circle.003_lod0.msh",
+						name = "Circle",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0.13979791104794, 3.6917015222571e-08, -0.27128851413727, 1, },
+					},
+				},
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+			},
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 486.76959228516,
+		},
+	},
+	metadata = { },
+	version = 1,
+}
+end
