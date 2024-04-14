@@ -61,6 +61,9 @@ function signals.updateSignals()
 					if c_signal then
 						local oldConstruction = game.interface.getEntity(c_signal)
 						if oldConstruction then
+							if (not signalPath.incomplete) and (not oldConstruction.params.nighty_signals_previousSpeed) then
+								oldConstruction.params.nighty_signals_previousSpeed = signalPath.previousSpeed
+							end
 							oldConstruction.params.nighty_signals_state = signalState
 							oldConstruction.params.nighty_signals_speed = math.floor(minSpeed)
 							oldConstruction.params.nighty_signals_dest = dest
@@ -85,6 +88,7 @@ function signals.updateSignals()
 			local oldConstruction = game.interface.getEntity(value.construction)
 			if oldConstruction then
 				oldConstruction.params.nighty_signals_state = 0
+				oldConstruction.params.nighty_signals_previousSpeed = nil
 				oldConstruction.params.seed = nil -- important!!
 				game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, oldConstruction.params)
 			end
@@ -133,7 +137,7 @@ function walkPath(move_path)
 	local signalPathSpeed = {}
 	local activeSignal = {}
 	
-	local polygon = {}
+	local previousSpeed = 0
 	
 	if move_path.path then
 		local i = math.max((move_path.dyn.pathPos.edgeIndex - 2), 1)
@@ -156,9 +160,18 @@ function walkPath(move_path)
 							if not tempSignalPaths.speed then
 								tempSignalPaths.speed = utils.getMinValue(signalPathSpeed)
 							end
+
+							if tempSignalPaths.incomplete == nil then
+								tempSignalPaths.incomplete = true
+							end
+
+							tempSignalPaths.previousSpeed = previousSpeed
 							tempSignalPaths.signal = activeSignal.signalId.entity
 							tempSignalPaths.signalState = activeSignal.signal.state
+							tempSignalPaths.incomplete = false
 							tempSignalPaths.followingSignals = {}
+
+							previousSpeed = tempSignalPaths.speed
 							
 							for key, value in pairs(signalPaths) do
 								table.insert(value.followingSignals, tempSignalPaths)
@@ -166,12 +179,17 @@ function walkPath(move_path)
 
 							table.insert(signalPaths, tempSignalPaths)
 						end
-						
+
+						tempSignalPaths = {}
+						signalPathSpeed = {}
+
+						if not activeSignal.signal then
+							tempSignalPaths.incomplete = true
+						end
+
 						activeSignal.signal = signal
 						activeSignal.signalId = signalId
 						
-						tempSignalPaths = {}
-						signalPathSpeed = {}
 					elseif signal.type == 2 then
 						local name = utils.getComponentProtected(signalId.entity, 63)
 						local values = parseName(name.name)
@@ -196,6 +214,7 @@ function walkPath(move_path)
 		end
 		tempSignalPaths.signal = activeSignal.signalId.entity
 		tempSignalPaths.signalState = activeSignal.signal.state
+		tempSignalPaths.incomplete = false
 
 		for key, value in pairs(signalPaths) do
 			table.insert(value.followingSignals, tempSignalPaths)
