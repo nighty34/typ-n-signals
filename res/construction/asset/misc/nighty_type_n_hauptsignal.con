@@ -12,7 +12,7 @@ return {
 		},
 		{
 			key = "nighty_type_n_signaltype",
-			name = _("ighty_type_n_signaltype"),
+			name = _("nighty_type_n_signaltype"),
 			values = {_("nighty_signal_normal"),_("nighty_signal_entry"), _("nighty_signal_exit")},
 			defaultIndex = 0,
 		},
@@ -26,8 +26,8 @@ return {
 	type = "ASSET_DEFAULT",
 	--buildMode = "MULTI",
 	description = {
-		name = _("TypeN Signal"),			
-		description = _("Tram Mast"),
+		name = _("nighty_type_n_hauptsignal_name"),			
+		description = _("nighty_type_n_hauptsignal_desc"),
 	},
 	availability = {
 		yearFrom = 1950
@@ -64,20 +64,17 @@ return {
 			end
 		end
 
-
 		-- Evaluate future signals
 		local nextStopSignalDistance = 10 -- choosen high TODO: (dirty code)
 		
 		if params.nighty_signals_followingSignals then
-			local entrySignal = nil
-			local exitSignal = nil
-
 			for key, value in pairs(params.nighty_signals_followingSignals) do
 				if value.signalState == 0 then
 					nextStopSignalDistance = math.min(nextStopSignalDistance, key)
 				end
 
-				if indicatesNextSpeed and key == 1 then
+				if key == 1 and (params.nighty_signals_previousSpeed and params.nighty_signals_previousSpeed > value.speed)  then
+					indicatesNextSpeed = true
 					indicatedSpeed = value.speed
 				end
 			end
