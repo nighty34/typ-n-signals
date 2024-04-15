@@ -38,8 +38,8 @@ function signals.updateSignals()
 			local signalPaths = walkPath(move_path)
 			
 			for i, signalPath in ipairs(signalPaths) do
-				local minSpeed = signalPath.speed
-				local signalState = signalPath.signalState
+				local minSpeed = signalPath.signal_speed
+				local signalState = signalPath.signal_state
 				local dest = 0
 				local direction = 0
 				
@@ -61,14 +61,12 @@ function signals.updateSignals()
 					if c_signal then
 						local oldConstruction = game.interface.getEntity(c_signal)
 						if oldConstruction then
-							if (not signalPath.incomplete) and (not oldConstruction.params.nighty_signals_previousSpeed) then
-								oldConstruction.params.nighty_signals_previousSpeed = signalPath.previousSpeed
+							if (not signalPath.incomplete) and (not oldConstruction.params.previous_speed) then
+								oldConstruction.params.previous_speed = signalPath.previous_speed
 							end
-							oldConstruction.params.nighty_signals_state = signalState
-							oldConstruction.params.nighty_signals_speed = math.floor(minSpeed)
-							oldConstruction.params.nighty_signals_dest = dest
-							oldConstruction.params.nighty_signals_direction = direction
-							oldConstruction.params.nighty_signals_followingSignals = signalPath.followingSignals
+							oldConstruction.params.signal_state = signalState
+							oldConstruction.params.signal_speed = math.floor(minSpeed)
+							oldConstruction.params.signal_followingSignals = signalPath.signal_followingSignals
 							oldConstruction.params.seed = nil -- important!!
 
 							game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, oldConstruction.params)
@@ -87,8 +85,8 @@ function signals.updateSignals()
 		if value.changed == 2 then
 			local oldConstruction = game.interface.getEntity(value.construction)
 			if oldConstruction then
-				oldConstruction.params.nighty_signals_state = 0
-				oldConstruction.params.nighty_signals_previousSpeed = nil
+				oldConstruction.params.signal_state = 0
+				oldConstruction.params.previous_speed = nil
 				oldConstruction.params.seed = nil -- important!!
 				game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, oldConstruction.params)
 			end
@@ -118,7 +116,7 @@ function parseName(input)
     for pair in input:gmatch("%s*([^,]+)%s*,?") do
         local key, value = pair:match("(%w+)%s*=%s*(%d+)")
         if key and (key == "speed" or key == "dest" or key == "direction") then
-            values[key] = tonumber(value) - 1
+            values[key] = tonumber(value)
         end
     end
     
@@ -157,24 +155,24 @@ function walkPath(move_path)
 					if signal.type == 0  or (signals.signalObjects["signal" .. signalId.entity] and signals.signalObjects["signal" .. signalId.entity].type) then
 					
 						if activeSignal.signal and activeSignal.signalId then
-							if not tempSignalPaths.speed then
-								tempSignalPaths.speed = utils.getMinValue(signalPathSpeed)
+							if not tempSignalPaths.signal_speed then
+								tempSignalPaths.signal_speed = utils.getMinValue(signalPathSpeed)
 							end
 
 							if tempSignalPaths.incomplete == nil then
 								tempSignalPaths.incomplete = true
 							end
 
-							tempSignalPaths.previousSpeed = previousSpeed
+							tempSignalPaths.previous_speed = previousSpeed
 							tempSignalPaths.signal = activeSignal.signalId.entity
-							tempSignalPaths.signalState = activeSignal.signal.state
+							tempSignalPaths.signal_state = activeSignal.signal.state
 							tempSignalPaths.incomplete = false
-							tempSignalPaths.followingSignals = {}
+							tempSignalPaths.signal_followingSignals = {}
 
-							previousSpeed = tempSignalPaths.speed
+							previousSpeed = tempSignalPaths.signal_speed
 							
 							for key, value in pairs(signalPaths) do
-								table.insert(value.followingSignals, tempSignalPaths)
+								table.insert(value.signal_followingSignals, tempSignalPaths)
 							end
 
 							table.insert(signalPaths, tempSignalPaths)
@@ -194,7 +192,7 @@ function walkPath(move_path)
 						local name = utils.getComponentProtected(signalId.entity, 63)
 						local values = parseName(name.name)
 						
-						tempSignalPaths.speed = values['speed']
+						tempSignalPaths.signal_speed = values['speed']
 						tempSignalPaths.dest = values['dest']
 						tempSignalPaths.direction = values['direction']
 					end
@@ -209,15 +207,15 @@ function walkPath(move_path)
 	end
 	
 	if activeSignal.signal and activeSignal.signalId then
-		if not tempSignalPaths.speed then
-			tempSignalPaths.speed = utils.getMinValue(signalPathSpeed)
+		if not tempSignalPaths.signal_speed then
+			tempSignalPaths.signal_speed = utils.getMinValue(signalPathSpeed)
 		end
 		tempSignalPaths.signal = activeSignal.signalId.entity
-		tempSignalPaths.signalState = activeSignal.signal.state
+		tempSignalPaths.signal_state = activeSignal.signal.state
 		tempSignalPaths.incomplete = false
 
 		for key, value in pairs(signalPaths) do
-			table.insert(value.followingSignals, tempSignalPaths)
+			table.insert(value.signal_followingSignals, tempSignalPaths)
 		end
 		
 		table.insert(signalPaths, tempSignalPaths)
@@ -235,67 +233,6 @@ function signals.load(state)
 	if state then
 		signals.signalObjects = state
 	end
-end
-
--- Generic Params for signals
--- @return returns params for signal constructions
-function signals.createParams()
-	local params = {}
-	
-	params[#params + 1] = {
-		key = "nighty_signals",
-		name = _("nighty_signaling"),
-		values = {_("nighty_signaling_1"),_("nighty_signaling_2")},
-		defaultIndex = 1,
-	}
-	params[#params + 1] = {
-		key = "nighty_signals_green",
-		name = _("nighty_signals_green"),
-		values = {_("nighty_on"),_("nighty_off")},
-		defaultIndex = 1,
-	}
-	params[#params + 1] = {
-		key = "nighty_signals_red",
-		name = _("nighty_signals_red"),
-		values = {_("nighty_on"),_("nighty_off")},
-		defaultIndex = 1,
-	}
-	params[#params + 1] = {
-		key = "nighty_signals_yellow",
-		name = _("nighty_signals_yellow"),
-		values = {_("nighty_on"),_("nighty_off")},
-		defaultIndex = 1,
-	}
-	
-	local speedValues = {}
-	for i = 1, 1000, 1 do
-		table.insert(speedValues, (i .. ""))
-	end
-
-	
-	params[#params + 1] = {
-		key = "nighty_signals_speed",
-		name = _("nighty_signals_speed"),
-		uiType = "SLIDER",
-		values = speedValues,
-	}
-	
---	params[#params + 1] = {
---		key = "nighty_signals_dest",
---		name = _("nighty_signals_dest"),
---		uiType = "SLIDER",
---		values = speedValues,
---	}
-
---	params[#params + 1] = {
---		key = "nighty_signals_direction",
---		name = _("nighty_signals_direction"),
---		uiType = "SLIDER",
---		values = {_("nighty_rightWay"), _("nighty_wrongWay")},
---	}
-	
-	
-	return params
 end
 
 return signals

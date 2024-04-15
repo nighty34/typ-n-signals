@@ -44,7 +44,7 @@ return {
 
 
 		-- Determine signalComponents
-		local isGreen = (params.nighty_signals_state and params.nighty_signals_state == 1)
+		local isGreen = (params.signal_state and params.signal_state == 1)
 		local hasSpeedIndicator = (params.nighty_type_n_speedindicator and params.nighty_type_n_speedindicator == 0)
 		local indicatesNextSpeed = (params.nighty_type_n_indicatesnextspeed and params.nighty_type_n_indicatesnextspeed == 0)
 		local signalType = "normal"
@@ -52,8 +52,8 @@ return {
 		local indicatedSpeed = maxSpeed + 1
 		local canIndicateSpeed = true
 
-		if (params.nighty_signals_speed) then
-			indicatedSpeed = params.nighty_signals_speed
+		if (params.signal_speed) then
+			indicatedSpeed = params.signal_speed
 		end
 
 		if params.nighty_type_n_entrysignal then
@@ -67,19 +67,19 @@ return {
 		-- Evaluate future signals
 		local nextStopSignalDistance = 10 -- choosen high TODO: (dirty code)
 		
-		if params.nighty_signals_followingSignals then
-			for key, value in pairs(params.nighty_signals_followingSignals) do
-				if value.signalState == 0 then
+		if params.signal_followingSignals then
+			for key, value in pairs(params.signal_followingSignals) do
+				if value.signal_state == 0 then
 					nextStopSignalDistance = math.min(nextStopSignalDistance, key)
 				end
 
-				if key == 1 and (params.nighty_signals_previousSpeed and params.nighty_signals_previousSpeed > value.speed)  then
+				if key == 1 and (params.previous_speed and params.previous_speed > value.signal_speed)  then
 					indicatesNextSpeed = true
-					indicatedSpeed = value.speed
+					indicatedSpeed = value.signal_speed
 				end
 			end
 
-			if #params.nighty_signals_followingSignals == 0 then
+			if #params.signal_followingSignals == 0 then
 				indicatesNextSpeed = false
 			end
 		else
@@ -109,31 +109,31 @@ return {
 		if hasSpeedIndicator then 
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speedindicator.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 			if isGreen and canIndicateSpeed then
-				if indicatedSpeed < 30 then
+				if indicatedSpeed <= 30 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_30.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 			
-				elseif indicatedSpeed < 40 then
+				elseif indicatedSpeed <= 40 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_40.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				
-				elseif indicatedSpeed < 50 then
+				elseif indicatedSpeed <= 50 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_50.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				
-				elseif indicatedSpeed < 60 then
+				elseif indicatedSpeed <= 60 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_60.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				
-				elseif indicatedSpeed < 70 then
+				elseif indicatedSpeed <= 70 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_70.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				
-				elseif indicatedSpeed < 80 then
+				elseif indicatedSpeed <= 80 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_80.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				
-				elseif indicatedSpeed < 90 then
+				elseif indicatedSpeed <= 90 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_90.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				
-				elseif indicatedSpeed < 100 then
+				elseif indicatedSpeed <= 100 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_100.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				
-				elseif indicatedSpeed < 110 then
+				elseif indicatedSpeed <= 110 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_110.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				end
 			end
