@@ -43,4 +43,17 @@ function utils.getFirstKey(list)
 	end
 end
 
+function utils.checksum(operator, ...) -- way to simpel checksum 
+    local args = {...}
+	local localsum = 0
+    for _, arg in ipairs(args) do
+		if arg ~= nil then
+			localsum = localsum + tonumber(arg)
+		end
+
+	end
+
+    return localsum * operator
+end
+
 return utils

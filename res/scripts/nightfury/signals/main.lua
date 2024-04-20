@@ -16,6 +16,8 @@ signals.pos = {0,0}
 -- If a signal is found it's current state is checked
 -- after that the signal will be changed accordingly
 function signals.updateSignals()
+	local checksum = utils.checksum -- performance Related
+
 	local trainActivationRange = 500 -- To be changed
 
 	local trains = {}
@@ -66,10 +68,17 @@ function signals.updateSignals()
 							end
 							oldConstruction.params.signal_state = signalState
 							oldConstruction.params.signal_speed = math.floor(minSpeed)
-							oldConstruction.params.signal_followingSignals = signalPath.signal_followingSignals
+							oldConstruction.params.following_signal = signalPath.following_signal
 							oldConstruction.params.seed = nil -- important!!
+							oldConstruction.params.changesum = signalPath.checksum
 
-							game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, oldConstruction.params)
+							local newCheckSum = signalPath.checksum
+
+							if (not signals.signalObjects[signalString].checksum) or (newCheckSum ~= signals.signalObjects[signalString].checksum) then
+								game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, oldConstruction.params)
+							end
+
+							signals.signalObjects[signalString].checksum = newCheckSum
 						else
 							print("Couldn't access params")
 						end
@@ -88,6 +97,7 @@ function signals.updateSignals()
 				oldConstruction.params.signal_state = 0
 				oldConstruction.params.previous_speed = nil
 				oldConstruction.params.seed = nil -- important!!
+
 				game.interface.upgradeConstruction(oldConstruction.id, oldConstruction.fileName, oldConstruction.params)
 			end
 			value.changed = 0
@@ -127,6 +137,8 @@ end
 -- @param move_path Move_path value from a trains path
 -- @return returns analysed path with signal states and maxSpeed of the parts
 function walkPath(move_path)
+	local checksum = utils.checksum
+
 	local pathViewDistance = 20 -- To be changed
 
 	local signalPaths = {} 
@@ -167,12 +179,16 @@ function walkPath(move_path)
 							tempSignalPaths.signal = activeSignal.signalId.entity
 							tempSignalPaths.signal_state = activeSignal.signal.state
 							tempSignalPaths.incomplete = false
-							tempSignalPaths.signal_followingSignals = {}
 
 							previousSpeed = tempSignalPaths.signal_speed
 							
-							for key, value in pairs(signalPaths) do
-								table.insert(value.signal_followingSignals, tempSignalPaths)
+							if #signalPaths > 0 then
+								signalPaths[#signalPaths].following_signal = tempSignalPaths
+							end
+
+							tempSignalPaths.checksum = checksum(tempSignalPaths.signal, tempSignalPaths.previous_speed, tempSignalPaths.signal_state, tempSignalPaths.signal_speed, #signalPaths)
+							for _, value in ipairs(signalPaths) do
+								value.checksum = value.checksum + tempSignalPaths.checksum
 							end
 
 							table.insert(signalPaths, tempSignalPaths)
@@ -214,9 +230,12 @@ function walkPath(move_path)
 		tempSignalPaths.signal_state = activeSignal.signal.state
 		tempSignalPaths.incomplete = false
 
-		for key, value in pairs(signalPaths) do
-			table.insert(value.signal_followingSignals, tempSignalPaths)
+		local previousChecksum = 0
+		if #signalPaths > 0 then
+			signalPaths[#signalPaths].following_signal = tempSignalPaths
+			previousChecksum = signalPaths[#signalPaths].checksum
 		end
+		tempSignalPaths.checksum = checksum(previousChecksum, tempSignalPaths.signal, tempSignalPaths.previous_speed, tempSignalPaths.signal_state, tempSignalPaths.signal_speed, #signalPaths)
 		
 		table.insert(signalPaths, tempSignalPaths)
 	end

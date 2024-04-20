@@ -67,20 +67,15 @@ return {
 		-- Evaluate future signals
 		local nextStopSignalDistance = 10 -- choosen high TODO: (dirty code)
 		
-		if params.signal_followingSignals then
-			for key, value in pairs(params.signal_followingSignals) do
-				if value.signal_state == 0 then
-					nextStopSignalDistance = math.min(nextStopSignalDistance, key)
-				end
 
-				if key == 1 and (params.previous_speed and params.previous_speed > value.signal_speed)  then
-					indicatesNextSpeed = true
-					indicatedSpeed = value.signal_speed
-				end
+		if params.following_signal then
+			if params.following_signal.signal_state == 0 then
+				nextStopSignalDistance = 1
 			end
 
-			if #params.signal_followingSignals == 0 then
-				indicatesNextSpeed = false
+			if params.previous_speed and params.previous_speed > params.following_signal.signal_speed then
+				indicatesNextSpeed = true
+				indicatedSpeed = params.following_signal.signal_speed
 			end
 		else
 			indicatesNextSpeed = false
