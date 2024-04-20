@@ -76,6 +76,12 @@ function data()
 				print(errorMessage)
 			end
 		end,
+		guiUpdate = function()
+			local controller = api.gui.util.getGameUI():getMainRendererComponent():getCameraController()
+			local campos, camrot, campitch = controller:getCameraData()
+			
+			game.interface.sendScriptEvent("__signalEvent__", "signals.viewUpdate", {campos[1], campos[2]})
+		end,
 		handleEvent = function(src, id, name, param)
 			if id ~="__signalEvent__" or src ~= "nighty_better_signals_placer_callback.lua" then
 				return
@@ -132,14 +138,6 @@ function data()
 				
 			elseif name == "builder.rotate" then
 					game.interface.sendScriptEvent("__signalEvent__", "signals.nextSignal", {})
-					
-			elseif id == "mainView" and (name == "camera.userPan" or name == 'camera.keyScroll') then
-				local view = game.gui.getCamera()
-				
-				if view then
-					local pos = {view[1], view[2]}
-					game.interface.sendScriptEvent("__signalEvent__", "signals.viewUpdate", pos)
-				end
 			end
 		end
 	}
