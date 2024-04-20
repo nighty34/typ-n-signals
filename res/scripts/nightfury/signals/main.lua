@@ -22,13 +22,13 @@ function signals.updateSignals()
 
 	local trains = {}
 	local vehicles = game.interface.getEntities({pos = signals.pos, radius = trainActivationRange}, {type = "VEHICLE"})
-	zone.setZoneCircle("zoneRadius", signals.pos, 500)
+	-- zone.setZoneCircle("zoneRadius", signals.pos, 500)
 
 	for i, trackedTrain in pairs(signals.trackedEntities) do
 		local trackedPos = game.interface.getEntity(trackedTrain).position
 		if trackedPos then
 			local newTrains = game.interface.getEntities({pos = {trackedPos[1], trackedPos[2]}, radius = trainActivationRange}, {type = "VEHICLE"})
-			zone.setZoneCircle("tracked" .. i, {trackedPos[1], trackedPos[2]}, trainActivationRange/2)
+			-- zone.setZoneCircle("tracked" .. i, {trackedPos[1], trackedPos[2]}, trainActivationRange/2)
 			if newTrains and #newTrains > 0 then
 				for _, newTrain in pairs(newTrains) do
 					if not utils.contains(vehicles, newTrain) then
