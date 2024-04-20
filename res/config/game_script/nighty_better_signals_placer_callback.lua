@@ -113,10 +113,7 @@ function data()
 			elseif name == "tracking.add" then
 				table.insert(signals.trackedEntities, param.entityId)
 			elseif name == "tracking.remove" then
-				print("Remove " .. param.entityId)
-				print(#signals.trackedEntities)
 				utils.removeFromTableByValue(signals.trackedEntities, param.entityId)
-				print(#signals.trackedEntities)
 			end
 		end,
 		guiHandleEvent = function(id, name, param)

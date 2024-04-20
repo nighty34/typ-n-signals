@@ -24,8 +24,6 @@ function signals.updateSignals()
 	local vehicles = game.interface.getEntities({pos = signals.pos, radius = trainActivationRange}, {type = "VEHICLE"})
 	zone.setZoneCircle("zoneRadius", signals.pos, 500)
 
-	print(#signals.trackedEntities)
-
 	for i, trackedTrain in pairs(signals.trackedEntities) do
 		local trackedPos = game.interface.getEntity(trackedTrain).position
 		if trackedPos then
@@ -61,16 +59,6 @@ function signals.updateSignals()
 			for _, signalPath in ipairs(signalPaths) do
 				local minSpeed = signalPath.signal_speed
 				local signalState = signalPath.signal_state
-				local dest = 0
-				local direction = 0
-				
-				if signalPath.dest then
-					dest = signalPath.dest
-				end
-				
-				if signalPath.direction then
-					direction = signalPath.direction
-				end
 				
 				local signalString = "signal" .. signalPath.signal
 				local tableEntry = signals.signalObjects[signalString]
@@ -228,8 +216,6 @@ function walkPath(move_path)
 						local values = parseName(name.name)
 						
 						tempSignalPaths.signal_speed = values['speed']
-						tempSignalPaths.dest = values['dest']
-						tempSignalPaths.direction = values['direction']
 					end
 
 				end
@@ -245,7 +231,7 @@ function walkPath(move_path)
 		if not tempSignalPaths.signal_speed then
 			tempSignalPaths.signal_speed = utils.getMinValue(signalPathSpeed)
 		end
-		
+
 		tempSignalPaths.previous_speed = previousSpeed
 		tempSignalPaths.signal = activeSignal.signalId.entity
 		tempSignalPaths.signal_state = activeSignal.signal.state
