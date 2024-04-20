@@ -25,7 +25,7 @@ end
 
 function utils.getMinValue(values)
 	local minValue = math.huge
-	for i, value in ipairs(values) do
+	for _, value in ipairs(values) do
 		minValue = math.min(minValue, value)
 	end
 	
@@ -35,7 +35,7 @@ end
 function utils.getFirstKey(list)
 	local firstKey
 	
-	for key, value in pairs(r_signal) do
+	for key, _ in pairs(r_signal) do
 		if not firstKey then
 			firstKey = key
 			break
@@ -54,6 +54,32 @@ function utils.checksum(operator, ...) -- way to simpel checksum
 	end
 
     return localsum * operator
+end
+
+function utils.starts_with(str, start)
+	return str:sub(1, #start) == start
+end
+
+function utils.ends_with(str, ending)
+	return ending == "" or str:sub(-#ending) == ending
+end
+
+function utils.removeFromTableByValue(tbl, remove)
+    for key, value in ipairs(tbl) do
+		if value == remove then
+			table.remove(tbl, key)
+		end
+    end
+end
+
+function utils.contains(tbl, x)
+    local found = false
+    for _, v in pairs(tbl) do
+        if v == x then
+            found = true
+        end
+    end
+    return found
 end
 
 return utils

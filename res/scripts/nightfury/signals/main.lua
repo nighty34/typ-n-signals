@@ -1,4 +1,5 @@
 local utils = require "nightfury/signals/utils"
+local zone = require "nightfury/signals/zone"
 local signals = {}
 
 signals.signals = {}
@@ -8,6 +9,7 @@ signals.signalObjects = {}
 signals.signalIndex = 0
 
 signals.pos = {0,0}
+signals.trackedEntities = {}
 
 
 -- 3 states: None, Changed, WasChanged
@@ -16,30 +18,47 @@ signals.pos = {0,0}
 -- If a signal is found it's current state is checked
 -- after that the signal will be changed accordingly
 function signals.updateSignals()
-	local checksum = utils.checksum -- performance Related
-
 	local trainActivationRange = 500 -- To be changed
 
 	local trains = {}
 	local vehicles = game.interface.getEntities({pos = signals.pos, radius = trainActivationRange}, {type = "VEHICLE"})
-	for index, vehicle in pairs(vehicles) do
+	zone.setZoneCircle("zoneRadius", signals.pos, 500)
+
+	print(#signals.trackedEntities)
+
+	for i, trackedTrain in pairs(signals.trackedEntities) do
+		local trackedPos = game.interface.getEntity(trackedTrain).position
+		if trackedPos then
+			local newTrains = game.interface.getEntities({pos = {trackedPos[1], trackedPos[2]}, radius = trainActivationRange}, {type = "VEHICLE"})
+			zone.setZoneCircle("tracked" .. i, {trackedPos[1], trackedPos[2]}, trainActivationRange/2)
+			if newTrains and #newTrains > 0 then
+				for _, newTrain in pairs(newTrains) do
+					if not utils.contains(vehicles, newTrain) then
+						table.insert(vehicles, newTrain)
+					end
+				end
+			end
+		end
+	end
+
+	for _, vehicle in pairs(vehicles) do
 		local train = utils.getComponentProtected(vehicle, 70)
 		if (train ~= nil) and (not train.userStopped) and (not train.noPath) and (not train.doorsOpen) then
 			table.insert(trains, vehicle)
 		end
 	end
 	
-	for key, value in pairs(signals.signalObjects) do
+	for _, value in pairs(signals.signalObjects) do
 		value.changed = value.changed * 2
 	end
 	
-	for i,train in pairs(trains) do
+	for _,train in pairs(trains) do
 		local move_path = utils.getComponentProtected(train, 66)
 
 		if move_path then
 			local signalPaths = walkPath(move_path)
 			
-			for i, signalPath in ipairs(signalPaths) do
+			for _, signalPath in ipairs(signalPaths) do
 				local minSpeed = signalPath.signal_speed
 				local signalState = signalPath.signal_state
 				local dest = 0
@@ -70,7 +89,7 @@ function signals.updateSignals()
 							oldConstruction.params.signal_speed = math.floor(minSpeed)
 							oldConstruction.params.following_signal = signalPath.following_signal
 							oldConstruction.params.seed = nil -- important!!
-							oldConstruction.params.changesum = signalPath.checksum
+							oldConstruction.params.checksum = signalPath.checksum
 
 							local newCheckSum = signalPath.checksum
 
@@ -226,17 +245,23 @@ function walkPath(move_path)
 		if not tempSignalPaths.signal_speed then
 			tempSignalPaths.signal_speed = utils.getMinValue(signalPathSpeed)
 		end
+		
+		tempSignalPaths.previous_speed = previousSpeed
 		tempSignalPaths.signal = activeSignal.signalId.entity
 		tempSignalPaths.signal_state = activeSignal.signal.state
 		tempSignalPaths.incomplete = false
 
-		local previousChecksum = 0
+		previousSpeed = tempSignalPaths.signal_speed
+		
 		if #signalPaths > 0 then
 			signalPaths[#signalPaths].following_signal = tempSignalPaths
-			previousChecksum = signalPaths[#signalPaths].checksum
 		end
-		tempSignalPaths.checksum = checksum(previousChecksum, tempSignalPaths.signal, tempSignalPaths.previous_speed, tempSignalPaths.signal_state, tempSignalPaths.signal_speed, #signalPaths)
-		
+
+		tempSignalPaths.checksum = checksum(tempSignalPaths.signal, tempSignalPaths.previous_speed, tempSignalPaths.signal_state, tempSignalPaths.signal_speed, #signalPaths)
+		for _, value in ipairs(signalPaths) do
+			value.checksum = value.checksum + tempSignalPaths.checksum
+		end
+
 		table.insert(signalPaths, tempSignalPaths)
 	end
 

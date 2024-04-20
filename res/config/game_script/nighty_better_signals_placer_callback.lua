@@ -8,7 +8,6 @@ local signalState = {
 	possibleSignals = nil,
 }
 
-
 -- Function will analyze params and determine if it's a in the config
 -- registered Signal.
 -- If a signal is detected it returns signal params
@@ -95,26 +94,35 @@ function data()
 				else
 					print("No Signal Found")
 				end
+
 			elseif name == "builder.proposalCreate" then
 				signalState.possibleSignals = game.interface.getEntities({radius=10,pos={param.position[1],param.position[2]}}, { type = "SIGNAL" })
 				markSignal(signalState.possibleSignals)
 
-				
 			elseif name == "signals.nextSignal" then
 				if signalState.possibleSignals then
 					signalState.signalIndex = signalState.signalIndex + 1
 					markSignal(signalState.possibleSignals)
 				end
-				
-				
+
 			elseif name == "signals.viewUpdate" then
-				signals.pos = param	
+				signals.pos = param
 				
 			elseif name == "signals.reset" then
 				zone.remZone("selectedSignal")
+			elseif name == "tracking.add" then
+				table.insert(signals.trackedEntities, param.entityId)
+			elseif name == "tracking.remove" then
+				print("Remove " .. param.entityId)
+				print(#signals.trackedEntities)
+				utils.removeFromTableByValue(signals.trackedEntities, param.entityId)
+				print(#signals.trackedEntities)
 			end
 		end,
 		guiHandleEvent = function(id, name, param)
+			-- print("ID " .. id)
+			-- print("Name " .. name)
+			-- print("Params " .. tostring(param))
 			if name == "visibilityChange" and param == false then
 				local signal = string.match(id, "^.+/(.+)%.con$")
 				
@@ -138,6 +146,19 @@ function data()
 				
 			elseif name == "builder.rotate" then
 					game.interface.sendScriptEvent("__signalEvent__", "signals.nextSignal", {})
+			elseif utils.starts_with(id, "temp.view.entity_") then
+				local entityId = string.match(id, "%d+$")
+				if not param then
+					param = {}
+				end
+
+				if name == "idAdded" then
+					param.entityId = tonumber(entityId)
+					game.interface.sendScriptEvent("__signalEvent__", "tracking.add", param)
+				elseif name == "window.close" then
+					param.entityId = tonumber(entityId)
+					game.interface.sendScriptEvent("__signalEvent__", "tracking.remove", param)
+				end
 			end
 		end
 	}
