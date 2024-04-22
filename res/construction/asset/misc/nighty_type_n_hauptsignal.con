@@ -7,13 +7,15 @@ return {
 		{
 			key = "nighty_type_n_speedindicator",
 			name = _("nighty_type_n_speedindicator"),
-			values = {_("nighty_yes"),_("nighty_no")},
+			uiType = "ICON_BUTTON",
+			values = {"ui/parameters/nighty/typ-n_speed_indicator_on.tga", "ui/parameters/nighty/none.tga"},
 			defaultIndex = 0,
 		},
 		{
 			key = "nighty_type_n_signaltype",
 			name = _("nighty_type_n_signaltype"),
-			values = {_("nighty_signal_normal"),_("nighty_signal_entry"), _("nighty_signal_exit"), _("nighty_signal_pre_station")},
+			uiType = "ICON_BUTTON",
+			values = {"ui/parameters/nighty/none.tga","ui/parameters/nighty/typ-n_sign_station_entry_on.tga", "ui/parameters/nighty/typ-n_sign_station_exit_on.tga", "ui/parameters/nighty/typ-n_speed_pre_station_on.tga"},
 			defaultIndex = 0,
 		},
 		{
@@ -25,13 +27,15 @@ return {
 		{
 			key = "nighty_type_n_shorten_block",
 			name = _("nighty_type_n_shorten_block"),
-			values = {_("nighty_yes"),_("nighty_no")},
+			uiType = "ICON_BUTTON",
+			values = {"ui/parameters/nighty/typ-n_speed_warning_on.tga", "ui/parameters/nighty/none.tga"},
 			defaultIndex = 1,
 		},
 		{
 			key = "nighty_type_n_occupied",
 			name = _("nighty_type_n_occupied"),
-			values = {_("nighty_yes"),_("nighty_no")},
+			uiType = "ICON_BUTTON",
+			values = {"ui/parameters/nighty/typ-n_speed_occupied_on.tga", "ui/parameters/nighty/none.tga"},
 			defaultIndex = 1,
 		},
 	},
