@@ -1,0 +1,66 @@
+function data()
+return {
+	boundingInfo = {
+		bbMax = { 0.39379522204399, -0.21312379837036, 6.9895067214966, },
+		bbMin = { -0.39228454232216, -0.22525089979172, 6.1996145248413, },
+	},
+	collider = {
+		params = {
+			halfExtents = { 0.39303988218307, 0.0060635507106781, 0.39494609832764, },
+		},
+		transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+		type = "BOX",
+	},
+	lods = {
+		{
+			node = {
+				children = {
+					{
+						materials = { "nighty/signals/schilder.mtl", },
+						mesh = "fbx_import/signal_haupt_merktafel.001_lod0.msh",
+						name = "Signal_haupt_merktafel",
+						transf = { 66.289398193359, 0, 0, 0, 0, 66.289398193359, 2.8976019166294e-06, 0, 0, -2.8976019166294e-06, 66.289398193359, 0, 0.00075535289943218, -0.22397744655609, 5.8030028343201, 1, },
+					},
+					{
+						materials = { "fbx_import/ScharzSignal.mtl", },
+						mesh = "fbx_import/Circle.004_lod0.msh",
+						name = "Circle",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0.044082991778851, 0, 0, 1, },
+					},
+				},
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+			},
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 181.4952545166,
+		},
+	},
+	metadata = {
+		labelList = {
+			labels = {
+				{
+					alignment = "CENTER",
+					alpha = 1,
+					alphaMode = "CUTOUT",
+					childId = "",
+					color = { 0, 0, 0, },
+					filter = "CUSTOM",
+					fitting = "SCALE",
+					nLines = 1,
+					params = {
+						expr = ".*#.*#(.*)",
+						replace = "\\1",
+					},
+					renderMode = "STD",
+					size = { 0.69999998807907, 0.25, },
+					transf = { 1, 0, -0, 0, 0, -4.3711388286738e-08, 1, 0, 0, -1, -4.3711388286738e-08, 0, -0.34999999403954, -0.23000000417233, 6.2300000190735, 1, },
+					type = "NAME",
+					verticalAlignment = "BOTTOM",
+				},
+			},
+		},
+	},
+	version = 1,
+}
+end

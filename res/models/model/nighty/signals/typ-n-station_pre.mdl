@@ -1,0 +1,36 @@
+function data()
+return {
+	boundingInfo = {
+		bbMax = { 0.39379522204399, -0.21312379837036, 6.9895067214966, },
+		bbMin = { -0.39228454232216, -0.22525089979172, 6.1996145248413, },
+	},
+	collider = {
+		params = {
+			halfExtents = { 0.39303988218307, 0.0060635507106781, 0.39494609832764, },
+		},
+		transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+		type = "BOX",
+	},
+	lods = {
+		{
+			node = {
+				children = {
+					{
+						materials = { "nighty/signals/schilder.mtl", },
+						mesh = "fbx_import/signal_haupt_merktafel_lod0.msh",
+						name = "Signal_haupt_merktafel",
+						transf = { 66.289398193359, 0, 0, 0, 0, 66.289398193359, 2.8976019166294e-06, 0, 0, -2.8976019166294e-06, 66.289398193359, 0, 0.00075535289943218, -0.22397744655609, 5.8030028343201, 1, },
+					},
+				},
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+			},
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 181.4952545166,
+		},
+	},
+	metadata = { },
+	version = 1,
+}
+end

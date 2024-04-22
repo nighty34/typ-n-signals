@@ -13,12 +13,18 @@ return {
 		{
 			key = "nighty_type_n_signaltype",
 			name = _("nighty_type_n_signaltype"),
-			values = {_("nighty_signal_normal"),_("nighty_signal_entry"), _("nighty_signal_exit")},
+			values = {_("nighty_signal_normal"),_("nighty_signal_entry"), _("nighty_signal_exit"), _("nighty_signal_pre_station")},
 			defaultIndex = 0,
 		},
 		{
 			key = "nighty_type_n_indicatesnextspeed",
 			name = _("nighty_type_n_indicatesnextspeed"),
+			values = {_("nighty_yes"),_("nighty_no")},
+			defaultIndex = 1,
+		},
+		{
+			key = "nighty_type_n_shorten_block",
+			name = _("nighty_type_n_shorten_block"),
 			values = {_("nighty_yes"),_("nighty_no")},
 			defaultIndex = 1,
 		},
@@ -47,6 +53,7 @@ return {
 		local isGreen = (params.signal_state and params.signal_state == 1)
 		local hasSpeedIndicator = (params.nighty_type_n_speedindicator and params.nighty_type_n_speedindicator == 0)
 		local indicatesNextSpeed = (params.nighty_type_n_indicatesnextspeed and params.nighty_type_n_indicatesnextspeed == 0)
+		local displayWarning = (params.nighty_type_n_shorten_block and params.nighty_type_n_shorten_block == 0)
 		local signalType = "normal"
 		local maxSpeed = 110
 		local indicatedSpeed = maxSpeed + 1
@@ -56,11 +63,13 @@ return {
 			indicatedSpeed = params.signal_speed
 		end
 
-		if params.nighty_type_n_entrysignal then
-			if params.nighty_type_n_entrysignal == 1 then
+		if params.nighty_type_n_signaltype then
+			if params.nighty_type_n_signaltype == 1 then
 				signalType = "entrySignal"
-			elseif params.nighty_type_n_entrysignal == 2 then
+			elseif params.nighty_type_n_signaltype == 2 then
 				signalType = "exitSignal"
+			elseif params.nighty_type_n_signaltype == 3 then
+				signalType = "preStationSignal"
 			end
 		end
 
@@ -71,7 +80,11 @@ return {
 		if params.following_signal then
 			if params.following_signal.signal_state == 0 then
 				nextStopSignalDistance = 1
+			elseif params.following_signal.following_signal and (params.following_signal.following_signal.signal_state == 0) then
+				nextStopSignalDistance = 2
 			end
+
+
 
 			if params.previous_speed and params.previous_speed > params.following_signal.signal_speed then
 				indicatesNextSpeed = true
@@ -83,17 +96,26 @@ return {
 		
 		if nextStopSignalDistance == 1 then
 			canIndicateSpeed = false
+		elseif displayWarning and nextStopSignalDistance == 2 then
+			canIndicateSpeed = false
 		end
 
 		
 		-- Model definition
 		result.models[#result.models+1] = { id = "nighty/signals/typ-n_base.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 		
+		if signalType == "entrySignal" then
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_entry.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+		elseif signalType == "exitSignal" then
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_exit.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+		elseif signalType == "preStationSignal" then
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n-station_pre.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+		end
 		
 		-- signal lamps
 		if not isGreen then -- red
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_red.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
-		elseif (nextStopSignalDistance == 1) or (indicatesNextSpeed and (maxSpeed >= indicatedSpeed)) then
+		elseif (nextStopSignalDistance == 1) or (indicatesNextSpeed and (maxSpeed >= indicatedSpeed)) or (displayWarning and (nextStopSignalDistance == 2)) then
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_yellow.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 		else -- green
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_green.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
@@ -131,6 +153,8 @@ return {
 				elseif indicatedSpeed <= 110 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_110.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				end
+			elseif displayWarning and nextStopSignalDistance == 2 then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_v.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 			end
 		end
 		

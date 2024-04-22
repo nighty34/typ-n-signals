@@ -16,6 +16,12 @@ return {
 			values = {_("nighty_yes"),_("nighty_no")},
 			defaultIndex = 1,
 		},
+		{
+			key = "nighty_type_n_pre_station",
+			name = _("nighty_type_n_pre_station"),
+			values = {_("nighty_yes"),_("nighty_no")},
+			defaultIndex = 1,
+		},
 	},
 	type = "ASSET_DEFAULT",
 	--buildMode = "MULTI",
@@ -38,37 +44,31 @@ return {
 
 
 		-- Determine signalComponents
-		local isGreen = (params.nighty_signals_state and params.nighty_signals_state == 1)
+		local isGreen = (params.signal_state and params.signal_state == 1)
 		local hasSpeedIndicator = (params.nighty_type_n_speedindicator and params.nighty_type_n_speedindicator == 0)
 		local indicatesNextSpeed = (params.nighty_type_n_indicatesnextspeed and params.nighty_type_n_indicatesnextspeed == 0)
+		local indicatesStation = (params.nighty_type_n_pre_station and params.nighty_type_n_pre_station == 0)
+		local signalType = "normal"
 		local maxSpeed = 110
 		local indicatedSpeed = maxSpeed + 1
 		local canIndicateSpeed = true
 
-		if (params.nighty_signals_speed) then
-			indicatedSpeed = params.nighty_signals_speed
+		if (params.signal_speed) then
+			indicatedSpeed = params.signal_speed
 		end
-
 
 		-- Evaluate future signals
 		local nextStopSignalDistance = 10 -- choosen high TODO: (dirty code)
 		
-		if params.nighty_signals_followingSignals then
-			local entrySignal = nil
-			local exitSignal = nil
 
-			for key, value in pairs(params.nighty_signals_followingSignals) do
-				if value.signalState == 0 then
-					nextStopSignalDistance = math.min(nextStopSignalDistance, key)
-				end
-
-				if indicatesNextSpeed and key == 1 then
-					indicatedSpeed = value.speed
-				end
+		if params.following_signal then
+			if params.following_signal.signal_state == 0 then
+				nextStopSignalDistance = 1
 			end
 
-			if #params.nighty_signals_followingSignals == 0 then
-				indicatesNextSpeed = false
+			if params.previous_speed and params.previous_speed > params.following_signal.signal_speed then
+				indicatesNextSpeed = true
+				indicatedSpeed = params.following_signal.signal_speed
 			end
 		else
 			indicatesNextSpeed = false
@@ -81,10 +81,14 @@ return {
 		
 		-- Model definition
 		result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_vorsignal.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
-		
+
+		if indicatesStation then
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n-station_pre.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+		end
+
 		
 		-- signal lamps
-		if not isGreen then
+		if not isGreen then -- red
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_yellow.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 		elseif (nextStopSignalDistance == 1) or (indicatesNextSpeed and (maxSpeed >= indicatedSpeed)) then
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_yellow.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
@@ -97,31 +101,31 @@ return {
 		if hasSpeedIndicator then 
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speedindicator.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 			if isGreen and canIndicateSpeed then
-				if indicatedSpeed < 30 then
+				if indicatedSpeed <= 30 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_30.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 			
-				elseif indicatedSpeed < 40 then
+				elseif indicatedSpeed <= 40 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_40.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				
-				elseif indicatedSpeed < 50 then
+				elseif indicatedSpeed <= 50 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_50.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				
-				elseif indicatedSpeed < 60 then
+				elseif indicatedSpeed <= 60 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_60.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				
-				elseif indicatedSpeed < 70 then
+				elseif indicatedSpeed <= 70 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_70.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				
-				elseif indicatedSpeed < 80 then
+				elseif indicatedSpeed <= 80 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_80.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				
-				elseif indicatedSpeed < 90 then
+				elseif indicatedSpeed <= 90 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_90.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				
-				elseif indicatedSpeed < 100 then
+				elseif indicatedSpeed <= 100 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_100.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				
-				elseif indicatedSpeed < 110 then
+				elseif indicatedSpeed <= 110 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_110.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				end
 			end
@@ -132,8 +136,8 @@ return {
 
 		result.terrainAlignmentLists = {
 		  {
-			type = "EQUAL",               -- accepted values: "EQUAL", "LESS" and "GREATER"
-			faces = { { { 1, -1, 0 }, { -1, -1, 0 }, { -1, 1, 0 } , { 1, 1, 0 } } }, -- a list of polygons
+			type = "EQUAL",
+			faces = { { { 1, -1, 0 }, { -1, -1, 0 }, { -1, 1, 0 } , { 1, 1, 0 } } },
 			slopeLow = 0.3,
 			slopeHigh = 0.6,
 		  },
