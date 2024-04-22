@@ -117,9 +117,6 @@ function data()
 			end
 		end,
 		guiHandleEvent = function(id, name, param)
-			-- print("ID " .. id)
-			-- print("Name " .. name)
-			-- print("Params " .. tostring(param))
 			if name == "visibilityChange" and param == false then
 				local signal = string.match(id, "^.+/(.+)%.con$")
 				
