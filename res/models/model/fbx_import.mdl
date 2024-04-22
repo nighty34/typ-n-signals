@@ -1,12 +1,12 @@
 function data()
 return {
 	boundingInfo = {
-		bbMax = { 0.12170334160328, -0.1778577119112, 6.493230342865, },
-		bbMin = { -0.12019266933203, -0.22525089979172, 6.1060538291931, },
+		bbMax = { 0.39379522204399, -0.1778577119112, 6.9895067214966, },
+		bbMin = { -0.39228454232216, -0.22525089979172, 6.1060538291931, },
 	},
 	collider = {
 		params = {
-			halfExtents = { 0.12094800174236, 0.023696593940258, 0.19358825683594, },
+			halfExtents = { 0.39303988218307, 0.023696593940258, 0.44172644615173, },
 		},
 		transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
 		type = "BOX",
@@ -17,8 +17,14 @@ return {
 				children = {
 					{
 						materials = { "fbx_import/Schilder.mtl", },
-						mesh = "fbx_import/signal_schild_nummer_lod0.msh",
-						name = "Signal_haupt_merktafel",
+						mesh = "fbx_import/signal_schild_bahnhofankuendigung_lod0.msh",
+						name = "Signal_schild_bahnhofankuendigung",
+						transf = { 66.289398193359, 0, 0, 0, 0, 66.289398193359, 2.8976019166294e-06, 0, 0, -2.8976019166294e-06, 66.289398193359, 0, 0.00075535289943218, -0.22397744655609, 5.8030028343201, 1, },
+					},
+					{
+						materials = { "fbx_import/Schilder.mtl", },
+						mesh = "fbx_import/signal_schild_bahnhofausfahrt_lod0.msh",
+						name = "signal_schild_bahnhofausfahrt",
 						transf = { 66.289398193359, 0, 0, 0, 0, 66.289398193359, 2.8976019166294e-06, 0, 0, -2.8976019166294e-06, 66.289398193359, 0, 0.00075535289943218, -0.22397744655609, 5.8030028343201, 1, },
 					},
 					{
@@ -28,10 +34,40 @@ return {
 						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0.044082991778851, 0, 0, 1, },
 					},
 					{
+						materials = { "fbx_import/Schilder.mtl", },
+						mesh = "fbx_import/signal_schild_nummer_lod0.msh",
+						name = "signal_schild_nummer",
+						transf = { 66.289398193359, 0, 0, 0, 0, 66.289398193359, 2.8976019166294e-06, 0, 0, -2.8976019166294e-06, 66.289398193359, 0, 0.00075535289943218, -0.22397744655609, 5.8030028343201, 1, },
+					},
+					{
+						materials = { "fbx_import/ScharzSignal.mtl", },
+						mesh = "fbx_import/Circle.006_lod0.msh",
+						name = "Circle",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0.044082991778851, 0, 0, 1, },
+					},
+					{
 						materials = { "fbx_import/Metal.mtl", },
 						mesh = "fbx_import/signal_schild_nummer_halterung_lod0.msh",
 						name = "Cube",
 						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, -0.35395193099976, 5.8383884429932, 1, },
+					},
+					{
+						materials = { "fbx_import/Schilder.mtl", },
+						mesh = "fbx_import/signal_schild_bahnhofeinfahrt_lod0.msh",
+						name = "signal_schild_bahnhofeinfahrt",
+						transf = { 66.289398193359, 0, 0, 0, 0, 66.289398193359, 2.8976019166294e-06, 0, 0, -2.8976019166294e-06, 66.289398193359, 0, 0.00075535289943218, -0.22397744655609, 5.8030028343201, 1, },
+					},
+					{
+						materials = { "fbx_import/Schilder.mtl", },
+						mesh = "fbx_import/signal_schild_wiederholtafel_lod0.msh",
+						name = "signal_schild_wiederholtafel",
+						transf = { 66.289398193359, 0, 0, 0, 0, 66.289398193359, 2.8976019166294e-06, 0, 0, -2.8976019166294e-06, 66.289398193359, 0, 0.00075535289943218, -0.22397744655609, 5.8030028343201, 1, },
+					},
+					{
+						materials = { "fbx_import/Schilder.mtl", },
+						mesh = "fbx_import/signal_schild_rangierhalt_lod0.msh",
+						name = "Signal_schild_rangierhalt",
+						transf = { 66.289398193359, 0, 0, 0, 0, 66.289398193359, 2.8976019166294e-06, 0, 0, -2.8976019166294e-06, 66.289398193359, 0, 0.00075535289943218, -0.22397744655609, 5.8030028343201, 1, },
 					},
 				},
 				name = "RootNode",

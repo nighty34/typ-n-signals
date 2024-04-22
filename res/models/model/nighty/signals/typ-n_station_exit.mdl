@@ -16,9 +16,9 @@ return {
 			node = {
 				children = {
 					{
-						materials = { "nighty/signals/schilder_2.mtl", },
-						mesh = "fbx_import/signal_haupt_merktafel.001_lod0.msh",
-						name = "Signal_haupt_merktafel",
+						materials = { "nighty/signals/schilder.mtl", },
+						mesh = "fbx_import/signal_schild_bahnhofausfahrt_lod0.msh",
+						name = "signal_schild_bahnhofausfahrt",
 						transf = { 66.289398193359, 0, 0, 0, 0, 66.289398193359, 2.8976019166294e-06, 0, 0, -2.8976019166294e-06, 66.289398193359, 0, 0.00075535289943218, -0.22397744655609, 5.8030028343201, 1, },
 					},
 					{
@@ -49,8 +49,8 @@ return {
 					fitting = "SCALE",
 					nLines = 1,
 					params = {
-						expr = ".*#.*#(.*)",
-						replace = "\\1",
+						expr = ".*\\((.*)\\).*\\[(.*)\\].*",
+						replace = "\\2",
 					},
 					renderMode = "STD",
 					size = { 0.69999998807907, 0.25, },
