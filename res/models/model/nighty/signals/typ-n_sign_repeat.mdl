@@ -16,15 +16,15 @@ return {
 			node = {
 				children = {
 					{
-						materials = { "nighty/signals/schilder.mtl", },
-						mesh = "fbx_import/signal_schild_wiederholtafel_lod0.msh",
-						name = "signal_schild_wiederholtafel",
+						materials = { "signals/sbb_type_n/signs.mtl", },
+						mesh = "signals/sbb_type_n/signs/signal_sign_repeat_lod0.msh",
+						name = "signal_sign_repeat",
 						transf = { 66.289398193359, 0, 0, 0, 0, 66.289398193359, 2.8976019166294e-06, 0, 0, -2.8976019166294e-06, 66.289398193359, 0, 0.00075535289943218, -0.22397744655609, 5.8030028343201, 1, },
 					},
 					{
-						materials = { "fbx_import/ScharzSignal.mtl", },
-						mesh = "fbx_import/Circle.004_lod0.msh",
-						name = "Circle",
+						materials = { "signals/sbb_type_n/signal_main.mtl", },
+						mesh = "signals/sbb_type_n/signs/signal_sign_screws_lod0.msh",
+						name = "signal_sign_screws",
 						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0.044082991778851, 0, 0, 1, },
 					},
 				},

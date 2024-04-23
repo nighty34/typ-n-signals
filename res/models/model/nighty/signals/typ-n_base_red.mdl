@@ -14,9 +14,9 @@ return {
 			node = {
 				children = {
 					{
-						materials = { "fbx_import/red.mtl", },
-						mesh = "fbx_import/lampe_rot_lod0.msh",
-						name = "Circle",
+						materials = { "signals/sbb_type_n/red.mtl", },
+						mesh = "signals/sbb_type_n/lamp_red_lod0.msh",
+						name = "red_lamp",
 						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
 					},
 				},
