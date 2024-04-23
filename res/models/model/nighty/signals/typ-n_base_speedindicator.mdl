@@ -30,7 +30,7 @@ return {
 					{
 						materials = { "signals/sbb_type_n/type_n_lense.mtl", },
 						mesh = "signals/sbb_type_n/signal_speed_indicator_glass_lod0.msh",
-						name = "glass",
+						name = "speed_indicator_glass",
 						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
 					},
 				},
