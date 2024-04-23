@@ -94,7 +94,6 @@ return {
 			end
 
 
-
 			if params.previous_speed and params.previous_speed > params.following_signal.signal_speed then
 				indicatesNextSpeed = true
 				indicatedSpeed = params.following_signal.signal_speed

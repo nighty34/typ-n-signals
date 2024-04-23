@@ -19,7 +19,7 @@ return {
 		{
 			key = "nighty_type_n_pre_station",
 			name = _("nighty_type_n_pre_station"),
-			values = {_("nighty_yes"),_("nighty_no")},
+			values = {_("nighty_no"),_("nighty_yes")},
 			defaultIndex = 1,
 		},
 	},
@@ -45,16 +45,20 @@ return {
 
 		-- Determine signalComponents
 		local isGreen = (params.signal_state and params.signal_state == 1)
-		local hasSpeedIndicator = (params.nighty_type_n_speedindicator and params.nighty_type_n_speedindicator == 0)
-		local indicatesNextSpeed = (params.nighty_type_n_indicatesnextspeed and params.nighty_type_n_indicatesnextspeed == 0)
-		local indicatesStation = (params.nighty_type_n_pre_station and params.nighty_type_n_pre_station == 0)
+		local hasSpeedIndicator = (params.nighty_type_n_speedindicator and params.nighty_type_n_speedindicator == 1)
+		local displayWarning = (params.nighty_type_n_shorten_block and params.nighty_type_n_shorten_block == 1)
 		local signalType = "normal"
 		local maxSpeed = 110
 		local indicatedSpeed = maxSpeed + 1
 		local canIndicateSpeed = true
+		local indicatesNextSpeed = false
 
 		if (params.signal_speed) then
 			indicatedSpeed = params.signal_speed
+		end
+
+		if params.nighty_type_n_pre_station == 1 then
+				signalType = "preStationSignal"
 		end
 
 		-- Evaluate future signals
@@ -64,6 +68,8 @@ return {
 		if params.following_signal then
 			if params.following_signal.signal_state == 0 then
 				nextStopSignalDistance = 1
+			elseif params.following_signal.following_signal and (params.following_signal.following_signal.signal_state == 0) then
+				nextStopSignalDistance = 2
 			end
 
 			if params.previous_speed and params.previous_speed > params.following_signal.signal_speed then
@@ -74,23 +80,25 @@ return {
 			indicatesNextSpeed = false
 		end
 		
+		
 		if nextStopSignalDistance == 1 then
+			canIndicateSpeed = false
+		elseif displayWarning and nextStopSignalDistance == 2 then
+			canIndicateSpeed = false
+		elseif displayOccupied and nextStopSignalDistance == 1 then
 			canIndicateSpeed = false
 		end
 
 		
 		-- Model definition
 		result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_vorsignal.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
-
-		if indicatesStation then
+		
+		if signalType == "preStationSignal" then
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n-station_pre.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 		end
-
 		
 		-- signal lamps
-		if not isGreen then -- red
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_yellow.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
-		elseif (nextStopSignalDistance == 1) or (indicatesNextSpeed and (maxSpeed >= indicatedSpeed)) then
+		if not isGreen or ((nextStopSignalDistance == 1) or (indicatesNextSpeed and (maxSpeed >= indicatedSpeed)) or (displayWarning and (nextStopSignalDistance == 2))) then
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_yellow.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 		else -- green
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_green.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
@@ -128,6 +136,10 @@ return {
 				elseif indicatedSpeed <= 110 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_110.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				end
+			elseif isGreen then
+				if displayWarning and nextStopSignalDistance == 2 then
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_v.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+				end
 			end
 		end
 		
@@ -135,12 +147,13 @@ return {
 		result.maintenanceCost = result.cost / 6
 
 		result.terrainAlignmentLists = {
-		  {
-			type = "EQUAL",
-			faces = { { { 1, -1, 0 }, { -1, -1, 0 }, { -1, 1, 0 } , { 1, 1, 0 } } },
-			slopeLow = 0.3,
-			slopeHigh = 0.6,
-		  },
+			{
+				type = "LESS",
+				faces = { { { .1, -.1, 0 }, { -.1, -.1, 0 }, { -.1, .1, 0 } , { .1, .1, 0 } } },
+				slopeLow = 0,
+				slopeHigh = 0,
+				optional = true,
+			},
 		}
 		
 		
