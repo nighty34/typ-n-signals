@@ -183,12 +183,13 @@ return {
 		result.maintenanceCost = result.cost / 6
 
 		result.terrainAlignmentLists = {
-		  {
-			type = "EQUAL",
-			faces = { { { 1, -1, 0 }, { -1, -1, 0 }, { -1, 1, 0 } , { 1, 1, 0 } } },
-			slopeLow = 0.3,
-			slopeHigh = 0.6,
-		  },
+			{
+				type = "LESS",
+				faces = { { { .1, -.1, 0 }, { -.1, -.1, 0 }, { -.1, .1, 0 } , { .1, .1, 0 } } },
+				slopeLow = 0,
+				slopeHigh = 0,
+				optional = true,
+			},
 		}
 		
 		
