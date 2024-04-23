@@ -15,7 +15,7 @@ return {
 				children = {
 					{
 						materials = { "fbx_import/green.mtl", },
-						mesh = "fbx_import/Green_lod0.msh",
+						mesh = "fbx_import/lampe_grün_lod0.msh",
 						name = "Circle",
 						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0.13979791104794, 3.6917015222571e-08, -0.27128851413727, 1, },
 					},
