@@ -36,12 +36,6 @@ return {
 			defaultIndex = 0,
 			tooltip = _("nighty_type_n_occupied_tooltip"),
 		},
-		{
-			key = "nighty_type_n_indicatesnextspeed",
-			name = _("nighty_type_n_indicatesnextspeed"),
-			values = {_("nighty_yes"),_("nighty_no")},
-			defaultIndex = 1,
-		},
 	},
 	type = "ASSET_DEFAULT",
 	--buildMode = "MULTI",
@@ -66,13 +60,13 @@ return {
 		-- Determine signalComponents
 		local isGreen = (params.signal_state and params.signal_state == 1)
 		local hasSpeedIndicator = (params.nighty_type_n_speedindicator and params.nighty_type_n_speedindicator == 1)
-		local indicatesNextSpeed = (params.nighty_type_n_indicatesnextspeed and params.nighty_type_n_indicatesnextspeed == 1)
 		local displayWarning = (params.nighty_type_n_shorten_block and params.nighty_type_n_shorten_block == 1)
 		local displayOccupied = (params.nighty_type_n_occupied and params.nighty_type_n_occupied == 1)
 		local signalType = "normal"
 		local maxSpeed = 110
 		local indicatedSpeed = maxSpeed + 1
 		local canIndicateSpeed = true
+		local indicatesNextSpeed = false
 
 		if (params.signal_speed) then
 			indicatedSpeed = params.signal_speed
