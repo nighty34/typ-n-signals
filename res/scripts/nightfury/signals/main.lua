@@ -25,16 +25,23 @@ function signals.updateSignals()
 	-- zone.setZoneCircle("zoneRadius", signals.pos, 500)
 
 	for i, trackedTrain in pairs(signals.trackedEntities) do
-		local trackedPos = game.interface.getEntity(trackedTrain).position
-		if trackedPos then
-			local newTrains = game.interface.getEntities({pos = {trackedPos[1], trackedPos[2]}, radius = trainActivationRange}, {type = "VEHICLE"})
-			-- zone.setZoneCircle("tracked" .. i, {trackedPos[1], trackedPos[2]}, trainActivationRange/2)
-			if newTrains and #newTrains > 0 then
-				for _, newTrain in pairs(newTrains) do
-					if not utils.contains(vehicles, newTrain) then
-						table.insert(vehicles, newTrain)
+		local tracked = game.interface.getEntity(trackedTrain)
+		if tracked then
+			local trackedPos = tracked.position
+			if trackedPos then
+				local newTrains = game.interface.getEntities({pos = {trackedPos[1], trackedPos[2]}, radius = trainActivationRange}, {type = "VEHICLE"})
+				-- zone.setZoneCircle("tracked" .. i, {trackedPos[1], trackedPos[2]}, trainActivationRange/2)
+				if newTrains and #newTrains > 0 then
+					for _, newTrain in pairs(newTrains) do
+						if not utils.contains(vehicles, newTrain) then
+							table.insert(vehicles, newTrain)
+						end
 					end
 				end
+			end
+		else
+			if utils.contains(signals.trackedEntities, trackedTrain) then
+				utils.removeFromTableByValue(signals.trackedEntities, trackedTrain)
 			end
 		end
 	end
