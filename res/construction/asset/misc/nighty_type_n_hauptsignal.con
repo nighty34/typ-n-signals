@@ -36,6 +36,14 @@ return {
 			defaultIndex = 0,
 			tooltip = _("nighty_type_n_occupied_tooltip"),
 		},
+		{
+			key = "nighty_type_n_id_sign",
+			name = _("nighty_type_n_id_sign"),
+			uiType = "ICON_BUTTON",
+			values = {"ui/parameters/nighty/none.tga", "ui/parameters/nighty/typ-n_main_id_sign_on.tga"},
+			defaultIndex = 0,
+			tooltip = _("nighty_type_n_id_sign_tooltip"),
+		},
 	},
 	type = "ASSET_DEFAULT",
 	--buildMode = "MULTI",
@@ -62,6 +70,7 @@ return {
 		local hasSpeedIndicator = (params.nighty_type_n_speedindicator and params.nighty_type_n_speedindicator == 1)
 		local displayWarning = (params.nighty_type_n_shorten_block and params.nighty_type_n_shorten_block == 1)
 		local displayOccupied = (params.nighty_type_n_occupied and params.nighty_type_n_occupied == 1)
+		local hasIdSign = (params.nighty_type_n_id_sign and params.nighty_type_n_id_sign == 1)
 		local signalType = "normal"
 		local maxSpeed = 110
 		local indicatedSpeed = maxSpeed + 1
@@ -115,11 +124,24 @@ return {
 		result.models[#result.models+1] = { id = "nighty/signals/typ-n_base.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 		
 		if signalType == "entrySignal" then
+			if hasIdSign then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, .4, 1 }}
+			end
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_entry.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 		elseif signalType == "exitSignal" then
+			if hasIdSign then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, .4, 1 }}
+			end
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_exit.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 		elseif signalType == "preStationSignal" then
+			if hasIdSign then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, .8, 1 }}
+			end
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n-station_pre.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+		else
+			if hasIdSign then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+			end
 		end
 		
 		-- signal lamps
