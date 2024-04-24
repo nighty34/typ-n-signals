@@ -27,7 +27,7 @@ return {
 			yearTo = 0,
 		},
 		category = {
-			categories = { "typen", },
+			categories = { "nighty_typ_n", },
 		},
 		cost = {
 			price = 0,

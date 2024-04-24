@@ -7,20 +7,18 @@ return {
 		{
 			key = "nighty_type_n_speedindicator",
 			name = _("nighty_type_n_speedindicator"),
-			values = {_("nighty_yes"),_("nighty_no")},
+			uiType = "ICON_BUTTON",
+			values = {"ui/parameters/nighty/none.tga","ui/parameters/nighty/typ-n_pre_speed_indicator_on.tga"},
 			defaultIndex = 0,
-		},
-		{
-			key = "nighty_type_n_indicatesnextspeed",
-			name = _("nighty_type_n_indicatesnextspeed"),
-			values = {_("nighty_yes"),_("nighty_no")},
-			defaultIndex = 1,
+			tooltip = _("nighty_type_n_speedindicator_tooltip"),
 		},
 		{
 			key = "nighty_type_n_pre_station",
 			name = _("nighty_type_n_pre_station"),
-			values = {_("nighty_no"),_("nighty_yes")},
-			defaultIndex = 1,
+			uiType = "ICON_BUTTON",
+			values = {"ui/parameters/nighty/none.tga", "ui/parameters/nighty/typ-n_pre_speed_pre_station_on.tga"},
+			defaultIndex = 0,
+			tooltip = _("nighty_type_n_pre_station_tooltip"),
 		},
 	},
 	type = "ASSET_DEFAULT",
@@ -33,7 +31,7 @@ return {
 		yearFrom = 1950		
 	},
 	skipOnInit = true,
-	categories = { "nighty_signals" },
+	categories = { "nighty_typ_n" },
 	skipCollision = true,
 	autoRemovable = false,
 	order = 34340,
@@ -80,7 +78,7 @@ return {
 			indicatesNextSpeed = false
 		end
 		
-		
+
 		if nextStopSignalDistance == 1 then
 			canIndicateSpeed = false
 		elseif displayWarning and nextStopSignalDistance == 2 then
