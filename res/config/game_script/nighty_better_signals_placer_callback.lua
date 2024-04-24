@@ -57,12 +57,12 @@ end
 function data()
 	return{
 		save = function()
-			state = {}
+			local state = {}
 			state.signals = signals.save()
 			return state
 		end,
 		load = function(loadedState)
-			state = loadedState or {signals = {}}
+			local state = loadedState or {signals = {}}
 			if state then
 				signals.load(state.signals)
 			end
@@ -110,13 +110,49 @@ function data()
 				
 			elseif name == "signals.reset" then
 				zone.remZone("selectedSignal")
+
 			elseif name == "tracking.add" then
 				table.insert(signals.trackedEntities, param.entityId)
+
 			elseif name == "tracking.remove" then
 				utils.removeFromTableByValue(signals.trackedEntities, param.entityId)
+
+			elseif name == "signals.rebuild" then
+				for old, new in pairs(param.matchedObjects) do
+					for key, value in pairs(signals.signalObjects) do
+						if key == old then
+							signals.signalObjects["signal" .. new] = value
+							signals.signalObjects[key] = nil
+						end
+					end
+				end
 			end
 		end,
 		guiHandleEvent = function(id, name, param)
+			if id == "trackBuilder" and name == "builder.apply" then
+				local matchedObjects = {}
+
+				if param and param.proposal and param.proposal.proposal then
+
+					local toBeRemoved = param.proposal.proposal.edgeObjectsToRemove
+					local toBeAdded = param.proposal.proposal.edgeObjectsToAdd
+
+					print("Found: " .. #toBeAdded .. " and " .. #toBeRemoved)
+
+					if #toBeRemoved > 0 then
+						if #toBeRemoved == #toBeAdded then
+							for i, value in pairs(toBeRemoved) do
+								matchedObjects["signal" .. value] = tonumber(toBeAdded[i].resultEntity)
+							end
+							local params = {}
+							params.matchedObjects = matchedObjects
+							game.interface.sendScriptEvent("__signalEvent__", "signals.rebuild", params)
+						else
+							print("Added and Removed EdgeObjects aren't the same")
+						end
+					end
+				end
+			end
 			if name == "visibilityChange" and param == false then
 				local signal = string.match(id, "^.+/(.+)%.con$")
 				
