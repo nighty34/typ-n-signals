@@ -36,7 +36,8 @@ end
 
 
 function markSignal(allSignals)
-	local signal = allSignals[((math.abs(signalState.signalIndex/2)) % #allSignals) + 1]
+	local signal = allSignals[math.abs(math.floor(signalState.signalIndex % #allSignals)) + 1]
+	
 
 	if signal then
 		local signalTransf = utils.getComponentProtected(signal, 58)
@@ -77,7 +78,7 @@ function data()
 		end,
 		guiUpdate = function()
 			local controller = api.gui.util.getGameUI():getMainRendererComponent():getCameraController()
-			local campos, camrot, campitch = controller:getCameraData()
+			local campos, _, _ = controller:getCameraData()
 			
 			game.interface.sendScriptEvent("__signalEvent__", "signals.viewUpdate", {campos[1], campos[2]})
 		end,
@@ -96,14 +97,9 @@ function data()
 				end
 
 			elseif name == "builder.proposalCreate" then
+				signalState.signalIndex = math.abs(param.selection*5)
 				signalState.possibleSignals = game.interface.getEntities({radius=10,pos={param.position[1],param.position[2]}}, { type = "SIGNAL" })
 				markSignal(signalState.possibleSignals)
-
-			elseif name == "signals.nextSignal" then
-				if signalState.possibleSignals then
-					signalState.signalIndex = signalState.signalIndex + 1
-					markSignal(signalState.possibleSignals)
-				end
 
 			elseif name == "signals.viewUpdate" then
 				signals.pos = param
@@ -168,12 +164,12 @@ function data()
 
 				if name == "builder.apply" then
 					signal_params.construction = param.result[1]
+				else
+					signal_params.selection = param.proposal.toAdd[1].params.paramY
 				end
 				
 				game.interface.sendScriptEvent("__signalEvent__", name, signal_params)
 				
-			elseif name == "builder.rotate" then
-					game.interface.sendScriptEvent("__signalEvent__", "signals.nextSignal", {})
 			elseif utils.starts_with(id, "temp.view.entity_") then
 				local entityId = string.match(id, "%d+$")
 				if not param then
