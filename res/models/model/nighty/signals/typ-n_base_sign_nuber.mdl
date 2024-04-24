@@ -49,7 +49,7 @@ return {
 					fitting = "SCALE",
 					nLines = 1,
 					params = {
-						expr = ".*\\((.*)\\).*\\[(.*)\\].*",
+						expr = ".*\\((.*)\\).*",
 						replace = "\\1",
 					},
 					renderMode = "STD",

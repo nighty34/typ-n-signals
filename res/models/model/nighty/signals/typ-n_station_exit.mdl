@@ -49,8 +49,8 @@ return {
 					fitting = "SCALE",
 					nLines = 1,
 					params = {
-						expr = ".*\\((.*)\\).*\\[(.*)\\].*",
-						replace = "\\2",
+						expr = ".*\\[(.*)\\].*",
+						replace = "\\1",
 					},
 					renderMode = "STD",
 					size = { 0.69999998807907, 0.25, },
