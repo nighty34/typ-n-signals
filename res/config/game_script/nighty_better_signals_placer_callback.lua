@@ -137,8 +137,6 @@ function data()
 					local toBeRemoved = param.proposal.proposal.edgeObjectsToRemove
 					local toBeAdded = param.proposal.proposal.edgeObjectsToAdd
 
-					print("Found: " .. #toBeAdded .. " and " .. #toBeRemoved)
-
 					if #toBeRemoved > 0 then
 						if #toBeRemoved == #toBeAdded then
 							for i, value in pairs(toBeRemoved) do
