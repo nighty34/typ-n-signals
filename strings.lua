@@ -19,6 +19,9 @@ return {
 		["nighty_type_n_occupied"] = ("Block ist belegt"),
 		["nighty_type_n_occupied_tooltip"] = ("[Geschwindigkeitsanzeige muss aktiv sein] Wähle, ob das Signal das Signalbild 'Belegtes Gleis' datstellen soll."),
 
+		["nighty_type_n_id_sign"] = ("Signal Nummer (E34)"),
+		["nighty_type_n_id_sign_tooltip"] = ("Wähle, ob das Signal ein kleines Schild auf dem die Signalnummer angezeigt wird, haben soll."),
+
 		["nighty_type_n_vorsignal_name"] = ("Typ N Vorsignal"),
 		["nighty_type_n_vorsignal_desc"] = ("Vorsignale des Typ N Systems mit oder ohne Geschwindigkeitsanzeige"),
 
@@ -47,6 +50,9 @@ return {
 
 		["nighty_type_n_occupied"] = ("Track is Occupied"),
 		["nighty_type_n_occupied_tooltip"] = ("[Needs Speedindicator to be active] Choose if the signal should be able to display 'Track is occupied'."),
+
+		["nighty_type_n_id_sign"] = ("Signal Identification Number (E34)"),
+		["nighty_type_n_id_sign_tooltip"] = ("Choose if the signal should have a signal identification number."),
 
 		["nighty_type_n_vorsignal_name"] = ("Type N Presignal"),
 		["nighty_type_n_vorsignal_desc"] = ("Presignal from the Type N System with or without Speedindicator"),
