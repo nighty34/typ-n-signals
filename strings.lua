@@ -33,6 +33,9 @@ return {
 
 		["nighty_invisible_signal"] = ("Unsichtbares Signal"),
 
+		["sbb_type_n_name"] = ("SBB Typ N Signale (Better Signals)"),
+		["sbb_type_n_name_desc"] = ("Schweizer Signale vom Typ N. Im Paket enthalten sind sowohl Vor- wie auch Hauptsignale. Die Signale sind Teil des [Better Signals] Projekts")
+
 
 	},
 	en = {
@@ -67,6 +70,9 @@ return {
 		["nighty_type_n_repeat_tooltip"] = ("Choose if a (Repeat)-Sign should be shown"),
 
 		["nighty_invisible_signal"] = ("Invisible Signal"),
+
+		["sbb_type_n_name"] = ("SBB Type N Signals (Better Signals)"),
+		["sbb_type_n_name_desc"] = ("Swiss Type N Signals. This signal pack includes both pre- and mainsignals. All signals are part of the [Better Signals] project")
 	}
 }
 end
