@@ -28,6 +28,9 @@ return {
 		["nighty_type_n_pre_station"] = ("Stationeinfahrts Vorankündigung"),
 		["nighty_type_n_pre_station_tooltip"] = ("Wähle, ob das Signal ein Zusatzschild als Vorankündigung für ein Einfahrtssignal darstellen soll"),
 
+		["nighty_type_n_repeat"] = ("Wiederholungs Schild"),
+		["nighty_type_n_repeat_tooltip"] = ("Wähle, ob das Signal ein Zusatzschild (Wiederholung) darstellen soll"),
+
 		["nighty_invisible_signal"] = ("Unsichtbares Signal"),
 
 
@@ -59,6 +62,9 @@ return {
 
 		["nighty_type_n_pre_station"] = ("Pre-Entry Sign"),
 		["nighty_type_n_pre_station_tooltip"] = ("Choose if the 'Pre-Entry Sign' should be displayed"),
+
+		["nighty_type_n_repeat"] = ("Repeat Sign"),
+		["nighty_type_n_repeat_tooltip"] = ("Choose if a (Repeat)-Sign should be shown"),
 
 		["nighty_invisible_signal"] = ("Invisible Signal"),
 	}

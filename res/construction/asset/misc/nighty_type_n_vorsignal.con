@@ -5,6 +5,14 @@ function data()
 return { 
 	params = {
 		{
+			key = "nighty_type_n_repeat",
+			name = _("nighty_type_n_repeat"),
+			uiType = "ICON_BUTTON",
+			values = {"ui/parameters/nighty/none.tga", "ui/parameters/nighty/typ-n_pre_repeat_on.tga"},
+			defaultIndex = 0,
+			tooltip = _("nighty_type_n_repeat_tooltip"),
+		},
+		{
 			key = "nighty_type_n_speedindicator",
 			name = _("nighty_type_n_speedindicator"),
 			uiType = "ICON_BUTTON",
@@ -54,6 +62,7 @@ return {
 		local hasSpeedIndicator = (params.nighty_type_n_speedindicator and params.nighty_type_n_speedindicator == 1)
 		local displayWarning = (params.nighty_type_n_shorten_block and params.nighty_type_n_shorten_block == 1)
 		local hasIdSign = (params.nighty_type_n_id_sign and params.nighty_type_n_id_sign == 1)
+		local hasRepeatSign = (params.nighty_type_n_repeat and params.nighty_type_n_repeat == 1)
 		local signalType = "normal"
 		local maxSpeed = 110
 		local indicatedSpeed = maxSpeed + 1
@@ -64,14 +73,30 @@ return {
 			indicatedSpeed = params.signal_speed
 		end
 
-		if params.nighty_type_n_pre_station == 1 then
-			signalType = "preStationSignal"
-			if hasIdSign then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, .8, 1 }}
+		if hasRepeatSign then
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_sign_repeat.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+			if params.nighty_type_n_pre_station == 1 then
+				signalType = "preStationSignal"
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n-station_pre.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, .4, 1 }}
+				if hasIdSign then
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1.2, 1 }}
+				end
+			else
+				if hasIdSign then
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, .4, 1 }}
+				end
 			end
 		else
-			if hasIdSign then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+			if params.nighty_type_n_pre_station == 1 then
+				signalType = "preStationSignal"
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n-station_pre.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+				if hasIdSign then
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, .8, 1 }}
+				end
+			else
+				if hasIdSign then
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+				end
 			end
 		end
 
@@ -106,10 +131,6 @@ return {
 		
 		-- Model definition
 		result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_vorsignal.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
-		
-		if signalType == "preStationSignal" then
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n-station_pre.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
-		end
 		
 		-- signal lamps
 		if not isGreen or ((nextStopSignalDistance == 1) or (indicatesNextSpeed and (maxSpeed >= indicatedSpeed)) or (displayWarning and (nextStopSignalDistance == 2))) then
