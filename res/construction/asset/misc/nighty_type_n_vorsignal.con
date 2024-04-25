@@ -64,7 +64,7 @@ return {
 		local hasIdSign = (params.nighty_type_n_id_sign and params.nighty_type_n_id_sign == 1)
 		local hasRepeatSign = (params.nighty_type_n_repeat and params.nighty_type_n_repeat == 1)
 		local signalType = "normal"
-		local maxSpeed = 110
+		local maxSpeed = 140
 		local indicatedSpeed = maxSpeed + 1
 		local canIndicateSpeed = true
 		local indicatesNextSpeed = false
@@ -111,9 +111,11 @@ return {
 				nextStopSignalDistance = 2
 			end
 
-			if params.previous_speed and params.previous_speed > params.following_signal.signal_speed then
+			if params.following_signal.previous_speed and (math.floor(params.following_signal.previous_speed/10) > math.floor(params.following_signal.signal_speed/10)) then
 				indicatesNextSpeed = true
 				indicatedSpeed = params.following_signal.signal_speed
+			elseif (params.previous_speed and (math.floor((params.previous_speed)/10) == math.floor((params.signal_speed)/10))) then
+				canIndicateSpeed = false
 			end
 		else
 			indicatesNextSpeed = false
@@ -133,7 +135,7 @@ return {
 		result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_vorsignal.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 		
 		-- signal lamps
-		if not isGreen or ((nextStopSignalDistance == 1) or (hasSpeedIndicator and (indicatesNextSpeed and (maxSpeed >= indicatedSpeed)) or (displayWarning and (nextStopSignalDistance == 2)))) then
+		if not isGreen or ((nextStopSignalDistance == 1) or (hasSpeedIndicator and ((indicatesNextSpeed and (maxSpeed >= indicatedSpeed)) or (displayWarning and (nextStopSignalDistance == 2))))) then
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_yellow.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 		else -- green
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_green.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
@@ -170,6 +172,15 @@ return {
 				
 				elseif indicatedSpeed <= 110 then
 					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_110.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+				
+				elseif indicatedSpeed <= 120 then
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_120.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+
+				elseif indicatedSpeed <= 130 then
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_130.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
+				
+				elseif indicatedSpeed <= 140 then
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_140.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }}
 				end
 			elseif isGreen then
 				if displayWarning and nextStopSignalDistance == 2 then

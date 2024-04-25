@@ -61,7 +61,7 @@ function signals.updateSignals()
 		local move_path = utils.getComponentProtected(train, 66)
 
 		if move_path then
-			local signalPaths = walkPath(move_path)
+			local signalPaths = walkPath(move_path, train)
 			
 			for _, signalPath in ipairs(signalPaths) do
 				local minSpeed = signalPath.signal_speed
@@ -150,7 +150,7 @@ end
 -- Walks down the given path and analyses path.
 -- @param move_path Move_path value from a trains path
 -- @return returns analysed path with signal states and maxSpeed of the parts
-function walkPath(move_path)
+function walkPath(move_path, train_id)
 	local checksum = utils.checksum
 
 	local pathViewDistance = 20 -- To be changed
@@ -193,8 +193,6 @@ function walkPath(move_path)
 							tempSignalPaths.signal = activeSignal.signalId.entity
 							tempSignalPaths.signal_state = activeSignal.signal.state
 							tempSignalPaths.incomplete = false
-
-							previousSpeed = tempSignalPaths.signal_speed
 							
 							if #signalPaths > 0 then
 								signalPaths[#signalPaths].following_signal = tempSignalPaths
@@ -206,6 +204,8 @@ function walkPath(move_path)
 							end
 
 							table.insert(signalPaths, tempSignalPaths)
+
+							previousSpeed = tempSignalPaths.signal_speed
 						end
 
 						tempSignalPaths = {}
@@ -243,8 +243,6 @@ function walkPath(move_path)
 		tempSignalPaths.signal = activeSignal.signalId.entity
 		tempSignalPaths.signal_state = activeSignal.signal.state
 		tempSignalPaths.incomplete = false
-
-		previousSpeed = tempSignalPaths.signal_speed
 		
 		if #signalPaths > 0 then
 			signalPaths[#signalPaths].following_signal = tempSignalPaths
@@ -256,6 +254,8 @@ function walkPath(move_path)
 		end
 
 		table.insert(signalPaths, tempSignalPaths)
+
+		previousSpeed = tempSignalPaths.signal_speed
 	end
 
 	return signalPaths
