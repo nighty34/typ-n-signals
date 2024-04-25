@@ -113,7 +113,7 @@ return {
 
 			if params.following_signal.previous_speed and (math.floor(params.following_signal.previous_speed/10) > math.floor(params.following_signal.signal_speed/10)) then
 				indicatesNextSpeed = true
-				indicatedSpeed = params.following_signal.signal_speed
+				indicatedSpeed = math.floor(params.following_signal.signal_speed)
 			elseif (params.previous_speed and (math.floor((params.previous_speed)/10) == math.floor((params.signal_speed)/10))) then
 				canIndicateSpeed = false
 			end
