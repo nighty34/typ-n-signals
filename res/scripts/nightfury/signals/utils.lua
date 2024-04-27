@@ -1,18 +1,19 @@
 local utils =  {}
 
 function utils.getEdgeSpeed(edge)
-	local transportNetwork = utils.getComponentProtected(edge, 52)
-		if not (transportNetwork == nil) then
-		
-		local minSpeed = transportNetwork.edges[1].speedLimit -- speedLimit
-		local curveSpeed = transportNetwork.edges[1].curveSpeedLimit -- curveSpeed
-		if minSpeed < curveSpeed then 
-			return minSpeed * 3.6
+	local transportNetwork = utils.getComponentProtected(edge.entity, 52)
+	local speed = math.huge
+	if not (transportNetwork == nil) then
+		local index = 1 + edge.index
+		if index > #transportNetwork.edges then
+			index = 0
 		end
-		
-		return curveSpeed * 3.6
+		local edges = transportNetwork.edges[index]
+
+		speed = math.min(edges.speedLimit, speed)
+		speed = math.min(edges.curveSpeedLimit, speed)
 	end
-	return math.huge -- return ~infinity
+	return speed * 3.6
 end
 
 function utils.getComponentProtected(entity, code)

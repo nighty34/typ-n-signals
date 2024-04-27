@@ -227,7 +227,11 @@ function walkPath(move_path, train_id)
 
 				end
 
-				table.insert(signalPathSpeed, utils.getEdgeSpeed(path.edgeId.entity))
+				table.insert(signalPathSpeed, utils.getEdgeSpeed(path.edgeId))
+				local track = game.interface.getEntity(path.edgeId.entity)
+				if track.node0pos and track.node1pos then
+					--zone.setZone("path" .. i, {track.node0pos, track.node1pos})
+				end
 			end
 
 			i = i + 1
