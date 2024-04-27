@@ -52,7 +52,7 @@ return {
 		description = _("nighty_type_n_hauptsignal_desc"),
 	},
 	availability = {
-		yearFrom = 1950
+		yearFrom = 1986
 	},
 	skipOnInit = true,
 	categories = { "nighty_typ_n" },
