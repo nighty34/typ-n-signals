@@ -177,7 +177,7 @@ function parseName(input)
 end
 
 function evaluatePath(path)
-	local pathViewDistance = 20 -- To be changed
+	local pathViewDistance = 30 -- To be changed
 
 	local evaluatedPath = {}
 	local currentSegment = {}
@@ -204,8 +204,7 @@ function evaluatePath(path)
 
 					local signal = signalComponent.signals[1]
 
-					-- if is valid Signal
-					if (signal.type == 0 or signal.type == 1) or (signals.signalObjects[tonumber(signal.entity)] and signals.signalObjects[tonumber(signal.entity)].allowWaypoints) then
+					if (signal.type == 0 or signal.type == 1) or (signals.signalObjects[tonumber(signal.entity)] and signals.signalObjects[tonumber(signal.entity)].allowWaypoints) then -- Adding Signal
 
 						currentSegment.entity = potentialSignal.entity
 						currentSegment.signal_state = signal.state
@@ -217,7 +216,7 @@ function evaluatePath(path)
 							if #evaluatedPath > 1 then
 								followingSignal.previous_speed = currentSegment.signal_speed
 							end
-							
+
 							currentSegment.following_signal = followingSignal
 						end
 
@@ -230,8 +229,20 @@ function evaluatePath(path)
 						currentSegment = {}
 						edgeSpeeds = {}
 					end
-				else
-					-- Kein Signal
+				elseif pathIndex == (#path.path.edges - path.path.endOffset) then -- Adding Trainstations
+					currentSegment.entity = 0000
+					currentSegment.signal_state = 0
+					currentSegment.incomplete = false
+					currentSegment.signal_speed = 0
+
+					currentSegment.checksum = checksum + utils.checksum(currentSegment.entity, currentSegment.signal_state, currentSegment.signal_speed, #evaluatedPath)
+					checksum = currentSegment.checksum
+
+					table.insert(evaluatedPath, 1, currentSegment)
+
+					followingSignal = currentSegment
+					currentSegment = {}
+					edgeSpeeds = {}
 				end
 			end
 		end
@@ -244,123 +255,6 @@ function evaluatePath(path)
 	return evaluatedPath
 end
 
--- Walks down the given path and analyses path.
--- @param move_path Move_path value from a trains path
--- @return returns analysed path with signal states and maxSpeed of the parts
-function walkPath(move_path, train_id)
-	local checksum = utils.checksum
-
-	local pathViewDistance = 20 -- To be changed
-
-	local signalPaths = {} 
-	
-	local tempSignalPaths = {}
-	local signalPathSpeed = {}
-	local activeSignal = {}
-	
-	local previousSpeed = 0
-	
-	if move_path.path then
-		local i = math.max((move_path.dyn.pathPos.edgeIndex - 2), 1)
-		local path_end = math.min(#move_path.path.edges, i + pathViewDistance)
-		
-		while (i <= path_end) do
-			local path = move_path.path.edges[i]
-			
-			if path then
-				local signalId = api.engine.system.signalSystem.getSignal(path.edgeId, path.dir)
-				local signalList = utils.getComponentProtected(signalId.entity, 26)
-				
-				if signalList and signalList.signals and #signalList.signals > 0 then -- found Signal
-				
-					local signal = signalList.signals[1]
-					
-					if (signal.type == 0)  or (signal.type == 1) or (signals.signalObjects["signal" .. signalId.entity] and signals.signalObjects["signal" .. signalId.entity].type) then
-					
-						if activeSignal.signal and activeSignal.signalId then
-							if not tempSignalPaths.signal_speed then
-								tempSignalPaths.signal_speed = utils.getMinValue(signalPathSpeed)
-							end
-
-							if tempSignalPaths.incomplete == nil then
-								tempSignalPaths.incomplete = true
-							end
-
-							tempSignalPaths.previous_speed = previousSpeed
-							tempSignalPaths.signal = activeSignal.signalId.entity
-							tempSignalPaths.signal_state = activeSignal.signal.state
-							tempSignalPaths.incomplete = false
-
-							if #signalPaths > 0 then
-								signalPaths[#signalPaths].following_signal = tempSignalPaths
-							end
-
-							tempSignalPaths.checksum = checksum(tempSignalPaths.signal, tempSignalPaths.previous_speed, tempSignalPaths.signal_state, tempSignalPaths.signal_speed, #signalPaths)
-							for _, value in ipairs(signalPaths) do
-								value.checksum = value.checksum + tempSignalPaths.checksum
-							end
-
-							table.insert(signalPaths, tempSignalPaths)
-
-							previousSpeed = tempSignalPaths.signal_speed
-						end
-
-						tempSignalPaths = {}
-						signalPathSpeed = {}
-
-						if not activeSignal.signal then
-							tempSignalPaths.incomplete = true
-						end
-
-						activeSignal.signal = signal
-						activeSignal.signalId = signalId
-						
-					elseif signal.type == 2 then
-						local name = utils.getComponentProtected(signalId.entity, 63)
-						local values = parseName(name.name)
-						
-						tempSignalPaths.signal_speed = values['speed']
-					end
-
-				end
-
-				table.insert(signalPathSpeed, utils.getEdgeSpeed(path.edgeId))
-			end
-
-			if (i == #move_path.path.edges) and (move_path.dyn.approachingStation) then
-				table.insert(signalPaths, tempSignalPaths)
-			end
-
-			i = i + 1
-		end
-	end
-	
-	if activeSignal.signal and activeSignal.signalId then
-		if not tempSignalPaths.signal_speed then
-			tempSignalPaths.signal_speed = utils.getMinValue(signalPathSpeed)
-		end
-
-		tempSignalPaths.previous_speed = previousSpeed
-		tempSignalPaths.signal = activeSignal.signalId.entity
-		tempSignalPaths.signal_state = activeSignal.signal.state
-		tempSignalPaths.incomplete = false
-		
-		if #signalPaths > 0 then
-			signalPaths[#signalPaths].following_signal = tempSignalPaths
-		end
-
-		tempSignalPaths.checksum = checksum(tempSignalPaths.signal, tempSignalPaths.previous_speed, tempSignalPaths.signal_state, tempSignalPaths.signal_speed, #signalPaths)
-		for _, value in ipairs(signalPaths) do
-			value.checksum = value.checksum + tempSignalPaths.checksum
-		end
-
-		table.insert(signalPaths, tempSignalPaths)
-
-		previousSpeed = tempSignalPaths.signal_speed
-	end
-
-	return signalPaths
-end
 
 function signals.save()
 	return signals.signalObjects
