@@ -29,7 +29,8 @@ local function getSignal(params)
 	
 	local result = {
 		position = position,
-		type = signals.signals[signal].type
+		type = signals.signals[signal].type,
+		allowWaypoints = signals.signals[signal].allowWaypoints,
 	}
 	return result
 end
@@ -91,7 +92,7 @@ function data()
 				if signalState.markedSignal then 
 					local r_signal = signalState.markedSignal
 					
-					signals.createSignal(r_signal, param.construction, param.type)
+					signals.createSignal(r_signal, param.construction, param.type, param.allowWaypoints)
 				else
 					print("No Signal Found")
 				end
@@ -106,6 +107,11 @@ function data()
 				
 			elseif name == "signals.reset" then
 				zone.remZone("selectedSignal")
+
+			elseif name == "signals.remove" then
+				for _, value in ipairs(param.remove) do
+					signals.removeSignalBySignal(value)
+				end
 
 			elseif name == "tracking.add" then
 				table.insert(signals.trackedEntities, param.entityId)
@@ -144,6 +150,23 @@ function data()
 						else
 							print("Added and Removed EdgeObjects aren't the same")
 						end
+					end
+				end
+			end
+			if id == "bulldozer" and name == "builder.apply" then
+				local removeObjects = {}
+
+				if param and param.proposal and param.proposal.proposal then
+
+					local toBeRemoved = param.proposal.proposal.edgeObjectsToRemove
+
+					if #toBeRemoved > 0 then
+						for i, value in pairs(toBeRemoved) do
+							table.insert(removeObjects, value)
+						end
+						local params = {}
+						params.remove = removeObjects
+						game.interface.sendScriptEvent("__signalEvent__", "signals.remove", params)
 					end
 				end
 			end

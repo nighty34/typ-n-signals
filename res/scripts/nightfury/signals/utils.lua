@@ -1,17 +1,18 @@
 local utils =  {}
 
-function utils.getEdgeSpeed(edge)
-	local transportNetwork = utils.getComponentProtected(edge.entity, 52)
+function utils.getEdgeSpeed(edgeId)
+	local transportNetwork = utils.getComponentProtected(edgeId.entity, 52)
 	local speed = math.huge
 	if not (transportNetwork == nil) then
-		local index = 1 + edge.index
+		local index = 1 + edgeId.index
 		if index > #transportNetwork.edges then
-			index = 0
-		end
-		local edges = transportNetwork.edges[index]
+			print("Index is too high on " .. edgeId.edge)
+		else
+			local edges = transportNetwork.edges[index]
 
-		speed = math.min(edges.speedLimit, speed)
-		speed = math.min(edges.curveSpeedLimit, speed)
+			speed = math.min(edges.speedLimit, speed)
+			speed = math.min(edges.curveSpeedLimit, speed)
+		end
 	end
 	return speed * 3.6
 end
@@ -29,14 +30,14 @@ function utils.getMinValue(values)
 	for _, value in ipairs(values) do
 		minValue = math.min(minValue, value)
 	end
-	
+
 	return minValue
 end
 
 function utils.getFirstKey(list)
 	local firstKey
-	
-	for key, _ in pairs(r_signal) do
+
+	for key, _ in pairs(list) do
 		if not firstKey then
 			firstKey = key
 			break
@@ -51,7 +52,6 @@ function utils.checksum(operator, ...) -- way to simpel checksum
 		if arg ~= nil then
 			localsum = localsum + tonumber(arg)
 		end
-
 	end
 
     return localsum * operator
