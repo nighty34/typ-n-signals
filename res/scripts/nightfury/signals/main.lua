@@ -10,6 +10,7 @@ signals.signalIndex = 0
 
 signals.pos = {0,0}
 signals.trackedEntities = {}
+signals.viewDistance = 20
 
 
 -- 3 states: None, Changed, WasChanged
@@ -177,7 +178,7 @@ function parseName(input)
 end
 
 function evaluatePath(path)
-	local pathViewDistance = 30 -- To be changed
+	local pathViewDistance = signals.viewDistance-- To be changed
 
 	local evaluatedPath = {}
 	local currentSegment = {}

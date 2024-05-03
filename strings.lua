@@ -35,7 +35,10 @@ return {
 		["nighty_invisible_waypoint"] = ("Unsichtbarer Wegpunkt"),
 
 		["sbb_type_n_name"] = ("SBB Typ N Signale (Better Signals)"),
-		["sbb_type_n_name_desc"] = ("Schweizer Signale vom Typ N. Im Paket enthalten sind sowohl Vor- wie auch Hauptsignale. Die Signale sind Teil des [Better Signals] Projekts")
+		["sbb_type_n_name_desc"] = ("Schweizer Signale vom Typ N. Im Paket enthalten sind sowohl Vor- wie auch Hauptsignale. Die Signale sind Teil des [Better Signals] Projekts"),
+
+		["better_signals_view_distance"] = ("Signal Erkennungsdistanz"),
+		["better_signals_view_distance_tooltip"] = ("Stelle ein, wie weit ein Zug Signale sehen kann"),
 
 
 	},
@@ -74,7 +77,7 @@ return {
 		["nighty_invisible_waypoint"] = ("Invisible Waypoint"),
 
 		["sbb_type_n_name"] = ("SBB Type N Signals (Better Signals)"),
-		["sbb_type_n_name_desc"] = ("Swiss Type N Signals. This signal pack includes both pre- and mainsignals. All signals are part of the [Better Signals] project")
+		["sbb_type_n_name_desc"] = ("Swiss Type N Signals. This signal pack includes both pre- and mainsignals. All signals are part of the [Better Signals] project"),
 	}
 }
 end
