@@ -8,7 +8,7 @@ return {
 			key = "nighty_type_n_signaltype",
 			name = _("nighty_type_n_signaltype"),
 			uiType = "ICON_BUTTON",
-			values = {"ui/parameters/nighty/none.tga","ui/parameters/nighty/typ-n_main_station_entry_on.tga", "ui/parameters/nighty/typ-n_main_station_exit_on.tga", "ui/parameters/nighty/typ-n_main_pre_station_on.tga"},
+			values = {"ui/parameters/nighty/none.tga","ui/parameters/nighty/typ-n_main_station_entry_on.tga", "ui/parameters/nighty/typ-n_main_station_exit_on.tga", "ui/parameters/nighty/typ-n_main_pre_station_on.tga", "ui/parameters/nighty/typ-n_main_pre_station_on.tga"},
 			defaultIndex = 0,
 			tooltip = _("nighty_type_n_signaltype_tooltip"),
 		},
@@ -52,6 +52,20 @@ return {
 			defaultIndex = 1,
 			tooltip = _("nighty_type_n_id_sign_tooltip"),
 		},
+		{
+			key = "nighty_type_n_build_form",
+			name = _("nighty_type_n_build_form"),
+			values = {_("nighty_type_n_build_form_old"), _("nighty_type_n_build_form_brugg"), _("nighty_type_n_build_form_rappi")},
+			defaultIndex = 2,
+			tooltip = _("EMPTY"),
+		},
+		{
+			key = "nighty_type_n_mast",
+			name = _("nighty_type_n_build_mast"),
+			values = {_("nighty_type_n_mast_basic"), _("nighty_type_n_mast_offset")},
+			defaultIndex = 0,
+			tooltip = _("EMPTY"),
+		},
 	},
 	type = "ASSET_TRACK",
 	--buildMode = "MULTI",
@@ -80,7 +94,7 @@ return {
 		local displayOccupied = (params.nighty_type_n_occupied and params.nighty_type_n_occupied == 1)
 		local hasIdSign = (params.nighty_type_n_id_sign and params.nighty_type_n_id_sign == 1)
 		local signalType = "normal"
-		local maxSpeed = 140
+		local maxSpeed = 160
 		local indicatedSpeed = maxSpeed + 1
 		local canIndicateSpeed = true
 		local indicatesNextSpeed = false
@@ -106,6 +120,8 @@ return {
 				signalType = "exitSignal"
 			elseif params.nighty_type_n_signaltype == 3 then
 				signalType = "preStationSignal"
+			elseif params.nighty_type_n_signaltype == 4 then
+				signalType = "shuntingStop"
 			end
 		end
 
@@ -139,85 +155,114 @@ return {
 		end
 
 		
-		-- Model definition
-		result.models[#result.models+1] = { id = "nighty/signals/typ-n_base.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+		-- ==[Model definition]==
+
+		-- Build Form
+		if params.nighty_type_n_build_form and (params.nighty_type_n_build_form == 0) then
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_schirm_alt_main.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
+		elseif params.nighty_type_n_build_form and (params.nighty_type_n_build_form == 1) then
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_schirm_brugg_main.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
+		else 
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_schirm_rappi_main.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
+		end
 		
+		-- Mast
+		if params.nighty_type_n_mast and (params.nighty_type_n_mast == 0) then
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_basic.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
+		else 
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_versetzt.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
+		end
+		
+		-- Sings
 		if signalType == "entrySignal" then
 			if hasIdSign then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, .4, 1 }}
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, .35, 1 }}
 			end
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_entry.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_entry.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 		elseif signalType == "exitSignal" then
 			if hasIdSign then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, .4, 1 }}
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, .35, 1 }}
 			end
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_exit.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_exit.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 		elseif signalType == "preStationSignal" then
 			if hasIdSign then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, .8, 1 }}
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, .7, 1 }}
 			end
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n-station_pre.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n-station_pre.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
+		elseif signalType == "shuntingStop" then
+			if hasIdSign then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
+			end
+
+			if hasSpeedIndicator then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n-sign_shunting.mdl", transf = {1, 0, 0, 0, 0, -1, -8.7422776573476e-08, 0, 0, 8.7422776573476e-08, -1, 0, -0.15, x_offset, 9.25, 1, }}
+			else
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n-sign_shunting.mdl", transf = {1, 0, 0, 0, 0, -1, -8.7422776573476e-08, 0, 0, 8.7422776573476e-08, -1, 0, 0, x_offset, 9.95, 1, }}
+			end
 		else
 			if hasIdSign then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 			end
 		end
 		
 		-- signal lamps
 		if not isGreen then -- red
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_red.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_red.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 		elseif (nextStopSignalDistance == 1) or (hasSpeedIndicator and ((indicatesNextSpeed and (maxSpeed >= indicatedSpeed)) or (displayWarning and (nextStopSignalDistance == 2)) or (displayOccupied and (nextStopSignalDistance == 1)))) then
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_yellow.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_yellow.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 		else -- green
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_green.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_green.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 		end
 
 
 		-- Speed indicator
 		if hasSpeedIndicator then 
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speedindicator.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speedindicator.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 			if isGreen and canIndicateSpeed then
-				if indicatedSpeed <= 30 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_30.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
-			
-				elseif indicatedSpeed <= 40 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_40.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+				if indicatedSpeed <= 40 then
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_40.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 				
 				elseif indicatedSpeed <= 50 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_50.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_50.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 				
 				elseif indicatedSpeed <= 60 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_60.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_60.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 				
 				elseif indicatedSpeed <= 70 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_70.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_70.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 				
 				elseif indicatedSpeed <= 80 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_80.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_80.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 				
 				elseif indicatedSpeed <= 90 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_90.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_90.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 				
 				elseif indicatedSpeed <= 100 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_100.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_100.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 				
 				elseif indicatedSpeed <= 110 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_110.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_110.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 				
 				elseif indicatedSpeed <= 120 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_120.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_120.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 
 				elseif indicatedSpeed <= 130 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_130.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_130.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 				
 				elseif indicatedSpeed <= 140 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_140.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_140.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
+
+				elseif indicatedSpeed <= 150 then
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_150.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
+
+				elseif indicatedSpeed <= 160 then
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_160.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 				end
 			elseif isGreen then
 				if displayWarning and nextStopSignalDistance == 2 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_v.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_v.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 				elseif displayOccupied and nextStopSignalDistance == 1 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_occupied.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, 0, 0, 1 }}
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_occupied.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 				end
 			end
 		end
