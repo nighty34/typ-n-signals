@@ -17,9 +17,9 @@ return {
 				children = {
 					{
 						materials = { "signals/sbb_type_n/signs.mtl", },
-						mesh = "signals/sbb_type_n/signs/signal_sign_pre_entry_lod0.msh",
-						name = "signal_sign_pre_station",
-						transf = { 66.289398193359, 0, 0, 0, 0, 66.289398193359, 2.8976019166294e-06, 0, 0, -2.8976019166294e-06, 66.289398193359, 0, 0.00075535289943218, -0.22397744655609, 5.8030028343201, 1, },
+						mesh = "signals/sbb_type_n/signs/Signal_schild_bahnhofankuendigung_lod0.msh",
+						name = "Signal_schild_bahnhofankuendigung",
+						transf = { 1, 0, 0, 0, 0, 1, 1.6292068494295e-07, 0, 0, -1.6292068494295e-07, 1, 0, 0, 0, 0, 1, },
 					},
 				},
 				name = "RootNode",

@@ -16,10 +16,10 @@ return {
 			node = {
 				children = {
 					{
-						materials = { "signals/sbb_type_n/speed_indicator/type_n_speed_indicator_occupied.mtl", },
-						mesh = "signals/sbb_type_n/signal_speed_indicator_sign_lod0.msh",
-						name = "speed_indicator_occupied",
-						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
+						materials = { "signals/sbb_type_n/speed_indicator/type_n_speed_indicator.mtl", },
+						mesh = "signals/sbb_type_n/speed/speed_occupied_lod0.msh",
+						name = "speed_occupied",
+						transf = { 1, 0, 0, 0, 0, 1, 1.6292068494295e-07, 0, 0, -1.6292068494295e-07, 1, 0, 0, 0, 0, 1, },
 					},
 				},
 				name = "RootNode",

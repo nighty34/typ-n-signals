@@ -16,22 +16,10 @@ return {
 			node = {
 				children = {
 					{
-						materials = { "signals/sbb_type_n/type_n_speed_indicator.mtl", },
-						mesh = "signals/sbb_type_n/signal_speed_indicator_lod0.msh",
+						materials = { "signals/sbb_type_n/signal_main.mtl", "signals/sbb_type_n/type_n_glass.mtl"},
+						mesh = "signals/sbb_type_n/speed/speed_indicator_lod0.msh",
 						name = "speed_indicator",
-						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
-					},
-					{
-						materials = { "signals/sbb_type_n/metal.mtl", },
-						mesh = "signals/sbb_type_n/signal_speed_indicator_holder_lod0.msh",
-						name = "speed_indicator_holder",
-						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
-					},
-					{
-						materials = { "signals/sbb_type_n/type_n_lense.mtl", },
-						mesh = "signals/sbb_type_n/signal_speed_indicator_glass_lod0.msh",
-						name = "speed_indicator_glass",
-						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 0, 1, },
+						transf = { 1, 0, 0, 0, 0, 1, 1.6292068494295e-07, 0, 0, -1.6292068494295e-07, 1, 0, 0, 0, 0, 1, },
 					},
 				},
 				name = "RootNode",

@@ -3,24 +3,16 @@ return {
 	__version = "",
 	order = 0,
 	params = {
-		albedo_scale = {
-			albedoScale = { 1, 1, 1, },
+		emissive_scale = {
+			emissiveScale = { 20, 34, 1, },
 		},
 		fade_out_range = {
 			fadeOutEndDist = 20000,
 			fadeOutStartDist = 10000,
 		},
-		map_albedo = {
+		map_emissive = {
 			fileName = "models/railroad/typ_n/signal_schirm_typ_n.dds",
 			type = "TWOD",
-			wrapS = "REPEAT",
-			wrapT = "REPEAT",
-		},
-		map_metal_gloss_ao = {
-			fileName = "default_metal_gloss_ao.dds",
-			type = "TWOD",
-			wrapS = "REPEAT",
-			wrapT = "REPEAT",
 		},
 		polygon_offset = {
 			factor = 0,
@@ -32,6 +24,6 @@ return {
 			twoSided = false,
 		},
 	},
-	type = "PHYSICAL",
+	type = "EMISSIVE",
 }
 end
