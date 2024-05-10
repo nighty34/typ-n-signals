@@ -45,6 +45,11 @@ return {
 		["nighty_type_n_mast_offset_right"] = ("Versetzt Rechts"),
 		["nighty_type_n_mast_offset_left"] = ("Versetzt Links"),
 
+		["nighty_type_n_mast_addon_none"] = ("Keine"),
+		["nighty_type_n_mast_addon_leiter"] = ("Leiter"),
+		["nighty_type_n_mast_addon_korb"] = ("Korb"),
+		["nighty_type_n_mast_addon_korb_leiter"] = ("Korb und Leiter"),
+
 		["sbb_type_n_name"] = ("SBB Typ N Signale (Better Signals)"),
 		["sbb_type_n_name_desc"] = ("Schweizer Signale vom Typ N. Im Paket enthalten sind sowohl Vor- wie auch Hauptsignale. Die Signale sind Teil des [Better Signals] Projekts"),
 
