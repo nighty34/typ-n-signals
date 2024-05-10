@@ -62,7 +62,7 @@ return {
 		{
 			key = "nighty_type_n_mast",
 			name = _("nighty_type_n_build_mast"),
-			values = {_("nighty_type_n_mast_basic"), _("nighty_type_n_mast_offset")},
+			values = {_("nighty_type_n_mast_basic"), _("nighty_type_n_mast_offset_right"), _("nighty_type_n_mast_offset_left")},
 			defaultIndex = 0,
 			tooltip = _("EMPTY"),
 		},

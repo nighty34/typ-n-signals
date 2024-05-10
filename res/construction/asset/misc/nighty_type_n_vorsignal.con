@@ -46,7 +46,7 @@ return {
 		{
 			key = "nighty_type_n_mast",
 			name = _("nighty_type_n_build_mast"),
-			values = {_("nighty_type_n_mast_basic"), _("nighty_type_n_mast_offset")},
+			values = {_("nighty_type_n_mast_basic"), _("nighty_type_n_mast_offset_right"), _("nighty_type_n_mast_offset_left")},
 			defaultIndex = 0,
 			tooltip = _("EMPTY"),
 		},
@@ -149,7 +149,9 @@ return {
 		-- Mast
 		if params.nighty_type_n_mast and (params.nighty_type_n_mast == 0) then
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_basic.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, z_offset, 1 }}
-		else 
+		elseif params.nighty_type_n_mast and (params.nighty_type_n_mast == 1) then
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_versetzt_mirrored.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, z_offset, 1 }}
+		else
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_versetzt.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, z_offset, 1 }}
 		end
 
