@@ -16,7 +16,7 @@ return {
 			node = {
 				children = {
 					{
-						materials = { "signals/sbb_type_n/signal_main.mtl", "signals/sbb_type_n/type_n_glass.mtl"},
+						materials = { "signals/sbb_type_n/signal_main.mtl", "signals/sbb_type_n/type_n_glass.mtl", },
 						mesh = "signals/sbb_type_n/speed/speed_indicator_lod0.msh",
 						name = "speed_indicator",
 						transf = { 1, 0, 0, 0, 0, 1, 1.6292068494295e-07, 0, 0, -1.6292068494295e-07, 1, 0, 0, 0, 0, 1, },
