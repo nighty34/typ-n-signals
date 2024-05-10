@@ -43,7 +43,7 @@ function markSignal(allSignals)
 	if signal then
 		local signalTransf = utils.getComponentProtected(signal, 58)
 		if signalTransf then
-			zone.setZoneCircle("selectedSignal", {signalTransf.fatInstances[1].transf[13], signalTransf.fatInstances[1].transf[14]}, 2)
+			zone.setZoneCircle("selectedSignal", {signalTransf.fatInstances[1].transf[13], signalTransf.fatInstances[1].transf[14]}, 1)
 			signalState.markedSignal = signal
 		end
 	else
