@@ -66,6 +66,13 @@ return {
 			defaultIndex = 0,
 			tooltip = _("EMPTY"),
 		},
+		{
+			key = "nighty_type_n_mast_addon",
+			name = _("nighty_type_n_build_mast_addon"),
+			values = {_("nighty_type_n_mast_addon_none"), _("nighty_type_n_mast_addon_leiter"), _("nighty_type_n_mast_addon_korb"), _("nighty_type_n_mast_addon_korb_leiter")},
+			defaultIndex = 0,
+			tooltip = _("EMPTY"),
+		},
 	},
 	type = "ASSET_TRACK",
 	description = {
@@ -185,7 +192,7 @@ return {
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_versetzt_mirrored.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, z_offset, 1 }}
 
 			if params.nighty_type_n_mast_addon and (params.nighty_type_n_mast_addon == 1) then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_leiter_versetzt.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, z_offset, 1 }}
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_leiter_versetzt.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset + 1.25, z_offset, 1 }}
 			elseif params.nighty_type_n_mast_addon and (params.nighty_type_n_mast_addon == 2) then
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_korb.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, z_offset, 1 }}
 			elseif params.nighty_type_n_mast_addon and (params.nighty_type_n_mast_addon == 3) then
