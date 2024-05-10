@@ -22,7 +22,7 @@ return {
 		},
 		{
 			key = "nighty_type_n_signaltype",
-			name = _("nighty_type_n_signaltype"),
+			name = _("nighty_type_n_signaltype_pre"),
 			uiType = "ICON_BUTTON",
 			values = {"ui/parameters/nighty/none.tga", "ui/parameters/nighty/typ-n_sign_repeat.tga","ui/parameters/nighty/typ-n_station_pre.tga",},
 			defaultIndex = 0,

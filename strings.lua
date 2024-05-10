@@ -8,6 +8,7 @@ return {
 		["nighty_yes"] = ("An"),
 
 		["nighty_type_n_signaltype"] = ("Signaltyp\nText kann im Signal-Namen geändert werden.\n z.B. [Zue] oder [Zue|ZHdb] für mehrere Schilder."),
+		["nighty_type_n_signaltype_pre"] = ("Signaltyp"),
 		["nighty_type_n_signaltype_tooltip"] = ("Wähle einen Signaltyp (Einfahrt-/Ausfahrt- oder Vorangezeigte Einfahrt)"),
 
 		["nighty_type_n_speedindicator"] = ("Geschwindigkeitsanzeige"),
