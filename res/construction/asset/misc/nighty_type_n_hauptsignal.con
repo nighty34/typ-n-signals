@@ -5,12 +5,35 @@ function data()
 return { 
 	params = {
 		{
+			key = "better_signals_x_offset",
+			name = _("better_signals_x_offset"),
+--			uiType = "ICON_BUTTON",
+			values = {_("better_signals_snap_left"), _("better_signals_snap_middle"), _("better_signals_snap_right")},
+			defaultIndex = 1,
+			tooltip = _("nighty_type_n_id_sign_tooltip"),
+		},
+		{
+			key = "nighty_type_n_id_sign",
+			name = _("nighty_type_n_id_sign"),
+			uiType = "ICON_BUTTON",
+			values = {"ui/parameters/nighty/none.tga", "ui/parameters/nighty/typ-n_main_id_sign_on.tga"},
+			defaultIndex = 0,
+			tooltip = _("nighty_type_n_id_sign_tooltip"),
+		},
+		{
 			key = "nighty_type_n_signaltype",
 			name = _("nighty_type_n_signaltype"),
 			uiType = "ICON_BUTTON",
-			values = {"ui/parameters/nighty/none.tga","ui/parameters/nighty/typ-n_main_station_entry_on.tga", "ui/parameters/nighty/typ-n_main_station_exit_on.tga", "ui/parameters/nighty/typ-n_main_pre_station_on.tga", "ui/parameters/nighty/typ-n_main_pre_station_on.tga"},
+			values = {"ui/parameters/nighty/none.tga","ui/parameters/nighty/typ-n_main_station_entry_on.tga", "ui/parameters/nighty/typ-n_main_station_exit_on.tga", "ui/parameters/nighty/typ-n_main_station_entry_on.tga", "ui/parameters/nighty/typ-n_main_pre_station_on.tga", "ui/parameters/nighty/typ-n_main_pre_station_on.tga"},
 			defaultIndex = 0,
 			tooltip = _("nighty_type_n_signaltype_tooltip"),
+		},
+		{
+			key = "nighty_type_n_build_form",
+			name = _("nighty_type_n_build_form"),
+			values = {_("nighty_type_n_build_form_old"), _("nighty_type_n_build_form_brugg"), _("nighty_type_n_build_form_rappi")},
+			defaultIndex = 2,
+			tooltip = _("EMPTY"),
 		},
 		{
 			key = "nighty_type_n_speedindicator",
@@ -35,29 +58,6 @@ return {
 			values = {"ui/parameters/nighty/none.tga", "ui/parameters/nighty/typ-n_main_occupied_on.tga"},
 			defaultIndex = 0,
 			tooltip = _("nighty_type_n_occupied_tooltip"),
-		},
-		{
-			key = "nighty_type_n_id_sign",
-			name = _("nighty_type_n_id_sign"),
-			uiType = "ICON_BUTTON",
-			values = {"ui/parameters/nighty/none.tga", "ui/parameters/nighty/typ-n_main_id_sign_on.tga"},
-			defaultIndex = 0,
-			tooltip = _("nighty_type_n_id_sign_tooltip"),
-		},
-		{
-			key = "better_signals_x_offset",
-			name = _("better_signals_x_offset"),
---			uiType = "ICON_BUTTON",
-			values = {_("better_signals_snap_left"), _("better_signals_snap_middle"), _("better_signals_snap_right")},
-			defaultIndex = 1,
-			tooltip = _("nighty_type_n_id_sign_tooltip"),
-		},
-		{
-			key = "nighty_type_n_build_form",
-			name = _("nighty_type_n_build_form"),
-			values = {_("nighty_type_n_build_form_old"), _("nighty_type_n_build_form_brugg"), _("nighty_type_n_build_form_rappi")},
-			defaultIndex = 2,
-			tooltip = _("EMPTY"),
 		},
 		{
 			key = "nighty_type_n_mast",
@@ -119,8 +119,10 @@ return {
 			elseif params.nighty_type_n_signaltype == 2 then
 				signalType = "exitSignal"
 			elseif params.nighty_type_n_signaltype == 3 then
-				signalType = "preStationSignal"
+				signalType = "entryNexit"
 			elseif params.nighty_type_n_signaltype == 4 then
+				signalType = "preStationSignal"
+			elseif params.nighty_type_n_signaltype == 5 then
 				signalType = "shuntingStop"
 			end
 		end
@@ -199,6 +201,11 @@ return {
 			else
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n-sign_shunting.mdl", transf = {1, 0, 0, 0, 0, -1, -8.7422776573476e-08, 0, 0, 8.7422776573476e-08, -1, 0, 0, x_offset, 9.95, 1, }}
 			end
+		elseif signalType == "entryNexit" then
+			if hasIdSign then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, .70, 1 }}
+			end
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_entry_n_exit.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
 		else
 			if hasIdSign then
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, 0, 1 }}
