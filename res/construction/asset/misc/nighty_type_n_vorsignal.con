@@ -175,7 +175,7 @@ return {
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_korb.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, z_offset, 1 }}
 			elseif params.nighty_type_n_mast_addon and (params.nighty_type_n_mast_addon == 3) then
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_korb.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, z_offset, 1 }}
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_leiter_versetzt.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset + 2, z_offset, 1 }}
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_leiter_versetzt.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset + 1.25, z_offset, 1 }}
 			end
 		else
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_versetzt.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, z_offset, 1 }}
