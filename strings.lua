@@ -1,11 +1,11 @@
 ﻿function data()
 return {
 	de = {
-		["nighty_type_n_hauptsignal_name"] = ("Typ N Hauptsignal"),
-		["nighty_type_n_hauptsignal_desc"] = ("Hauptsignale des Typ N Systems mit oder ohne Geschwindigkeitsanzeige"),
-
 		["nighty_no"] = ("Aus"),
 		["nighty_yes"] = ("An"),
+
+		["nighty_type_n_hauptsignal_name"] = ("Typ N Hauptsignal"),
+		["nighty_type_n_hauptsignal_desc"] = ("Hauptsignale des Typ N Systems mit oder ohne Geschwindigkeitsanzeige"),
 
 		["nighty_type_n_signaltype"] = ("Signaltyp\nText kann im Signal-Namen geändert werden.\n z.B. [Zue] oder [Zue|ZHdb] für mehrere Schilder."),
 		["nighty_type_n_signaltype_pre"] = ("Signaltyp"),
@@ -69,7 +69,8 @@ return {
 		["nighty_type_n_hauptsignal_name"] = ("Type N Main Signal"),
 		["nighty_type_n_hauptsignal_desc"] = ("Minsignal from the Type N System with or without Speedindicator"),
 
-		["nighty_type_n_signaltype"] = ("Signal Type"),
+		["nighty_type_n_signaltype"] = ("Signal Type\nText on the signs can be changed.\n e.g. [Zue] or [Zue|ZHdb] for multiple signs."),
+		["nighty_type_n_signaltype_pre"] = ("Signal Type"),
 		["nighty_type_n_signaltype_tooltip"] = ("Choose a signaltype (Entry-/Exit- or Entry Announcement)"),
 
 		["nighty_type_n_speedindicator"] = ("Speed Indicator"),
@@ -81,7 +82,7 @@ return {
 		["nighty_type_n_occupied"] = ("Track is Occupied"),
 		["nighty_type_n_occupied_tooltip"] = ("[Needs Speedindicator to be active] Choose if the signal should be able to display 'Track is occupied'."),
 
-		["nighty_type_n_id_sign"] = ("Signal Identification Number (E34)"),
+		["nighty_type_n_id_sign"] = ("Signal Identification Number\nText on sign can be changed\ne.g. (E34)"),
 		["nighty_type_n_id_sign_tooltip"] = ("Choose if the signal should have a signal identification number."),
 
 		["nighty_type_n_vorsignal_name"] = ("Type N Presignal"),
@@ -96,8 +97,32 @@ return {
 		["nighty_invisible_signal"] = ("Invisible Signal"),
 		["nighty_invisible_waypoint"] = ("Invisible Waypoint"),
 
+		["nighty_type_n_build_form"] = ("Signal Build Type"),
+		["nighty_type_n_build_form_old"] = ("Old"),
+		["nighty_type_n_build_form_brugg"] = ("Brugg"),
+		["nighty_type_n_build_form_rappi"] = ("Rappi"),
+
+		["nighty_type_n_mast"] = ("Signal Mast"),
+		["nighty_type_n_mast_basic"] = ("Standard"),
+		["nighty_type_n_mast_offset_right"] = ("Offset Right"),
+		["nighty_type_n_mast_offset_left"] = ("Offset Left"),
+
+		["nighty_type_n_mast_addon_none"] = ("None"),
+		["nighty_type_n_mast_addon_leiter"] = ("Ladder"),
+		["nighty_type_n_mast_addon_korb"] = ("Cage"),
+		["nighty_type_n_mast_addon_korb_leiter"] = ("Ladder and Cage"),
+
 		["sbb_type_n_name"] = ("SBB Type N Signals (Better Signals)"),
 		["sbb_type_n_name_desc"] = ("Swiss Type N Signals. This signal pack includes both pre- and mainsignals. All signals are part of the [Better Signals] project"),
+
+		["better_signals_view_distance"] = ("Signal View Distance"),
+		["better_signals_view_distance_tooltip"] = ("Choose how far the trains should be able to evaluate signals"),
+
+		["better_signals_x_offset"] = ("Signals selection can be changed\nwith ü und ¨.\n\nSignal Offset"),
+		["better_signals_x_offset_tooltip"] = ("Choose on which side the signals should snap"),
+		["better_signals_snap_left"] = ("Left"),
+		["better_signals_snap_right"] = ("Right"),
+		["better_signals_snap_middle"] = ("Center"),
 	}
 }
 end
