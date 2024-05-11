@@ -205,7 +205,7 @@ function evaluatePath(path)
 
 					local signal = signalComponent.signals[1]
 
-					if (signal.type == 0 or signal.type == 1) or (signals.signalObjects[tonumber(signal.entity)] and signals.signalObjects[tonumber(signal.entity)].allowWaypoints) then -- Adding Signal
+					if (signal.type == 0 or signal.type == 1) or (potentialSignal.entity and (signals.signalObjects["signal" .. potentialSignal.entity] and signals.signalObjects["signal" .. potentialSignal.entity].allowWaypoints)) then -- Adding Signal
 
 						currentSegment.entity = potentialSignal.entity
 						currentSegment.signal_state = signal.state
