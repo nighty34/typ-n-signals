@@ -83,4 +83,12 @@ function utils.contains(tbl, x)
     return found
 end
 
+function utils.inver_table(tbl, attribute)
+	local result={}
+	for key,value in pairs(tbl) do
+	  result[value[attribute]]=key
+	end
+	return result
+ end
+
 return utils

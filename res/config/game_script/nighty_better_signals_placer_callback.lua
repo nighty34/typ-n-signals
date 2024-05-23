@@ -6,6 +6,8 @@ local signalState = {
 	signalIndex = 0,
 	markedSignal = nil,
 	possibleSignals = nil,
+	connectedSignal = nil,
+	connectedUpdated = false,
 }
 
 -- Function will analyze params and determine if it's a in the config
@@ -38,14 +40,10 @@ end
 
 function markSignal(allSignals)
 	local signal = allSignals[math.abs(math.floor(signalState.signalIndex % #allSignals)) + 1]
-	
 
 	if signal then
-		local signalTransf = utils.getComponentProtected(signal, 58)
-		if signalTransf then
-			zone.setZoneCircle("selectedSignal", {signalTransf.fatInstances[1].transf[13], signalTransf.fatInstances[1].transf[14]}, 1)
-			signalState.markedSignal = signal
-		end
+		zone.markEntity("selectedSignal", signal, 1, {1,1,1,1})
+		signalState.markedSignal = signal
 	else
 		if #allSignals == 0 then
 			zone.remZone("selectedSignal")
@@ -114,9 +112,32 @@ function data()
 				end
 
 			elseif name == "tracking.add" then
+				for key, value in pairs(signals.signalObjects) do
+					if value.construction == param.entityId then
+						if signalState.connectedSignal ~= nil then
+							zone.remZone("connectedSignal")
+							signalState.connectedUpdated = true
+						end
+						signalState.connectedSignal = string.match(key, "%d+$")
+						zone.markEntity("connectedSignal", tonumber(signalState.connectedSignal), 1, {0, 1, 0, 1})
+						return
+					end
+				end
+
 				table.insert(signals.trackedEntities, param.entityId)
 
 			elseif name == "tracking.remove" then
+				for _, value in pairs(signals.signalObjects) do
+					if value.construction == param.entityId then
+						if not signalState.connectedUpdated then
+							signalState.connectedSignal = nil
+							zone.remZone("connectedSignal")
+							return
+						else
+							signalState.connectedUpdated = false
+						end
+					end
+				end
 				utils.removeFromTableByValue(signals.trackedEntities, param.entityId)
 
 			elseif name == "signals.rebuild" then
