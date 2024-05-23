@@ -13,6 +13,13 @@ return {
 			tooltip = _("better_signals_x_offset_tooltip"),
 		},
 		{
+			key = "better_signals_tunnel_helper",
+			name = _("better_signals_tunnel_helper"),
+			uiType = "CHECKBOX",
+			values = {"0", "1"},
+			tooltip = _("better_signals_tunnel_helper_tooltip"),
+		},
+		{
 			key = "nighty_type_n_mast_addon",
 			name = _("nighty_type_n_build_mast_addon"),
 			values = {_("nighty_type_n_mast_addon_none"), _("nighty_type_n_mast_addon_leiter"), _("nighty_type_n_mast_addon_korb"), _("nighty_type_n_mast_addon_korb_leiter")},
@@ -295,6 +302,22 @@ return {
 
 			},
 		}
+
+		if params.better_signals_tunnel_helper and params.better_signals_tunnel_helper == 1 then
+			result.groundFaces[#result.groundFaces + 1] = {
+				face = { { -50, -50, 0 }, { 50, -50, 0 }, { 50, 50, 0 }, { -50, 50, 0 } },
+				modes = {
+					{
+						type = "FILL",               
+						key = "hole.lua"
+					}
+				},
+				loop = true,
+				alignmentOffsetMode = "OBJECT",
+				alignmentDirMode = "OBJECT",
+				alignmentOffset = { -2.0, -1.0 },
+			} 
+		end
 		
 		return result
 	end
