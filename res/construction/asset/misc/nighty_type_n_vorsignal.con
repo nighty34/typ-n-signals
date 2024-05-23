@@ -20,6 +20,13 @@ return {
 			tooltip = _("better_signals_tunnel_helper_tooltip"),
 		},
 		{
+			key = "nighty_type_n_mast",
+			name = _("nighty_type_n_build_mast"),
+			values = {_("nighty_type_n_mast_basic"), _("nighty_type_n_mast_offset_left"), _("nighty_type_n_mast_offset_right")},
+			defaultIndex = 0,
+			tooltip = _("nighty_type_n_build_mast_tooltip"),
+		},
+		{
 			key = "nighty_type_n_mast_addon",
 			name = _("nighty_type_n_build_mast_addon"),
 			values = {_("nighty_type_n_mast_addon_none"), _("nighty_type_n_mast_addon_leiter"), _("nighty_type_n_mast_addon_korb"), _("nighty_type_n_mast_addon_korb_leiter")},
@@ -56,13 +63,6 @@ return {
 			values = {"ui/parameters/nighty/none.tga","ui/parameters/nighty/typ-n_speed_indicator.tga"},
 			defaultIndex = 0,
 			tooltip = _("nighty_type_n_speedindicator_tooltip"),
-		},
-		{
-			key = "nighty_type_n_mast",
-			name = _("nighty_type_n_build_mast"),
-			values = {_("nighty_type_n_mast_basic"), _("nighty_type_n_mast_offset_right"), _("nighty_type_n_mast_offset_left")},
-			defaultIndex = 0,
-			tooltip = _("nighty_type_n_build_mast_tooltip"),
 		},
 	},
 	type = "ASSET_TRACK",
