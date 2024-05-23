@@ -39,16 +39,19 @@ return {
 		["nighty_type_n_build_form_old"] = ("Alt"),
 		["nighty_type_n_build_form_brugg"] = ("Brugg"),
 		["nighty_type_n_build_form_rappi"] = ("Rappi"),
+		["nighty_type_n_build_form_tooltip"] = ("Wähle die Bauform der Signalblende"),
 
 		["nighty_type_n_mast"] = ("Signal Mast"),
 		["nighty_type_n_mast_basic"] = ("Standard"),
 		["nighty_type_n_mast_offset_right"] = ("Versetzt Rechts"),
 		["nighty_type_n_mast_offset_left"] = ("Versetzt Links"),
+		["nighty_type_n_build_mast_tooltip"] = ("Wähle einen Mast"),
 
 		["nighty_type_n_mast_addon_none"] = ("Keine"),
 		["nighty_type_n_mast_addon_leiter"] = ("Leiter"),
 		["nighty_type_n_mast_addon_korb"] = ("Korb"),
 		["nighty_type_n_mast_addon_korb_leiter"] = ("Korb und Leiter"),
+		["nighty_type_n_mast_addon_tooltip"] = ("Wähle zusätzliche Bauteile, welche am Signalmast angebracht werden"),
 
 		["sbb_type_n_name"] = ("SBB Typ N Signale (Better Signals)"),
 		["sbb_type_n_name_desc"] = ("Schweizer Signale vom Typ N. Im Paket enthalten sind sowohl Vor- wie auch Hauptsignale. Die Signale sind Teil des [Better Signals] Projekts"),
@@ -101,16 +104,19 @@ return {
 		["nighty_type_n_build_form_old"] = ("Old"),
 		["nighty_type_n_build_form_brugg"] = ("Brugg"),
 		["nighty_type_n_build_form_rappi"] = ("Rappi"),
+		["nighty_type_n_build_form_tooltip"] = ("Choose the appearance of the signal"),
 
 		["nighty_type_n_mast"] = ("Signal Mast"),
 		["nighty_type_n_mast_basic"] = ("Standard"),
 		["nighty_type_n_mast_offset_right"] = ("Offset Right"),
 		["nighty_type_n_mast_offset_left"] = ("Offset Left"),
+		["nighty_type_n_build_mast_tooltip"] = ("Choose a signal mast"),
 
 		["nighty_type_n_mast_addon_none"] = ("None"),
 		["nighty_type_n_mast_addon_leiter"] = ("Ladder"),
 		["nighty_type_n_mast_addon_korb"] = ("Cage"),
 		["nighty_type_n_mast_addon_korb_leiter"] = ("Ladder and Cage"),
+		["nighty_type_n_mast_addon_tooltip"] = ("Choose addons, that should be attached the signal mast"),
 
 		["sbb_type_n_name"] = ("SBB Type N Signals (Better Signals)"),
 		["sbb_type_n_name_desc"] = ("Swiss Type N Signals. This signal pack includes both pre- and mainsignals. All signals are part of the [Better Signals] project"),
