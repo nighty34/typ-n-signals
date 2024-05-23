@@ -18,7 +18,7 @@ return {
 		["nighty_type_n_shorten_block_tooltip"] = ("[Geschwindigkeitsanzeige muss aktiv sein] Wähle, ob das Signal das Signalbild 'Warnung Verkürzter Blockabstand' datstellen soll."),
 
 		["nighty_type_n_occupied"] = ("Block ist belegt"),
-		["nighty_type_n_occupied_tooltip"] = ("[Geschwindigkeitsanzeige muss aktiv sein] Wähle, ob das Signal das Signalbild 'Belegtes Gleis' datstellen soll."),
+		["nighty_type_n_occupied_tooltip"] = ("[Geschwindigkeitsanzeige muss aktiv sein] Wähle, ob das Signal das Signalbild 'Belegtes Gleis' darstellen soll."),
 
 		["nighty_type_n_id_sign"] = ("Signal Nummer\nText kann im Signal-Namen geändert werden.\nz.B. (E34)"),
 		["nighty_type_n_id_sign_tooltip"] = ("Wähle, ob das Signal ein kleines Schild auf dem die Signalnummer angezeigt wird, haben soll."),
