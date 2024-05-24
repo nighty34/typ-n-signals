@@ -85,6 +85,7 @@ function signals.updateSignals()
 								oldConstruction.params.signal_state = signalState
 								oldConstruction.params.signal_speed = math.floor(minSpeed)
 								oldConstruction.params.following_signal = signalPath.following_signal
+								oldConstruction.params.paramsOverride = signalPath.paramsOverride
 								oldConstruction.params.seed = nil -- important!!
 
 								local newCheckSum = signalPath.checksum
@@ -108,7 +109,7 @@ function signals.updateSignals()
 									end
 								end
 
-								signals.signalObjects[signalString].checksum = newCheckSum
+								signals.signalObjects[signalString].checksum = newCheckSum	
 							else
 								print("Couldn't access params")
 							end
@@ -165,13 +166,12 @@ end
 
 function parseName(input)
     local values = {}
-    
     -- Iterate over each key-value pair in the input string
     for pair in input:gmatch("%s*([^,]+)%s*,?") do
         local key, value = pair:match("(%w+)%s*=%s*(%d+)")
-        if key and (key == "speed" or key == "dest" or key == "direction") then
-            values[key] = tonumber(value)
-        end
+		if key and value then
+			values[key] = tonumber(value)
+		end
     end
     
     return values
@@ -229,6 +229,11 @@ function evaluatePath(path)
 						followingSignal = currentSegment
 						currentSegment = {}
 						edgeSpeeds = {}
+					elseif signal.type == 2 then
+						local name = utils.getComponentProtected(potentialSignal.entity, 63)
+						local values = parseName(name.name)
+
+						currentSegment.paramsOverride = values
 					end
 				elseif pathIndex == (#path.path.edges - path.path.endOffset) then -- Adding Trainstations
 					currentSegment.entity = 0000

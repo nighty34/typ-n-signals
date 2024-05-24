@@ -98,6 +98,20 @@ return {
 		local x_offset = 0
 		local z_offset = .5
 
+		if params.paramsOverride then
+			if params.paramsOverride.occupied then
+				displayOccupied = params.paramsOverride.occupied == 1
+			end
+
+			if params.paramsOverride.warning then
+				displayWarning = params.paramsOverride.warning == 1
+			end
+
+			if params.paramsOverride.speed then
+				indicatedSpeed = tonumber(params.paramsOverride.speed)
+			end
+		end
+
 		if (params.better_signals_x_offset) then
 			if params.better_signals_x_offset == 0 then
 				x_offset = -2.5
