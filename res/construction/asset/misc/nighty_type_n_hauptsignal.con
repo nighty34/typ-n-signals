@@ -115,6 +115,10 @@ return {
 		local x_offset = 0
 		local z_offset = .5
 
+		if (params.signal_speed) then
+			indicatedSpeed = params.signal_speed
+		end
+
 		if params.paramsOverride then
 			if params.paramsOverride.occupied then
 				displayOccupied = params.paramsOverride.occupied == 1
@@ -125,7 +129,7 @@ return {
 			end
 
 			if params.paramsOverride.speed then
-				indicatedSpeed = tonumber(params.paramsOverride.speed)
+				indicatedSpeed = params.paramsOverride.speed
 			end
 		end
 
@@ -135,10 +139,6 @@ return {
 			elseif params.better_signals_x_offset == 2 then
 				x_offset = 2.5
 			end
-		end
-
-		if (params.signal_speed) then
-			indicatedSpeed = params.signal_speed
 		end
 
 		if params.nighty_type_n_signaltype then
@@ -166,10 +166,10 @@ return {
 				nextStopSignalDistance = 2
 			end
 
-			if params.following_signal.previous_speed and (math.floor(params.following_signal.previous_speed/10) > math.floor(params.following_signal.signal_speed/10)) then
+			if (params.following_signal.previous_speed and (math.floor(params.following_signal.previous_speed/10) > math.floor(params.following_signal.signal_speed/10))) and (params.following_signal.showSpeedChange) then
 				indicatesNextSpeed = true
 				indicatedSpeed = math.floor(params.following_signal.signal_speed)
-			elseif (params.previous_speed and (math.floor((params.previous_speed)/10) == math.floor((params.signal_speed)/10))) then
+			elseif (params.previous_speed and (math.floor((params.previous_speed)/10) == math.floor((params.signal_speed)/10))) or not params.showSpeedChange then
 				canIndicateSpeed = false
 			end
 		else

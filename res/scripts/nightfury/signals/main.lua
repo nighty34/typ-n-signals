@@ -86,6 +86,7 @@ function signals.updateSignals()
 								oldConstruction.params.signal_speed = math.floor(minSpeed)
 								oldConstruction.params.following_signal = signalPath.following_signal
 								oldConstruction.params.paramsOverride = signalPath.paramsOverride
+								oldConstruction.params.showSpeedChange = signalPath.showSpeedChange
 								oldConstruction.params.seed = nil -- important!!
 
 								local newCheckSum = signalPath.checksum
@@ -163,13 +164,40 @@ function signals.removeSignalByConstruction(construction)
 	end
 end
 
-
 function parseName(input)
+    local result = {}
+    -- Entferne Leerzeichen am Anfang und Ende des Strings
+    input = input:match("^%s*(.-)%s*$")
+    
+    -- Iteriere über jedes Paar, das durch Kommas getrennt ist
+    for pair in string.gmatch(input, '([^,]+)') do
+        local key, value = pair:match("^%s*([^=]+)%s*=%s*(.+)%s*$")
+        if key and value then
+            -- Konvertiere "true" und "false" in booleans
+            if value == "true" then
+                value = 1
+            elseif value == "false" then
+                value = 2
+            elseif tonumber(value) then
+                value = tonumber(value)
+            end
+            result[key] = value
+        end
+    end
+    return result
+end
+
+function parseName_old(input)
     local values = {}
     -- Iterate over each key-value pair in the input string
     for pair in input:gmatch("%s*([^,]+)%s*,?") do
-        local key, value = pair:match("(%w+)%s*=%s*(%d+)")
+        local key, value = pair:match("(%w+)%s*=%s*(%s+)")
 		if key and value then
+			if string.lower(value) == 'false' then
+				value = 0
+			elseif string.lower(value) == 'true' then
+				value = 1
+			end
 			values[key] = tonumber(value)
 		end
     end
@@ -219,6 +247,13 @@ function evaluatePath(path)
 							end
 
 							currentSegment.following_signal = followingSignal
+						end
+
+						if currentSegment.paramsOverride and currentSegment.paramsOverride.showSpeedChange then
+							currentSegment.showSpeedChange = currentSegment.paramsOverride.showSpeedChange == 1
+							print("Evaluating")
+						else
+							currentSegment.showSpeedChange = true
 						end
 
 						currentSegment.checksum = checksum + utils.checksum(currentSegment.entity, currentSegment.signal_state, currentSegment.signal_speed, #evaluatedPath)
