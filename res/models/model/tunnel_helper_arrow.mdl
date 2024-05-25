@@ -1,0 +1,36 @@
+function data()
+return {
+	boundingInfo = {
+		bbMax = { 4.1207389831543, 1.0930734872818, 9.2199583053589, },
+		bbMin = { -5.512825012207, -1.0930733680725, 8.4113082885742, },
+	},
+	collider = {
+		params = {
+			halfExtents = { 4.8167819976807, 1.0930733680725, 0.40432500839233, },
+		},
+		transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+		type = "BOX",
+	},
+	lods = {
+		{
+			node = {
+				children = {
+					{
+						materials = { "signals/helper/tunnel_helper.mtl", },
+						mesh = "signals/helper/tunnel_helper_lod0.msh",
+						name = "tunnel_signal_arrow",
+						transf = { 100, 0, 0, 0, 0, -1.6292067812174e-05, -100, 0, 0, 100, -1.6292067812174e-05, 0, 0, 0, 8.2767791748047, 1, },
+					},
+				},
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+			},
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 845.36065673828,
+		},
+	},
+	metadata = { },
+	version = 1,
+}
+end

@@ -364,6 +364,8 @@ return {
 		}
 
 		if params.better_signals_tunnel_helper and params.better_signals_tunnel_helper == 1 then
+			result.models[#result.models+1] = { id = "tunnel_helper_arrow.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, z_offset, 1 }}
+
 			result.groundFaces[#result.groundFaces + 1] = {
 				face = { { -50, -50, 0 }, { 50, -50, 0 }, { 50, 50, 0 }, { -50, 50, 0 } },
 				modes = {
