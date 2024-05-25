@@ -251,7 +251,6 @@ function evaluatePath(path)
 
 						if currentSegment.paramsOverride and currentSegment.paramsOverride.showSpeedChange then
 							currentSegment.showSpeedChange = currentSegment.paramsOverride.showSpeedChange == 1
-							print("Evaluating")
 						else
 							currentSegment.showSpeedChange = true
 						end
