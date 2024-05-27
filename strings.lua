@@ -4,6 +4,15 @@ return {
 		["nighty_no"] = ("Aus"),
 		["nighty_yes"] = ("An"),
 
+		["better_signals_x_offset"] = ("Signalauswahl zum verknüpfen kann \nmit ü und ¨ geändert werden.\n\nSignal Versatz"),
+		["better_signals_x_offset_tooltip"] = ("Wähle auf welcher Seite vom Gleis, das Signal snappen soll."),
+		["better_signals_snap_left"] = ("Links"),
+		["better_signals_snap_right"] = ("Rechts"),
+		["better_signals_snap_middle"] = ("Mitte"),
+		
+		["better_signals_tunnel_helper"] = ("Tunnel Hilfe"),
+		["better_signals_tunnel_helper_tooltip"] = ("Eine Hilfe, welche das Platzieren von Signalen in Tunnels vereinfachen soll."),
+
 		["nighty_type_n_hauptsignal_name"] = ("Typ N Hauptsignal"),
 		["nighty_type_n_hauptsignal_desc"] = ("Hauptsignale des Typ N Systems mit oder ohne Geschwindigkeitsanzeige"),
 
@@ -47,6 +56,7 @@ return {
 		["nighty_type_n_mast_offset_left"] = ("Versetzt Links"),
 		["nighty_type_n_build_mast_tooltip"] = ("Wähle einen Mast"),
 
+		["nighty_type_n_mast_addon"] = ("Mast Zusatz"),
 		["nighty_type_n_mast_addon_none"] = ("Keine"),
 		["nighty_type_n_mast_addon_leiter"] = ("Leiter"),
 		["nighty_type_n_mast_addon_korb"] = ("Korb"),
@@ -55,19 +65,19 @@ return {
 
 		["sbb_type_n_name"] = ("SBB Typ N Signale (Better Signals)"),
 		["sbb_type_n_name_desc"] = ("Schweizer Signale vom Typ N. Im Paket enthalten sind sowohl Vor- wie auch Hauptsignale. Die Signale sind Teil des [Better Signals] Projekts"),
-
-		["better_signals_view_distance"] = ("Signal Erkennungsdistanz"),
-		["better_signals_view_distance_tooltip"] = ("Stelle ein, wie weit ein Zug Signale sehen kann"),
-
-		["better_signals_x_offset"] = ("Signalauswahl zum verknüpfen kann \nmit ü und ¨ geändert werden.\n\nSignal Versatz"),
-		["better_signals_x_offset_tooltip"] = ("Wähle auf welcher Seite vom Gleis, das Signal snappen soll."),
-		["better_signals_snap_left"] = ("Links"),
-		["better_signals_snap_right"] = ("Rechts"),
-		["better_signals_snap_middle"] = ("Mitte"),
 	},
 	en = {
 		["nighty_no"] = ("Off"),
 		["nighty_yes"] = ("On"),
+
+		["better_signals_x_offset"] = ("Signals selection can be changed\nwith ü und ¨.\n\nSignal Offset"),
+		["better_signals_x_offset_tooltip"] = ("Choose on which side the signals should snap"),
+		["better_signals_snap_left"] = ("Left"),
+		["better_signals_snap_right"] = ("Right"),
+		["better_signals_snap_middle"] = ("Center"),
+		
+		["better_signals_tunnel_helper"] = ("Tunnel Helper"),
+		["better_signals_tunnel_helper_tooltip"] = ("Check to enable a helper for placing signals in tunnels"),
 
 		["nighty_type_n_hauptsignal_name"] = ("Type N Main Signal"),
 		["nighty_type_n_hauptsignal_desc"] = ("Minsignal from the Type N System with or without Speedindicator"),
@@ -112,6 +122,7 @@ return {
 		["nighty_type_n_mast_offset_left"] = ("Offset Left"),
 		["nighty_type_n_build_mast_tooltip"] = ("Choose a signal mast"),
 
+		["nighty_type_n_mast_addon"] = ("Mast Addon"),
 		["nighty_type_n_mast_addon_none"] = ("None"),
 		["nighty_type_n_mast_addon_leiter"] = ("Ladder"),
 		["nighty_type_n_mast_addon_korb"] = ("Cage"),
@@ -120,15 +131,6 @@ return {
 
 		["sbb_type_n_name"] = ("SBB Type N Signals (Better Signals)"),
 		["sbb_type_n_name_desc"] = ("Swiss Type N Signals. This signal pack includes both pre- and mainsignals. All signals are part of the [Better Signals] project"),
-
-		["better_signals_view_distance"] = ("Signal View Distance"),
-		["better_signals_view_distance_tooltip"] = ("Choose how far the trains should be able to evaluate signals"),
-
-		["better_signals_x_offset"] = ("Signals selection can be changed\nwith ü und ¨.\n\nSignal Offset"),
-		["better_signals_x_offset_tooltip"] = ("Choose on which side the signals should snap"),
-		["better_signals_snap_left"] = ("Left"),
-		["better_signals_snap_right"] = ("Right"),
-		["better_signals_snap_middle"] = ("Center"),
 	}
 }
 end
