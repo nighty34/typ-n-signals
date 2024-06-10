@@ -18,6 +18,7 @@ return {
 
 		["nighty_type_n_signaltype"] = ("Signaltyp\nText kann im Signal-Namen geändert werden.\n z.B. [Zue] oder [Zue|ZHdb] für mehrere Schilder."),
 		["nighty_type_n_signaltype_pre"] = ("Signaltyp"),
+		["nighty_type_n_signaltype_pre_tooltip"] = ("Wähle einen Signaltyp (Wiederholungssignal und Voranzeige Einfahrt)"),
 		["nighty_type_n_signaltype_tooltip"] = ("Wähle einen Signaltyp (Einfahrt-/Ausfahrt- oder Vorangezeigte Einfahrt)"),
 
 		["nighty_type_n_speedindicator"] = ("Geschwindigkeitsanzeige"),
@@ -84,7 +85,8 @@ return {
 
 		["nighty_type_n_signaltype"] = ("Signal Type\nText on the signs can be changed.\n e.g. [Zue] or [Zue|ZHdb] for multiple signs."),
 		["nighty_type_n_signaltype_pre"] = ("Signal Type"),
-		["nighty_type_n_signaltype_tooltip"] = ("Choose a signaltype (Entry-/Exit- or Entry Announcement)"),
+		["nighty_type_n_signaltype_pre_tooltip"] = ("Choose a signaltype (Repeat or Entry Announcement)"),
+		["nighty_type_n_signaltype_tooltip"] = ("Choose a signaltype (Entry/Exit or Entry Announcement)"),
 
 		["nighty_type_n_speedindicator"] = ("Speed Indicator"),
 		["nighty_type_n_speedindicator_tooltip"] = ("Choose if the signal should have a speed indicator."),
