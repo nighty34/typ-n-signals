@@ -11,10 +11,6 @@ config.signals = {
 		type = "main",
 		allowWaypoints = true,
 	},
-	nighty_simple = {
-		type="main",
-		allowWaypoints = true,
-	}
 }
 
 
