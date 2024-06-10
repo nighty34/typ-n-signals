@@ -11,10 +11,10 @@ return {
 		},
 		alpha_test = {
 			a2CThreshold = 0,
-			alphaThreshold = 0,
+			alphaThreshold = 1,
 			cutout = true,
 			disableDepthAndNormalWrite = false,
-			sorted = false,
+			sorted = true,
 		},
 		fade_out_range = {
 			fadeOutEndDist = 20000,
