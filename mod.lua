@@ -4,17 +4,19 @@ local signals = require "nightfury/signals/main"
 function data()
 	return {
 		info = {
-			description = _("sbb_type_n_name_desc"),
 			name = _("sbb_type_n_name"),
-			params = {
-			},
+			description = _("sbb_type_n_name_desc"),
+			minorVersion = 0,
 			modid = "nightfury34_type-n_signale_1",
+			severityAdd = "NONE",
+			severityRemove = "WARNING",
 			authors = {
 				{
 					name = "nightfury34",
 					role = "CREATOR",
 				},
 			},
+			params = {},
 			dependencies = { "nightfury34_better_signals_1" },
 			requiredMods = {
 				{
