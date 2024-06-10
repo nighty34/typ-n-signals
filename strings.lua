@@ -24,7 +24,7 @@ return {
 		["nighty_type_n_speedindicator_tooltip"] = ("Wähle ob das Signal mit Geschwindigkeitsanzeige gebaut werden soll."),
 
 		["nighty_type_n_shorten_block"] = ("Verkürzte Blockabstände"),
-		["nighty_type_n_shorten_block_tooltip"] = ("[Geschwindigkeitsanzeige muss aktiv sein] Wähle, ob das Signal das Signalbild 'Warnung Verkürzter Blockabstand' datstellen soll."),
+		["nighty_type_n_shorten_block_tooltip"] = ("[Geschwindigkeitsanzeige muss aktiv sein] Wähle, ob das Signal das Signalbild 'Warnung Verkürzter Blockabstand' darstellen soll."),
 
 		["nighty_type_n_occupied"] = ("Block ist belegt"),
 		["nighty_type_n_occupied_tooltip"] = ("[Geschwindigkeitsanzeige muss aktiv sein] Wähle, ob das Signal das Signalbild 'Belegtes Gleis' darstellen soll."),
