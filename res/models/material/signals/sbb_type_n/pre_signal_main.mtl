@@ -14,7 +14,7 @@ return {
 			alphaThreshold = 0.5,
 			cutout = false,
 			disableDepthAndNormalWrite = false,
-			sorted = false,
+			sorted = true,
 		},
 		fade_out_range = {
 			fadeOutEndDist = 20000,
@@ -25,13 +25,13 @@ return {
 			type = "TWOD",
 		},
 		map_metal_gloss_ao = {
-			fileName = "models/railroad/typ_n/signal_metall_typ_n.dds",
+			fileName = "default_metal_gloss_ao.tga",
 			type = "TWOD",
 			wrapS = "REPEAT",
 			wrapT = "REPEAT",
 		},
 		map_normal = {
-			fileName = "models/railroad/typ_n/signal_schirm_typ_n_normal.dds",
+			fileName = "default_normal_map.dds",
 			redGreen = true,
 			type = "TWOD",
 		},
@@ -51,3 +51,4 @@ return {
 	type = "PHYS_TRANSPARENT_NRML_MAP",
 }
 end
+
