@@ -9,7 +9,7 @@ return {
 			name = _("better_signals_x_offset"),
 --			uiType = "ICON_BUTTON",
 			values = {_("better_signals_snap_left"), _("better_signals_snap_middle"), _("better_signals_snap_right")},
-			defaultIndex = 1,
+			defaultIndex = 0,
 			tooltip = _("better_signals_x_offset_tooltip"),
 		},
 		{
