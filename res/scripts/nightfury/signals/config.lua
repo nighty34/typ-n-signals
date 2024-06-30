@@ -5,11 +5,11 @@ local config = {}
 config.signals = {
 	nighty_type_n_hauptsignal = {
 		type = "main",
-		allowWaypoints = true,
+		isAnimated = true,
 	},
 	nighty_type_n_vorsignal = {
 		type = "main",
-		allowWaypoints = true,
+		isAnimated = false,
 	},
 }
 

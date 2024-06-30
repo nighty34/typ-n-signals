@@ -90,7 +90,7 @@ return {
 		local displayWarning = (params.nighty_type_n_shorten_block and params.nighty_type_n_shorten_block == 1)
 		local hasIdSign = (params.nighty_type_n_id_sign and params.nighty_type_n_id_sign == 1)
 		local signalType = "normal"
-		local maxSpeed = 140
+		local maxSpeed = 160
 		local indicatedSpeed = maxSpeed + 1
 		local canIndicateSpeed = true
 		local indicatesNextSpeed = false
@@ -103,10 +103,6 @@ return {
 		end
 
 		if params.paramsOverride then
-			if params.paramsOverride.occupied then
-				displayOccupied = params.paramsOverride.occupied == 1
-			end
-
 			if params.paramsOverride.warning then
 				displayWarning = params.paramsOverride.warning == 1
 			end
@@ -143,11 +139,19 @@ return {
 				nextStopSignalDistance = 2
 			end
 
-			if (params.following_signal.previous_speed and (math.floor(params.following_signal.previous_speed/10) > math.floor(params.following_signal.signal_speed/10))) and (params.following_signal.showSpeedChange) then
-				indicatesNextSpeed = true
-				indicatedSpeed = math.floor(params.following_signal.signal_speed)
-			elseif (params.previous_speed and (math.floor((params.previous_speed)/10) == math.floor((indicatedSpeed)/10))) or not params.showSpeedChange then
-				canIndicateSpeed = false
+			if params.following_signal.signal_speed then
+				local followingSignalSpeed = params.following_signal.signal_speed
+
+				if params.following_signal.paramsOverride and params.following_signal.paramsOverride.speed then
+					followingSignalSpeed = tonumber(params.following_signal.paramsOverride.speed)
+				end
+			
+				if (params.following_signal.previous_speed and (math.floor(params.following_signal.previous_speed/10) > math.floor(followingSignalSpeed/10))) and (params.following_signal.showSpeedChange) then
+					indicatesNextSpeed = true
+					indicatedSpeed = math.floor(followingSignalSpeed)
+				elseif (params.previous_speed and (math.floor((params.previous_speed)/10) == math.floor((indicatedSpeed)/10))) or not params.showSpeedChange then
+					canIndicateSpeed = false
+				end
 			end
 		else
 			indicatesNextSpeed = false
@@ -157,8 +161,6 @@ return {
 		if nextStopSignalDistance == 1 then
 			canIndicateSpeed = false
 		elseif displayWarning and nextStopSignalDistance == 2 then
-			canIndicateSpeed = false
-		elseif displayOccupied and nextStopSignalDistance == 1 then
 			canIndicateSpeed = false
 		end
 
