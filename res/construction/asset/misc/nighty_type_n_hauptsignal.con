@@ -158,7 +158,6 @@ return {
 
 		-- Evaluate future signals
 		local nextStopSignalDistance = 10 -- choosen high TODO: (dirty code)
-		
 
 		if params.following_signal then
 			if params.following_signal.signal_state == 0 then
@@ -169,15 +168,18 @@ return {
 
 			if params.following_signal.signal_speed then
 				local followingSignalSpeed = params.following_signal.signal_speed
-
-				if params.following_signal.paramsOverride and params.following_signal.paramsOverride.speed then
-					followingSignalSpeed = tonumber(params.following_signal.paramsOverride.speed)
-				end
-			
-				if (params.following_signal.previous_speed and (math.floor(params.following_signal.previous_speed/10) > math.floor(followingSignalSpeed/10))) and (params.following_signal.showSpeedChange) then
+				if (math.floor(followingSignalSpeed/10)*10 < math.floor(indicatedSpeed/10)*10) then
 					indicatesNextSpeed = true
-					indicatedSpeed = math.floor(followingSignalSpeed)
-				elseif (params.previous_speed and (math.floor((params.previous_speed)/10) == math.floor((indicatedSpeed)/10))) or not params.showSpeedChange then
+					indicatedSpeed = math.floor((followingSignalSpeed+1)/10)*10
+				elseif params.previous_speed and (((math.floor(params.previous_speed/10)*10 < math.floor(indicatedSpeed/10)*10) or (math.floor(params.previous_speed/10)*10 > math.floor(indicatedSpeed/10)*10))) then
+					canIndicateSpeed = true
+					indicatesNextSpeed = false
+					indicatedSpeed = math.floor((indicatedSpeed+1)/10)*10
+				else
+					canIndicateSpeed = false
+				end
+
+				if (params.previous_speed and (math.floor((params.previous_speed)/10) == math.floor((indicatedSpeed+1)/10))) or not params.showSpeedChange then
 					canIndicateSpeed = false
 				end
 			end
