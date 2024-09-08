@@ -5,11 +5,15 @@ local config = {}
 config.signals = {
 	nighty_type_n_hauptsignal = {
 		type = "main",
-		isAnimated = true,
+		isAnimated = false,
 	},
 	nighty_type_n_vorsignal = {
 		type = "main",
 		isAnimated = false,
+	},
+	nighty_type_n_hauptsignal_bruecke = {
+		type = "main",
+		isAnimated = false
 	},
 }
 
