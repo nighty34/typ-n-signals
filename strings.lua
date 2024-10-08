@@ -9,6 +9,9 @@ return {
 		["better_signals_snap_left"] = ("Links"),
 		["better_signals_snap_right"] = ("Rechts"),
 		["better_signals_snap_middle"] = ("Mitte"),
+
+		["nighty_type_n_signalbruecke_name"] = ("Signalbrückenausleger"),
+		["nighty_type_n_signalbruecke_desc"] = ("Signalbrückenausleger der SBB designed für Typ-N Signale"),
 		
 		["better_signals_tunnel_helper"] = ("Tunnel Hilfe"),
 		["better_signals_tunnel_helper_tooltip"] = ("Eine Hilfe, welche das Platzieren von Signalen in Tunnels vereinfachen soll."),
@@ -18,6 +21,9 @@ return {
 
 		["nighty_type_n_hauptsignal_name"] = ("Typ N Hauptsignal"),
 		["nighty_type_n_hauptsignal_desc"] = ("Hauptsignale des Typ N Systems mit oder ohne Geschwindigkeitsanzeige"),
+
+		["nighty_type_n_vorsignal_bruecke_name"] = ("Typ N Vorsignal als Signalbrücke"),
+		["nighty_type_n_vorsignal_bruecke_desc"] = ("Vorsignal des Typ N System, als Signalbrück"),
 
 		["nighty_type_n_signaltype"] = ("Signaltyp\nText kann im Signal-Namen geändert werden.\n z.B. [Zue] oder [Zue|ZHdb] für mehrere Schilder."),
 		["nighty_type_n_signaltype_pre"] = ("Signaltyp"),
@@ -83,6 +89,9 @@ return {
 		["better_signals_snap_left"] = ("Left"),
 		["better_signals_snap_right"] = ("Right"),
 		["better_signals_snap_middle"] = ("Center"),
+
+		["nighty_type_n_signalbruecke_name"] = ("Signaling Bridge Mast"),
+		["nighty_type_n_signalbruecke_desc"] = ("Signaling Bridge designed for the type n signaling system"),
 		
 		["better_signals_tunnel_helper"] = ("Tunnel Helper"),
 		["better_signals_tunnel_helper_tooltip"] = ("Check to enable a helper for placing signals in tunnels"),
@@ -92,6 +101,9 @@ return {
 
 		["nighty_type_n_hauptsignal_name"] = ("Type N Main Signal"),
 		["nighty_type_n_hauptsignal_desc"] = ("Mainsignal from the Type N System with or without Speedindicator"),
+
+		["nighty_type_n_vorsignal_bruecke_name"] = ("Type N Pre Signal as Signalingbridge"),
+		["nighty_type_n_vorsignal_bruecke_desc"] = ("Presignal from the Type N System with or without Speedindicator"),
 
 		["nighty_type_n_signaltype"] = ("Signal Type\nText on the signs can be changed.\n e.g. [Zue] or [Zue|ZHdb] for multiple signs."),
 		["nighty_type_n_signaltype_pre"] = ("Signal Type"),

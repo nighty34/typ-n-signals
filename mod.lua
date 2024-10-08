@@ -29,11 +29,13 @@ function data()
 		end,
 		postRunFn = function ()
 			if pcall(function() api.res.constructionRep.get(api.res.constructionRep.find('asset/f1rnen_l_signalbruecke.con')) end) then
-				print("Found F1rnen Mod")
+				print("Type-N Signals: Found F1rnen Mod")
 				api.res.constructionRep.setVisible(api.res.constructionRep.find('asset/misc/nighty_type_n_hauptsignal_bruecke.con'),false)
+				api.res.constructionRep.setVisible(api.res.constructionRep.find('asset/misc/nighty_type_n_vorsignal_bruecke.con'),false)
 			else
-				print("Couldn't find F1rnen Mod")
+				print("Type-N Signals: Couldn't find F1rnen Mod")
 				api.res.constructionRep.setVisible(api.res.constructionRep.find('asset/misc/nighty_type_n_hauptsignal_bruecke_f1rnen.con'),false)
+				api.res.constructionRep.setVisible(api.res.constructionRep.find('asset/misc/nighty_type_n_vorsignal_bruecke_f1rnen.con'),false)
 			end
 		end
 	}

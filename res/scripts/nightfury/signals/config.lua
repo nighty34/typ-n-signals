@@ -15,6 +15,18 @@ config.signals = {
 		type = "main",
 		isAnimated = false
 	},
+	nighty_type_n_hauptsignal_bruecke_f1rnen = {
+		type = "main",
+		isAnimated = false
+	},
+	nighty_type_n_vorsignal_bruecke = {
+		type = "main",
+		isAnimated = false
+	},
+	nighty_type_n_vorsignal_bruecke_f1rnen = {
+		type = "main",
+		isAnimated = false
+	},
 }
 
 
