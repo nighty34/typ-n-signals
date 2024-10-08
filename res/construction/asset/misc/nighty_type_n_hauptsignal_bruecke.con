@@ -1,13 +1,11 @@
 local signals = require "nightfury/signals/main"
-
 function data()
 
-return { 
-	params = {
+return {
+	params =  {
 		{
 			key = "better_signals_x_offset",
 			name = _("better_signals_x_offset"),
---			uiType = "ICON_BUTTON",
 			values = {_("better_signals_snap_left"), _("better_signals_snap_middle"), _("better_signals_snap_right")},
 			defaultIndex = 0,
 			tooltip = _("better_signals_x_offset_tooltip"),
@@ -20,24 +18,17 @@ return {
 			tooltip = _("better_signals_tunnel_helper_tooltip"),
 		},
 		{
-			key = "nighty_type_n_mast",
-			name = _("nighty_type_n_mast"),
-			values = {_("nighty_type_n_mast_basic"), _("nighty_type_n_mast_offset_left"), _("nighty_type_n_mast_offset_right")},
+			key = "nighty_type_n_korb",
+			name = _("nighty_type_n_korb"),
+			values = {_("nighty_type_n_korb_basic"), _("nighty_type_n_korb_with_cage"),},
 			defaultIndex = 0,
 			tooltip = _("nighty_type_n_build_mast_tooltip"),
-		},
-		{
-			key = "nighty_type_n_mast_addon",
-			name = _("nighty_type_n_mast_addon"),
-			values = {_("nighty_type_n_mast_addon_none"), _("nighty_type_n_mast_addon_leiter"), _("nighty_type_n_mast_addon_korb"), _("nighty_type_n_mast_addon_korb_leiter")},
-			defaultIndex = 0,
-			tooltip = _("nighty_type_n_mast_addon_tooltip"),
 		},
 		{
 			key = "nighty_type_n_id_sign",
 			name = _("nighty_type_n_id_sign"),
 			uiType = "ICON_BUTTON",
-			values = {"ui/parameters/nighty/none.tga", "ui/parameters/nighty/typ-n_sign_id.tga"},
+			values = {"ui/parameters/nighty/none.tga", "ui/parameters/nighty/typ-n_sign_id_up.tga", "ui/parameters/nighty/typ-n_sign_id_down.tga"},
 			defaultIndex = 0,
 			tooltip = _("nighty_type_n_id_sign_tooltip"),
 		},
@@ -83,8 +74,8 @@ return {
 	},
 	type = "ASSET_TRACK",
 	description = {
-		name = _("nighty_type_n_hauptsignal_name"),			
-		description = _("nighty_type_n_hauptsignal_desc"),
+		name = _("nighty_type_n_hauptsignal_bruecke_name"),			
+		description = _("nighty_type_n_hauptsignal_bruecke_desc"),
 	},
 	availability = {
 		yearFrom = 1986,
@@ -113,7 +104,7 @@ return {
 		local indicatesNextSpeed = false
 
 		local y_offset = 0
-		local z_offset = 2
+		local z_offset = 2.75
 		local x_offset = .25
 	
 
@@ -197,7 +188,7 @@ return {
 			canIndicateSpeed = false
 		end
 
-		
+
 		-- ==[Model definition]==
 
 		-- Build Form
@@ -205,44 +196,26 @@ return {
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_schirm_alt_main.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
 		elseif params.nighty_type_n_build_form and (params.nighty_type_n_build_form == 1) then
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_schirm_brugg_main.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-		else 
+		else
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_schirm_rappi_main.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
 		end
 		
 		-- Mast
-		if params.nighty_type_n_mast and (params.nighty_type_n_mast == 0) then
+		if params.nighty_type_n_korb and (params.nighty_type_n_korb == 0) then
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_bruecke.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-
-			if params.nighty_type_n_mast_addon and (params.nighty_type_n_mast_addon == 1) then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_leiter.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-			elseif params.nighty_type_n_mast_addon and (params.nighty_type_n_mast_addon == 2) then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_korb.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-			elseif params.nighty_type_n_mast_addon and (params.nighty_type_n_mast_addon == 3) then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_korb.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_leiter.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
+			if (params.nighty_type_n_id_sign and params.nighty_type_n_id_sign == 2) then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber_without.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset-.3, y_offset, z_offset-1.9, 1 }}
 			end
-
-		elseif params.nighty_type_n_mast and (params.nighty_type_n_mast == 1) then
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_versetzt_mirrored.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-
-			if params.nighty_type_n_mast_addon and (params.nighty_type_n_mast_addon == 1) then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_leiter_versetzt.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset + 1.25, z_offset, 1 }}
-			elseif params.nighty_type_n_mast_addon and (params.nighty_type_n_mast_addon == 2) then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_korb.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-			elseif params.nighty_type_n_mast_addon and (params.nighty_type_n_mast_addon == 3) then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_korb.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_leiter_versetzt.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset + 1.25, z_offset, 1 }}
+		elseif params.nighty_type_n_korb and (params.nighty_type_n_korb == 1) then
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_bruecke.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_korb.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
+			if (params.nighty_type_n_id_sign and params.nighty_type_n_id_sign == 2) then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber_without.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset-.3, y_offset, z_offset-1.9, 1 }}
 			end
-		else
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_versetzt.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-
-			if params.nighty_type_n_mast_addon and (params.nighty_type_n_mast_addon == 1) then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_leiter_versetzt.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-			elseif params.nighty_type_n_mast_addon and (params.nighty_type_n_mast_addon == 2) then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_korb.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-			elseif params.nighty_type_n_mast_addon and (params.nighty_type_n_mast_addon == 3) then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_korb.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_mast_addon_leiter_versetzt.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
+		elseif params.nighty_type_n_korb and (params.nighty_type_n_korb == 2) then
+			result.models[#result.models+1] = { id="railroad/sbb_l_signalkorb/sbb_l_signalkorb.mdl", transf = { -1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, x_offset-.1, y_offset+2.5, z_offset-2.25, 1 }}
+			if (params.nighty_type_n_id_sign and params.nighty_type_n_id_sign == 2) then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber_without.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset+.23, y_offset, z_offset-1.9, 1 }}
 			end
 		end
 		
@@ -263,12 +236,16 @@ return {
 			end
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n-station_pre.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
 		elseif signalType == "shuntingStop" then
-			if hasIdSign then
+			if hasIdSign or ((params.nighty_type_n_id_sign and params.nighty_type_n_id_sign == 2) and (params.nighty_type_n_korb and params.nighty_type_n_korb < 2)) then
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
 			end
 
 			if hasSpeedIndicator then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n-sign_shunting.mdl", transf = {1, 0, 0, 0, 0, -1, -8.7422776573476e-08, 0, 0, 8.7422776573476e-08, -1, 0, x_offset -0.15, y_offset, z_offset + 9.25, 1, }}
+				if params.nighty_type_n_korb and (params.nighty_type_n_korb == 2) then
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n-sign_shunting.mdl", transf = {1, 0, 0, 0, 0, -1, -8.7422776573476e-08, 0, 0, 8.7422776573476e-08, -1, 0, x_offset -0.15, y_offset, z_offset + 9, 1, }}
+				else
+					result.models[#result.models+1] = { id = "nighty/signals/typ-n-sign_shunting.mdl", transf = {1, 0, 0, 0, 0, -1, -8.7422776573476e-08, 0, 0, 8.7422776573476e-08, -1, 0, x_offset -0.15, y_offset, z_offset + 9.25, 1, }}
+				end
 			else
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n-sign_shunting.mdl", transf = {1, 0, 0, 0, 0, -1, -8.7422776573476e-08, 0, 0, 8.7422776573476e-08, -1, 0, x_offset, y_offset, z_offset + 9.95, 1, }}
 			end

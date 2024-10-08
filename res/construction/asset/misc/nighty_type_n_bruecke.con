@@ -1,0 +1,67 @@
+function data()
+	return { 
+		type = "ASSET_TRACK",
+		description = {
+			name = _("nighty_type_n_signalbruecke_name"),			
+			description = _("nighty_type_n_signalbruecke_desc")
+		},
+	
+		buildMode = "SINGLE",
+		categories = {"nighty_typ_n"},
+		skipCollision = true,
+		autoRemovable = false,
+		order = 1,
+		
+	
+		params = {
+			{
+				key = "quer_length",		
+				name = _("Quertragewerk Elemente"),
+				uiType = "SLIDER",
+				values = { _("1"),_("2"),_("3"),_("4"),_("5"),_("6"),_("7"),_("8"),_("9"),_("10") },			
+			},
+			{
+				key = "nighty_y_offset",		
+				name = _("Y-Offset"),
+				uiType = "SLIDER",
+				defaultIndex = 14,
+				values = { _("-7"),_("-6.5"),_("-6"),_("-5.5"),_("-5"),_("-4.5"),_("-4"),_("-3.5"),_("-3"),_("-2.5"),_("-2"),_("-1.5"),_("-1"),_("-0.5"),_("0"),_("0.5"),_("1"),_("1.5"),_("2"),_("2.5"),_("3"),_("3.5"),_("4"),_("4.5"),_("5"),_("5.5"),_("6"),_("6.5"),_("7"),},			
+			},
+		},
+		
+		updateFn = function(params)
+			local result = {}
+			local nighty_quer_offset = (params.nighty_y_offset or 0) * 0.5 - 9.4375 - 1.25;
+
+			local z_offset = .8
+	
+			result.models = { }
+	
+			result.models[#result.models+1] =
+			{ id = "nighty/bruecke/typ-n_signalb_mast.mdl",
+			transf = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, nighty_quer_offset-0.2, z_offset, 1, } }
+	
+			for i = (params.quer_length*2 + 1 or 0) + 1, 0, -1
+			do
+				result.models[#result.models+1] =
+				{ id = "nighty/bruecke/typ-n_signalb_balken.mdl",
+				transf = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, nighty_quer_offset-0.2, z_offset, 1, } }
+				
+				nighty_quer_offset = nighty_quer_offset + 2.5
+			end
+			
+			result.models[#result.models+1] =
+			{ id = "nighty/bruecke/typ-n_signalb_mast.mdl",
+			transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, 0, nighty_quer_offset, z_offset, 1, } }
+			
+			result.terrainAlignmentLists = { {
+				type = "EQUAL",
+				faces =  { }
+			} }
+	
+			return result
+		end
+	}
+	
+	end
+	

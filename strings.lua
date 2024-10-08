@@ -13,6 +13,9 @@ return {
 		["better_signals_tunnel_helper"] = ("Tunnel Hilfe"),
 		["better_signals_tunnel_helper_tooltip"] = ("Eine Hilfe, welche das Platzieren von Signalen in Tunnels vereinfachen soll."),
 
+		["nighty_type_n_hauptsignal_bruecke_name"] = ("Typ N Hauptsignal als Signalbrücke"),
+		["nighty_type_n_hauptsignal_bruecke_desc"] = ("Hauptsignale des Typ N System, als Signalbrücke"),
+
 		["nighty_type_n_hauptsignal_name"] = ("Typ N Hauptsignal"),
 		["nighty_type_n_hauptsignal_desc"] = ("Hauptsignale des Typ N Systems mit oder ohne Geschwindigkeitsanzeige"),
 
@@ -57,6 +60,10 @@ return {
 		["nighty_type_n_mast_offset_left"] = ("Versetzt Links"),
 		["nighty_type_n_build_mast_tooltip"] = ("Wähle einen Mast"),
 
+		["nighty_type_n_korb_basic"] = ("H-Balken"),
+		["nighty_type_n_korb_with_cage"] = ("H-Balken mit Korb"),
+		["nighty_type_n_korb_f1rnen"] = ("Signalkorb"),
+
 		["nighty_type_n_mast_addon"] = ("Mast Zusatz"),
 		["nighty_type_n_mast_addon_none"] = ("Keine"),
 		["nighty_type_n_mast_addon_leiter"] = ("Leiter"),
@@ -80,8 +87,11 @@ return {
 		["better_signals_tunnel_helper"] = ("Tunnel Helper"),
 		["better_signals_tunnel_helper_tooltip"] = ("Check to enable a helper for placing signals in tunnels"),
 
+		["nighty_type_n_hauptsignal_bruecke_name"] = ("Type N Main Signal as Signalingbridge"),
+		["nighty_type_n_hauptsignal_bruecke_desc"] = ("Mainsignal from the Type N System with or without Speedindicator"),
+
 		["nighty_type_n_hauptsignal_name"] = ("Type N Main Signal"),
-		["nighty_type_n_hauptsignal_desc"] = ("Minsignal from the Type N System with or without Speedindicator"),
+		["nighty_type_n_hauptsignal_desc"] = ("Mainsignal from the Type N System with or without Speedindicator"),
 
 		["nighty_type_n_signaltype"] = ("Signal Type\nText on the signs can be changed.\n e.g. [Zue] or [Zue|ZHdb] for multiple signs."),
 		["nighty_type_n_signaltype_pre"] = ("Signal Type"),
@@ -123,6 +133,10 @@ return {
 		["nighty_type_n_mast_offset_right"] = ("Offset Right"),
 		["nighty_type_n_mast_offset_left"] = ("Offset Left"),
 		["nighty_type_n_build_mast_tooltip"] = ("Choose a signal mast"),
+
+		["nighty_type_n_korb_basic"] = ("Basic"),
+		["nighty_type_n_korb_with_cage"] = ("Basic with Cage"),
+		["nighty_type_n_korb_f1rnen"] = ("F1rnen Signaling Bridge"),
 
 		["nighty_type_n_mast_addon"] = ("Mast Addon"),
 		["nighty_type_n_mast_addon_none"] = ("None"),
