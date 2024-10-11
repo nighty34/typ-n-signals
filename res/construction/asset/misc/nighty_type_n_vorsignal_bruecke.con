@@ -1,62 +1,10 @@
-local signals = require "nightfury/signals/main"
+local builder = require "nightfury/signals/type_n_builder"
+local param_builder = require "nightfury/signals/type_n_param_builder"
 
 function data()
 
 return { 
-	params = {
-		{
-			key = "better_signals_x_offset",
-			name = _("better_signals_x_offset"),
-			values = {_("better_signals_snap_left"), _("better_signals_snap_middle"), _("better_signals_snap_right")},
-			defaultIndex = 0,
-			tooltip = _("better_signals_x_offset_tooltip"),
-		},
-		{
-			key = "better_signals_tunnel_helper",
-			name = _("better_signals_tunnel_helper"),
-			uiType = "CHECKBOX",
-			values = {"0", "1"},
-			tooltip = _("better_signals_tunnel_helper_tooltip"),
-		},
-		{
-			key = "nighty_type_n_korb",
-			name = _("nighty_type_n_korb"),
-			values = {_("nighty_type_n_korb_basic"), _("nighty_type_n_korb_with_cage")},
-			defaultIndex = 0,
-			tooltip = _("nighty_type_n_build_mast_tooltip"),
-		},
-		{
-			key = "nighty_type_n_id_sign",
-			name = _("nighty_type_n_id_sign"),
-			uiType = "ICON_BUTTON",
-			values = {"ui/parameters/nighty/none.tga", "ui/parameters/nighty/typ-n_sign_id_up.tga", "ui/parameters/nighty/typ-n_sign_id_down.tga"},
-			defaultIndex = 0,
-			tooltip = _("nighty_type_n_id_sign_tooltip"),
-		},
-		{
-			key = "nighty_type_n_signaltype",
-			name = _("nighty_type_n_signaltype_pre"),
-			uiType = "ICON_BUTTON",
-			values = {"ui/parameters/nighty/none.tga", "ui/parameters/nighty/typ-n_sign_repeat.tga","ui/parameters/nighty/typ-n_station_pre.tga",},
-			defaultIndex = 0,
-			tooltip = _("nighty_type_n_signaltype_pre_tooltip"),
-		},
-		{
-			key = "nighty_type_n_build_form",
-			name = _("nighty_type_n_build_form"),
-			values = {_("nighty_type_n_build_form_old"), _("nighty_type_n_build_form_brugg"), _("nighty_type_n_build_form_rappi")},
-			defaultIndex = 2,
-			tooltip = _("nighty_type_n_build_form_tooltip"),
-		},
-		{
-			key = "nighty_type_n_speedindicator",
-			name = _("nighty_type_n_speedindicator"),
-			uiType = "ICON_BUTTON",
-			values = {"ui/parameters/nighty/none.tga","ui/parameters/nighty/typ-n_speed_indicator.tga"},
-			defaultIndex = 0,
-			tooltip = _("nighty_type_n_speedindicator_tooltip"),
-		},
-	},
+	params = param_builder.pre_bridge_params(false),
 	type = "ASSET_TRACK",
 	description = {
 		name = _("nighty_type_n_vorsignal_bruecke_name"),			
@@ -81,7 +29,7 @@ return {
 		local hasSpeedIndicator = (params.nighty_type_n_speedindicator and params.nighty_type_n_speedindicator == 1)
 		local displayWarning = (params.nighty_type_n_shorten_block and params.nighty_type_n_shorten_block == 1)
 		local hasIdSign = (params.nighty_type_n_id_sign and params.nighty_type_n_id_sign == 1)
-		local signalType = "normal"
+		local signalType = nil
 		local maxSpeed = 160
 		local indicatedSpeed = maxSpeed + 1
 		local canIndicateSpeed = true
@@ -89,7 +37,7 @@ return {
 
 		local y_offset = 0
 		local z_offset = 2.75
-		local x_offset = .25
+		local x_offset = builder.calc_x_offset(.25, params.better_signals_x_offset)
 		
 		if (params.signal_speed) then
 			indicatedSpeed = params.signal_speed
@@ -105,21 +53,14 @@ return {
 			end
 		end
 
-		if (params.better_signals_x_offset) then
-			if params.better_signals_x_offset == 0 then
-				y_offset = -2.5
-			elseif params.better_signals_x_offset == 2 then
-				y_offset = 2.5
-			end
+		if (params.better_signals_y_offset) then
+			y_offset = builder.set_y_offset(y_offset, params.better_signals_y_offset)
 		end
 
 		if params.nighty_type_n_signaltype then
-			if params.nighty_type_n_signaltype == 1 then
-				signalType = "repeat"
-			elseif params.nighty_type_n_signaltype == 2 then
-				signalType = "preStationSignal"
-			end
+			signalType = builder.eval_pre_signal_type(params.nighty_type_n_signaltype)
 		end
+
 
 		-- Evaluate future signals
 		local nextStopSignalDistance = 10 -- choosen high TODO: (dirty code)

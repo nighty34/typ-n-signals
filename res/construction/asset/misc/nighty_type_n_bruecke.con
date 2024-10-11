@@ -18,6 +18,7 @@ function data()
 				key = "quer_length",		
 				name = _("Quertragewerk Elemente"),
 				uiType = "SLIDER",
+				defaultIndex =  1,
 				values = { _("1"),_("2"),_("3"),_("4"),_("5"),_("6"),_("7"),_("8"),_("9"),_("10") },			
 			},
 			{
@@ -27,6 +28,13 @@ function data()
 				defaultIndex = 14,
 				values = { _("-7"),_("-6.5"),_("-6"),_("-5.5"),_("-5"),_("-4.5"),_("-4"),_("-3.5"),_("-3"),_("-2.5"),_("-2"),_("-1.5"),_("-1"),_("-0.5"),_("0"),_("0.5"),_("1"),_("1.5"),_("2"),_("2.5"),_("3"),_("3.5"),_("4"),_("4.5"),_("5"),_("5.5"),_("6"),_("6.5"),_("7"),},			
 			},
+			{
+				key = "nighty_x_offset",
+				name = _("nighty_x_offset"),
+				uiType = "SLIDER",
+				values = { _("-5"), _("-4"), _("-3"), _("-2"), _("-1"), _("0"), _("1"), _("2"), _("3"), _("4"), _("5") },
+				defaultIndex = 5,
+			},
 		},
 		
 		updateFn = function(params)
@@ -34,25 +42,38 @@ function data()
 			local nighty_quer_offset = (params.nighty_y_offset or 0) * 0.5 - 9.4375 - 1.25;
 
 			local z_offset = .8
+			local x_offset = 0
+
+			if params.nighty_x_offset == 0 then x_offset = 0.75 end;
+			if params.nighty_x_offset == 1 then x_offset = 0.60 end;
+			if params.nighty_x_offset == 2 then x_offset = 0.45 end;
+			if params.nighty_x_offset == 3 then x_offset = 0.30 end;
+			if params.nighty_x_offset == 4 then x_offset = 0.15 end;
+			if params.nighty_x_offset == 5 then x_offset = 0 end;
+			if params.nighty_x_offset == 6 then x_offset = -0.15 end;
+			if params.nighty_x_offset == 7 then x_offset = -0.30 end;
+			if params.nighty_x_offset == 8 then x_offset = -0.45 end;
+			if params.nighty_x_offset == 9 then x_offset = -0.60 end;
+			if params.nighty_x_offset == 10 then x_offset = -0.75 end;
 	
 			result.models = { }
 	
 			result.models[#result.models+1] =
 			{ id = "nighty/bruecke/typ-n_signalb_mast.mdl",
-			transf = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, nighty_quer_offset-0.2, z_offset, 1, } }
+			transf = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, nighty_quer_offset-0.2, z_offset, 1, } }
 	
 			for i = (params.quer_length*2 + 1 or 0) + 1, 0, -1
 			do
 				result.models[#result.models+1] =
 				{ id = "nighty/bruecke/typ-n_signalb_balken.mdl",
-				transf = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, nighty_quer_offset-0.2, z_offset, 1, } }
+				transf = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, nighty_quer_offset-0.2, z_offset, 1, } }
 				
 				nighty_quer_offset = nighty_quer_offset + 2.5
 			end
 			
 			result.models[#result.models+1] =
 			{ id = "nighty/bruecke/typ-n_signalb_mast.mdl",
-			transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, 0, nighty_quer_offset, z_offset, 1, } }
+			transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, x_offset, nighty_quer_offset, z_offset, 1, } }
 			
 			result.terrainAlignmentLists = { {
 				type = "EQUAL",
