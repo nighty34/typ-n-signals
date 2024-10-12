@@ -161,17 +161,19 @@ return {
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset + .35, 1 }}
 			end
 			if mirrorEntryExit then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_exit.mdl", transf = { -1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, x_offset-.15, y_offset, z_offset, 1 }}
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_exit.mdl", transf = { -1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, x_offset-.12, y_offset, z_offset-.3, 1 }}
 			end
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_entry.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_sign_clamp.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
 		elseif signalType == "exitSignal" then
 			if hasIdSign then
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset + .35, 1 }}
 			end
 			if mirrorEntryExit then
-				result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_entry.mdl", transf = { -1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, x_offset-.15, y_offset, z_offset, 1 }}
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_entry.mdl", transf = { -1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, x_offset-.12, y_offset, z_offset-.3, 1 }}
 			end
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_exit.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
+			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_sign_clamp.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
 		elseif signalType == "preStationSignal" then
 			if hasIdSign then
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset + .7, 1 }}
