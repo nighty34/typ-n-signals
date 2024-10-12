@@ -39,6 +39,13 @@ local function main_signs_params()
 			tooltip = _("nighty_type_n_signaltype_tooltip"),
 		},
 		{
+			key = "nighty_type_n_mirror_station_sign",
+			name = _("nighty_type_n_mirror_station_sign"),
+			uiType= "CHECKBOX",
+			values = {"0", "1"},
+			defaultIndex = 1,
+		},
+		{
 			key = "nighty_type_n_build_form",
 			name = _("nighty_type_n_build_form"),
 			values = {_("nighty_type_n_build_form_old"), _("nighty_type_n_build_form_brugg"), _("nighty_type_n_build_form_rappi")},
@@ -72,7 +79,7 @@ local function main_signs_params()
     }
 end
 
-function pre_sign_params()
+local function pre_sign_params()
 	return {
 		{
 			key = "nighty_type_n_signaltype",
@@ -145,7 +152,7 @@ function param_builder.main_bridge_params(f1rnen_active)
 	else
 		utils.addToTable(params, signalingbridge_params)
 	end
-    utils.addToTable(params, pre_sign_params())
+    utils.addToTable(params, main_signs_params())
 
     return params
 end

@@ -16,6 +16,8 @@ return {
 
 		["nighty_type_n_signalbruecke_name"] = ("Signalbrückenausleger"),
 		["nighty_type_n_signalbruecke_desc"] = ("Signalbrückenausleger der SBB designed für Typ-N Signale"),
+
+		["nighty_type_n_mirror_station_sign"] = ("Spiegel Ein-/Ausfahrtsschild"),
 		
 		["better_signals_tunnel_helper"] = ("Tunnel Hilfe"),
 		["better_signals_tunnel_helper_tooltip"] = ("Eine Hilfe, welche das Platzieren von Signalen in Tunnels vereinfachen soll."),
@@ -102,6 +104,8 @@ return {
 
 		["nighty_type_n_signalbruecke_name"] = ("Signaling Bridge Mast"),
 		["nighty_type_n_signalbruecke_desc"] = ("Signaling Bridge designed for the type n signaling system"),
+
+		["nighty_type_n_mirror_station_sign"] = ("Mirror Entry/Exit Sign"),
 		
 		["better_signals_tunnel_helper"] = ("Tunnel Helper"),
 		["better_signals_tunnel_helper_tooltip"] = ("Check to enable a helper for placing signals in tunnels"),

@@ -28,6 +28,7 @@ return {
 		local displayWarning = (params.nighty_type_n_shorten_block and params.nighty_type_n_shorten_block == 1)
 		local displayOccupied = (params.nighty_type_n_occupied and params.nighty_type_n_occupied == 1)
 		local hasIdSign = (params.nighty_type_n_id_sign and params.nighty_type_n_id_sign == 1)
+		local mirrorEntryExit = (params.nighty_type_n_mirror_station_sign and params.nighty_type_n_mirror_station_sign == 1)
 		local signalType = nil
 		local maxSpeed = 160
 		local indicatedSpeed = maxSpeed + 1
@@ -142,10 +143,16 @@ return {
 			if hasIdSign then
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset + .35, 1 }}
 			end
+			if mirrorEntryExit then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_exit.mdl", transf = { -1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, x_offset-.15, y_offset, z_offset, 1 }}
+			end
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_entry.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
 		elseif signalType == "exitSignal" then
 			if hasIdSign then
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset + .35, 1 }}
+			end
+			if mirrorEntryExit then
+				result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_entry.mdl", transf = { -1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, x_offset-.15, y_offset, z_offset, 1 }}
 			end
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_station_exit.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
 		elseif signalType == "preStationSignal" then
