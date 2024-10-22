@@ -76,10 +76,17 @@ local function main_signs_params()
 			defaultIndex = 0,
 			tooltip = _("nighty_type_n_occupied_tooltip"),
 		},
+		{
+			key = "nighty_type_n_worker_platform",
+			name = _("nighty_type_n_worker_platform"),
+			uiType= "CHECKBOX",
+			values = {"0", "1"},
+			defaultIndex = 0,
+		},
     }
 end
 
-local function pre_sign_params()
+local function pre_signs_params()
 	return {
 		{
 			key = "nighty_type_n_signaltype",
@@ -103,6 +110,13 @@ local function pre_sign_params()
 			values = {"ui/parameters/nighty/none.tga","ui/parameters/nighty/typ-n_speed_indicator.tga"},
 			defaultIndex = 0,
 			tooltip = _("nighty_type_n_speedindicator_tooltip"),
+		},
+		{
+			key = "nighty_type_n_worker_platform",
+			name = _("nighty_type_n_worker_platform"),
+			uiType= "CHECKBOX",
+			values = {"0", "1"},
+			defaultIndex = 0,
 		},
 	}
 end
@@ -202,7 +216,7 @@ function param_builder.pre_bridge_params(f1rnen_active)
 	else
 		utils.addToTable(params, signalingbridge_params)
 	end
-    utils.addToTable(params, main_signs_params())
+    utils.addToTable(params, pre_signs_params())
 
     return params
 end
@@ -270,7 +284,7 @@ function param_builder.pre_signal_params()
 
     utils.addToTable(params, util_params())
     utils.addToTable(params, signal_params)
-    utils.addToTable(params, pre_sign_params())
+    utils.addToTable(params, pre_signs_params())
 
     return params
 end

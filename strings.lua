@@ -87,6 +87,8 @@ return {
 
 		["sbb_type_n_name"] = ("SBB Typ N Signale (Better Signals)"),
 		["sbb_type_n_name_desc"] = ("Schweizer Signale vom Typ N. Im Paket enthalten sind sowohl Vor- wie auch Hauptsignale. Die Signale sind Teil des [Better Signals] Projekts"),
+
+		["nighty_type_n_worker_platform"] = ("Arbeiter Platform")
 	},
 	en = {
 		["nighty_x_offset"] = ("X-Offset"),
@@ -175,6 +177,8 @@ return {
 
 		["sbb_type_n_name"] = ("SBB Type N Signals (Better Signals)"),
 		["sbb_type_n_name_desc"] = ("Swiss Type N Signals. This signal pack includes both pre- and mainsignals. All signals are part of the [Better Signals] project"),
+
+		["nighty_type_n_worker_platform"] = ("Worker Platform")
 	}
 }
 end

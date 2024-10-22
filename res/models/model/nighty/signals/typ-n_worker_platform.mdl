@@ -1,0 +1,36 @@
+function data()
+return {
+	boundingInfo = {
+		bbMax = { 0.71913462877274, 0.24934673309326, 3.7903559207916, },
+		bbMin = { -0.68673467636108, -0.24934680759907, 3.7036230564117, },
+	},
+	collider = {
+		params = {
+			halfExtents = { 0.70293462276459, 0.24934676289558, 0.043366432189941, },
+		},
+		transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+		type = "BOX",
+	},
+	lods = {
+		{
+			node = {
+				children = {
+					{
+						materials = { "signals/sbb_type_n/metal.mtl", },
+						mesh = "signals/sbb_type_n/signal_arbeits_plattform_lod0.msh",
+						name = "signal_arbeits_plattform",
+						transf = { 1, 0, 0, 0, 0, -1.6292068494295e-07, -1, 0, 0, 1, -1.6292068494295e-07, 0, 0, 0, 3.9777407646179, 1, },
+					},
+				},
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+			},
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 154.50183105469,
+		},
+	},
+	metadata = { },
+	version = 1,
+}
+end
