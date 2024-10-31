@@ -1,5 +1,11 @@
-local config = require "nightfury/signals/config"
-local signals = require "nightfury/signals/main"
+local function pRequire(modulName)
+    local state, result_or_error = pcall(require, modulName)
+    if state then
+        return result_or_error
+    else
+        return nil, result_or_error
+    end
+end
 
 function data()
 	return {
@@ -25,7 +31,47 @@ function data()
 			},
 		},
 		runFn = function(settings, modParams)
-			config.load()
+			local signals = pRequire('nightfury/signals/main')
+
+			if not signals then
+				return
+			end
+		
+			signals.signals['nighty_type_n_hauptsignal'] = {
+				type = "main",
+				isAnimated = false,
+			}
+
+			signals.signals['nighty_type_n_vorsignal'] = {
+				type = "hybrid",
+				isAnimated = false,
+				preSignalTriggerKey = "nighty_type_n_signaltype",
+				preSignalTriggerValue = 1,
+			}
+
+			signals.signals['nighty_type_n_hauptsignal_bruecke'] = {
+				type = "main",
+				isAnimated = false
+			}
+
+			signals.signals['nighty_type_n_hauptsignal_bruecke_f1rnen'] = {
+				type = "main",
+				isAnimated = false
+			}
+
+			signals.signals['nighty_type_n_vorsignal_bruecke'] = {
+				type = "hybrid",
+				isAnimated = false,
+				preSignalTriggerKey = "nighty_type_n_signaltype",
+				preSignalTriggerValue = 1,
+			}
+
+			signals.signals['nighty_type_n_vorsignal_bruecke_f1rnen'] = {
+				type = "hybrid",
+				isAnimated = false,
+				preSignalTriggerKey = "nighty_type_n_signaltype",
+				preSignalTriggerValue = 1,
+			}
 		end,
 		postRunFn = function ()
 			if pcall(function() api.res.constructionRep.get(api.res.constructionRep.find('asset/f1rnen_l_signalbruecke.con')) end) then
