@@ -7,7 +7,7 @@ function data()
 		},
 	
 		buildMode = "SINGLE",
-		categories = {"nighty_typ_n"},
+		categories = {"nighty_typ_n", "better_signals"},
 		skipCollision = true,
 		autoRemovable = false,
 		order = 1,
@@ -35,6 +35,12 @@ function data()
 				values = { _("-5"), _("-4"), _("-3"), _("-2"), _("-1"), _("0"), _("1"), _("2"), _("3"), _("4"), _("5") },
 				defaultIndex = 5,
 			},
+			{
+				key = "nighty_middle_mast",
+				name = _("nighty_middle_mast"),
+				values = { _("nighty_no"), _("nighty_yes"), },
+				defaultIndex = 1,
+			},
 		},
 		
 		updateFn = function(params)
@@ -43,6 +49,10 @@ function data()
 
 			local z_offset = .8
 			local x_offset = 0
+
+			if params.nighty_middle_mast and params.nighty_middle_mast == 1 then
+				nighty_quer_offset = nighty_quer_offset + 1.4
+			end
 
 			if params.nighty_x_offset == 0 then x_offset = 0.75 end;
 			if params.nighty_x_offset == 1 then x_offset = 0.60 end;

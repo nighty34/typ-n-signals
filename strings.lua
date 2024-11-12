@@ -6,6 +6,8 @@ return {
 		["nighty_no"] = ("Aus"),
 		["nighty_yes"] = ("An"),
 
+		["nighty_middle_mast"] = ("Als Mittelmast"),
+
 		["better_signals_x_offset"] = ("Signalauswahl zum verknüpfen kann \nmit ü und ¨ geändert werden.\n\nSignal X-Versatz"),
 		["better_signals_x_offset_tooltip"] = ("Wähle den Versatz, mit welchem das Signal an das Gleis snappen soll"),
 		["better_signals_y_offset"] = ("Signal Y-Versatz"),
@@ -95,6 +97,8 @@ return {
 
 		["nighty_no"] = ("Off"),
 		["nighty_yes"] = ("On"),
+
+		["nighty_middle_mast"] = ("Build between tracks"),
 
 		["better_signals_x_offset"] = ("Signals selection can be changed\nwith ü und ¨.\n\nSignal X-Offset"),
 		["better_signals_x_offset_tooltip"] = ("Wähle den Versatz, mit welchem das Signal an das Gleis snappen soll"),
