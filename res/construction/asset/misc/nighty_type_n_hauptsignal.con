@@ -14,7 +14,7 @@ return {
 		yearFrom = 1986,
 	},
 	skipOnInit = true,
-	categories = { "nighty_typ_n" },
+	categories = { "nighty_typ_n", "better_signals" },
 	skipCollision = true,
 	autoRemovable = false,
 	order = 34340,

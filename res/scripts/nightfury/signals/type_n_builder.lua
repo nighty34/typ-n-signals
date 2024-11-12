@@ -60,7 +60,7 @@ function builder.buildSignalLamps(canDisplayRed, isGreen, displayWarning, displa
 	local models = {}
 	if not isGreen and canDisplayRed then
 		models[#models+1] = { id = "nighty/signals/typ-n_base_red.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-	elseif (nextStopSignalDistance == 1) or (indicatesNextSpeed or (displayWarning and (nextStopSignalDistance == 2)) or (displayOccupied and (nextStopSignalDistance == 1))) then
+	elseif ((nextStopSignalDistance == 1) or (indicatesNextSpeed or (displayWarning and (nextStopSignalDistance == 2)) or (displayOccupied and (nextStopSignalDistance == 1)))) or not isGreen then
 		models[#models+1] = { id = "nighty/signals/typ-n_base_yellow.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
 	else
 		models[#models+1] = { id = "nighty/signals/typ-n_base_green.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}

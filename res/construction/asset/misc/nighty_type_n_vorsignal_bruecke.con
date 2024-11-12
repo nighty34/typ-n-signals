@@ -1,5 +1,7 @@
 local builder = require "nightfury/signals/type_n_builder"
 local param_builder = require "nightfury/signals/type_n_param_builder"
+local utils = require "nightfury/signals/type_n_utils"
+
 
 function data()
 
@@ -14,7 +16,7 @@ return {
 		yearFrom = 1986		
 	},
 	skipOnInit = true,
-	categories = { "nighty_typ_n" },
+	categories = { "nighty_typ_n", "better_signals" },
 	skipCollision = true,
 	autoRemovable = false,
 	order = 34340,
@@ -23,35 +25,18 @@ return {
 		local result = {}
 		result.models = {}
 
+		local addToTable = utils.addToTable
+
 
 		-- Determine signalComponents
-		local isGreen = (params.signal_state and params.signal_state == 1)
 		local hasSpeedIndicator = (params.nighty_type_n_speedindicator and params.nighty_type_n_speedindicator == 1)
-		local displayWarning = (params.nighty_type_n_shorten_block and params.nighty_type_n_shorten_block == 1)
 		local hasIdSign = (params.nighty_type_n_id_sign and params.nighty_type_n_id_sign == 1)
 		local signalType = nil
-		local maxSpeed = 160
-		local indicatedSpeed = maxSpeed + 1
-		local canIndicateSpeed = true
-		local indicatesNextSpeed = false
 
 		local y_offset = 0
 		local z_offset = 2.75
 		local x_offset = builder.calc_x_offset(.25, params.better_signals_x_offset)
 		
-		if (params.signal_speed) then
-			indicatedSpeed = params.signal_speed
-		end
-
-		if params.paramsOverride then
-			if params.paramsOverride.warning then
-				displayWarning = params.paramsOverride.warning == 1
-			end
-
-			if params.paramsOverride.speed then
-				indicatedSpeed = params.paramsOverride.speed
-			end
-		end
 
 		if (params.better_signals_y_offset) then
 			y_offset = builder.set_y_offset(y_offset, params.better_signals_y_offset)
@@ -61,46 +46,7 @@ return {
 			signalType = builder.eval_pre_signal_type(params.nighty_type_n_signaltype)
 		end
 
-
-		-- Evaluate future signals
-		local nextStopSignalDistance = 10 -- choosen high TODO: (dirty code)
-		
-
-		if params.following_signal then
-			if params.following_signal.signal_state == 0 then
-				nextStopSignalDistance = 1
-			elseif params.following_signal.following_signal and (params.following_signal.following_signal.signal_state == 0) then
-				nextStopSignalDistance = 2
-			end
-
-			if params.following_signal.signal_speed then
-				local followingSignalSpeed = params.following_signal.signal_speed
-				if (math.floor(followingSignalSpeed/10)*10 < math.floor(indicatedSpeed/10)*10) then
-					indicatesNextSpeed = true
-					indicatedSpeed = math.floor(followingSignalSpeed/10)*10
-				elseif params.previous_speed and (((math.floor(params.previous_speed/10)*10 < math.floor(indicatedSpeed/10)*10) or (math.floor(params.previous_speed/10)*10 > math.floor(indicatedSpeed/10)*10))) then
-					canIndicateSpeed = true
-					indicatesNextSpeed = false
-					indicatedSpeed = math.floor((indicatedSpeed+1)/10)*10
-				else
-					canIndicateSpeed = false
-				end
-
-				if (params.previous_speed and (math.floor((params.previous_speed)/10) == math.floor((indicatedSpeed)/10))) or (not params.showSpeedChange) then
-					indicatesNextSpeed = false
-					canIndicateSpeed = false
-				end
-			end
-		else
-			indicatesNextSpeed = false
-		end
-		
-
-		if nextStopSignalDistance == 1 then
-			canIndicateSpeed = false
-		elseif displayWarning and nextStopSignalDistance == 2 then
-			canIndicateSpeed = false
-		end
+		local evaluatedSignal = builder.evaluateMainSignal(params)
 
 		
 		-- ==[Model definition]==
@@ -154,62 +100,12 @@ return {
 			end
 		end
 
-		-- signal lamps
-		if not isGreen or ((nextStopSignalDistance == 1) or (hasSpeedIndicator and ((indicatesNextSpeed and (maxSpeed >= indicatedSpeed)) or (displayWarning and (nextStopSignalDistance == 2))))) then
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_yellow.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-		else -- green
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_green.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-		end
+		addToTable(result.models, builder.buildSignalLamps(false, evaluatedSignal.isGreen, evaluatedSignal.displayWarning, evaluatedSignal.displayOccupied, evaluatedSignal.indicatesNextSpeed, evaluatedSignal.nextStopSignalDistance, x_offset, y_offset, z_offset))
 
 
 		-- Speed indicator
-		if hasSpeedIndicator then 
-			result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speedindicator.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-			if isGreen and canIndicateSpeed then
-				if indicatedSpeed <= 40 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_40.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-				
-				elseif indicatedSpeed <= 50 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_50.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-				
-				elseif indicatedSpeed <= 60 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_60.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-				
-				elseif indicatedSpeed <= 70 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_70.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-				
-				elseif indicatedSpeed <= 80 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_80.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-				
-				elseif indicatedSpeed <= 90 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_90.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-				
-				elseif indicatedSpeed <= 100 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_100.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-				
-				elseif indicatedSpeed <= 110 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_110.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-				
-				elseif indicatedSpeed <= 120 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_120.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-
-				elseif indicatedSpeed <= 130 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_130.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-				
-				elseif indicatedSpeed <= 140 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_140.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-
-				elseif indicatedSpeed <= 150 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_150.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-
-				elseif indicatedSpeed <= 160 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_160.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
-				end
-			elseif isGreen then
-				if displayWarning and nextStopSignalDistance == 2 then
-					result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_speed_v.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, x_offset, z_offset, 1 }}
-				end
-			end
+		if hasSpeedIndicator then
+			addToTable(result.models, builder.buildSpeedIndicator(evaluatedSignal.isGreen, evaluatedSignal.canIndicateSpeed, evaluatedSignal.indicatedSpeed, evaluatedSignal.displayWarning, evaluatedSignal.displayOccupied, x_offset, y_offset, z_offset))
 		end
 		
 		result.cost = -1
