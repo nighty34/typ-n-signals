@@ -127,7 +127,7 @@ function param_builder.main_bridge_params(f1rnen_active)
         {
 			key = "nighty_type_n_korb",
 			name = _("nighty_type_n_korb"),
-			values = {_("nighty_type_n_korb_basic"), _("nighty_type_n_korb_with_cage"), _("nighty_type_n_korb_f1rnen")},
+			values = {_("nighty_type_n_korb_basic"), _("nighty_type_n_korb_with_cage"),},
 			defaultIndex = 0,
 			tooltip = _("nighty_type_n_build_mast_tooltip"),
 		},
@@ -177,7 +177,7 @@ function param_builder.pre_bridge_params(f1rnen_active)
         {
 			key = "nighty_type_n_korb",
 			name = _("nighty_type_n_korb"),
-			values = {_("nighty_type_n_korb_basic"), _("nighty_type_n_korb_with_cage"), _("nighty_type_n_korb_f1rnen")},
+			values = {_("nighty_type_n_korb_basic"), _("nighty_type_n_korb_with_cage"),},
 			defaultIndex = 0,
 			tooltip = _("nighty_type_n_build_mast_tooltip"),
 		},
@@ -194,7 +194,7 @@ function param_builder.pre_bridge_params(f1rnen_active)
         {
 			key = "nighty_type_n_korb",
 			name = _("nighty_type_n_korb"),
-			values = {_("nighty_type_n_korb_basic"), _("nighty_type_n_korb_with_cage")},
+			values = {_("nighty_type_n_korb_basic"), _("nighty_type_n_korb_with_cage"),  _("nighty_type_n_korb_f1rnen")},
 			defaultIndex = 0,
 			tooltip = _("nighty_type_n_build_mast_tooltip"),
 		},
