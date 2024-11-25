@@ -110,6 +110,13 @@ return {
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset + .35, 1 }}
 			end
 			result.models[#result.models+1] = { id = "nighty/signals/typ-n_sign_repeat.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
+
+			if evaluatedSignal.canIndicateSpeed then
+				evaluatedSignal.indicatesNextSpeed = true
+			end
+
+			evaluatedSignal.displayOccupied = false
+			evaluatedSignal.displayWarning = false
 		elseif signalType == "preStationSignal" then
 			if hasIdSign then
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset + .7, 1 }}
@@ -119,10 +126,6 @@ return {
 			if hasIdSign then
 				result.models[#result.models+1] = { id = "nighty/signals/typ-n_base_sign_nuber.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x_offset, y_offset, z_offset, 1 }}
 			end
-		end
-
-		if evaluatedSignal.canIndicateSpeed then
-			evaluatedSignal.indicatesNextSpeed = true
 		end
 
 
