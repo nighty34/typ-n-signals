@@ -317,6 +317,7 @@ function builder.evaluateMainSignal(params)
 	
 	if nextStopSignalDistance == 1 then
 		canIndicateSpeed = false
+		displayWarning = false
 	elseif displayWarning and nextStopSignalDistance == 2 then
 		canIndicateSpeed = false
 		displayWarning = true
@@ -444,4 +445,3 @@ function builder.buildGroundFaces(tunnelHelperOn)
 	return groundFaces, models
 end
 
-return builder
